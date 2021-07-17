@@ -2,7 +2,7 @@ body {
     background-color: #121212;
 }
 
-button {
+.btn {
     font-family: Roboto, sans-serif;
     font-weight: 500;
     font-size: 14px;
@@ -12,6 +12,8 @@ button {
     border: none;
     outline: none;
     cursor: pointer;
+    width: fit-content;
+    padding: 1%;
 }
 
 h1 {
@@ -54,7 +56,22 @@ a {
     font-weight: 400;
     color: inherit;
     text-decoration: inherit;
+    cursor: pointer;
     
+}
+
+.newTab {
+    color:#BB86FC;
+}
+
+fieldset {
+    border-style: none;
+}
+
+.telaLogin {
+    padding: 5%;
+    margin-top: 30%;
+    position: static;
 }
 
 .menuLateral {
@@ -127,6 +144,8 @@ ul {
 
 .dp12 {
     background-color: #FFFFFF14;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .dp16 {

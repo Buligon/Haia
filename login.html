@@ -1,39 +1,81 @@
 <!DOCTYPE html>
 
 <html lang="pt-br">
-    <head>
-        <style>
-            body {
-                background-image: url(imgs/wallpaper_desfoque.png)
-            }
-        </style>
 
-        <meta http-equiv="Content-Language" content="pt-br">
-        <meta charset="UTF-8">
-        <meta name="description" content="Software para gerenciamento de projetos">
-        <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento">
-        <meta name="author" content="Lucas Buligon Antunes">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Haia</title>
-    </head>
-    <body>
-        <div>
-            <img src="imgs/padrao_sem_fundo.png">
-            <button><img src="imgs/google_logo.png" ><p>Continuar com o Google</p></button>
-            <div>
-                <p>Ou</p>
+<head>
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta charset="UTF-8">
+    <meta name="description" content="Software para gerenciamento de projetos">
+    <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento">
+    <meta name="author" content="Lucas Buligon Antunes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Material_icons -->
+    <!-- https://material.io/resources/icons/?style=baseline -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=outline -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=round -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=sharp -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=twotone -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="css/bootstrap-grid.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    <!-- Javascript -->
+    <script type="text/javascript" src="js/script.js"></script>
+
+    <title>Haia</title>
+</head>
+
+<body>
+    <div class='container'>
+        <div class='row'>
+            <div class='col-md'></div>
+            <div class='col-md-5'>
+                <div class='dp12'>
+                    <div class="telaLogin">
+                        <div>
+                            <img src="imgs/padrao_sem_fundo.png" style="height: 300px; height: 300px;">
+                        </div>
+                        <div>
+
+                            <div class="btn"><img src="imgs/google_logo.png" style="width: 30px; height: 30px;">
+                                Continuar com o Google
+                            </div>
+                        </div>
+                        <div>
+                            <p class="empMedium" style="align-self:center;">Ou</p>
+                        </div>
+                        <div>
+                            <form autocomplete="off">
+                                <fieldset>
+                                    <input type="email" id="email" name="email" placeholder="Email"><br>
+                                    <input type="password" id="pwd" name="pwd" placeholder="Senha" required><br>
+                                    <a class="newTab">Esqueceu sua senha?</a>
+                                    <input type="submit" value="Submit">
+
+                                    <p class="empHigh">Ainda não tem uma conta? <a class="newTab">Registre-se</a></p>
+
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <form autocomplete="off">
-                <fieldset>
-                    <input type="email" id="email" name="email" placeholder="Email"><br>
-                    <input type="password" id="pwd" name="pwd" placeholder="Senha" required><br>
-                    <a>Esqueceu sua senha?</a>
-                    <input type="submit" value="Submit">
-
-                    <p>Ainda não tem uma conta?</p>
-                    <a>Registre-se</a>
-                </fieldset>
-            </form>
+            <div class='col-md'></div>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>
