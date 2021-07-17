@@ -14,59 +14,84 @@ button {
 }
 
 h1 {
-    font-family: Roboto, sans-serif;
     font-size: 96px;
-    color: #FFFFFF;
     font-weight: 300;
 }
 
 h2 {
-    font-family: Roboto, sans-serif;
     font-size: 60px;
-    color: #FFFFFF;
     font-weight: 300;
 }
 
 h3 {
-    font-family: Roboto, sans-serif;
     font-size: 48px;
-    color: #FFFFFF;
     font-weight: 400;
 }
 
 h4 {
-    font-family: Roboto, sans-serif;
     font-size: 34px;
-    color: #FFFFFF;
     font-weight: 400;
 }
 
 h5 {
-    font-family: Roboto, sans-serif;
     font-size: 24px;
-    color: #FFFFFF;
     font-weight: 400;
 }
 
 h6 {
-    font-family: Roboto, sans-serif;
     font-size: 20px;
-    color: #FFFFFF;
     font-weight: 500;
 }
 
 p {
-    font-family: Roboto, sans-serif;
     font-size: 16px;
     font-weight: 400;
-    color: #FFFFFF;
 }
 
 a {
-    font-family: Roboto, sans-serif;
     font-size: 16px;
     font-weight: 400;
+    color: inherit;
+    text-decoration: inherit;
+    
+}
+
+.menuLateral {
+    margin: 0;
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    text-align: left;
+    text-decoration: none;
+    line-height: 50px;
+    left: -15%;
+}
+
+.menuLateral.mostra {
+    left: 0%;
+}
+
+nav ul li:hover {
     color: #BB86FC;
+    background-color: #BB86FC60;
+    transition: 0.5s;
+}
+nav ul li {
+    font-size: 34px;
+    font-weight: 400;
+    display: block;
+}
+
+ul {
+    list-style-type: none;
+    list-style: none;
+}
+
+.abreMenuLateral {
+    position: absolute;
+    top: 15px;
+    cursor: pointer;
+    background-color:pink;
 }
 
 .dp00 {
@@ -119,4 +144,9 @@ a {
 
 .empDisabled {
     color: #FFFFFF38;
+}
+
+* {
+    padding: 0;
+    font-family: Roboto, sans-serif;
 }
