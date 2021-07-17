@@ -1,0 +1,155 @@
+body {
+    background-color: #121212;
+}
+
+button {
+    font-family: Roboto, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    background-color: #BB86FC;
+    color: #000000;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 96px;
+    font-weight: 300;
+}
+
+h2 {
+    font-size: 60px;
+    font-weight: 300;
+}
+
+h3 {
+    font-size: 48px;
+    font-weight: 400;
+}
+
+h4 {
+    font-size: 34px;
+    font-weight: 400;
+}
+
+h5 {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+h6 {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+a {
+    font-size: 16px;
+    font-weight: 400;
+    color: inherit;
+    text-decoration: inherit;
+    
+}
+
+.menuLateral {
+    transition: 0.5s;
+    margin: 0;
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    text-align: left;
+    text-decoration: none;
+    line-height: 50px;
+    left: -15%;
+}
+
+.menuLateralmostra {
+    transition: 0.5s;
+    margin: 0;
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    text-align: left;
+    text-decoration: none;
+    line-height: 50px;
+    left: 0%;
+}
+
+nav ul li:hover {
+    color: #BB86FC;
+    background-color: #BB86FC60;
+    transition: 0.5s;
+}
+nav ul li {
+    font-size: 34px;
+    font-weight: 400;
+    display: block;
+}
+
+ul {
+    list-style-type: none;
+    list-style: none;
+}
+
+.dp00 {
+    background-color: #FFFFFF00;
+}
+
+.dp01 {
+    background-color: #FFFFFF05;
+}
+
+.dp02 {
+    background-color: #FFFFFF07;
+}
+
+.dp03 {
+    background-color: #FFFFFF08;
+}
+
+.dp04 {
+    background-color: #FFFFFF09;
+}
+
+.dp06 {
+    background-color: #FFFFFF11;
+}
+
+.dp08 {
+    background-color: #FFFFFF12;
+}
+
+.dp12 {
+    background-color: #FFFFFF14;
+}
+
+.dp16 {
+    background-color: #FFFFFF15;
+}
+
+.dp24 {
+    background-color: #FFFFFF16;
+}
+
+.empHigh {
+    color: #FFFFFF87;
+}
+
+.empMedium {
+    color: #FFFFFF60;
+}
+
+.empDisabled {
+    color: #FFFFFF38;
+}
+
+* {
+    padding: 0;
+    font-family: Roboto, sans-serif;
+}
