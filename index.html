@@ -2,11 +2,6 @@
 
 <html lang="pt-br">
     <head>
-        <style>
-            body {
-                background-image: url(imgs/wallpaper.png)
-            }
-        </style>
 
         <meta http-equiv="Content-Language" content="pt-br">
         <meta charset="UTF-8">
@@ -15,81 +10,88 @@
         <meta name="author" content="Lucas Buligon Antunes">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <!-- Material_icons -->
+        <!-- https://material.io/resources/icons/?style=baseline -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+        <!-- https://material.io/resources/icons/?style=outline -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+        <!-- https://material.io/resources/icons/?style=round -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+        <!-- https://material.io/resources/icons/?style=sharp -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+        <!-- https://material.io/resources/icons/?style=twotone -->
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+
+        <!-- Jquery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="css/bootstrap-grid.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+        <!-- Javascript -->
+        <script type="text/javascript" src="js/script.js"></script>
+        
         <title>Haia</title>
     </head>
     <body>
-        <div class="container">
-            <head>
-                <ul>
-                    <li><button type="button" class="btn btn-info btn-lg" data-toggle="moodal" data-target="#permissoes">Permissões</li>
-                    <li><a href="#lorem">Lorem</a></li>
-                    <li><a href="#ipsum">Ipsum</a></li>
-                    <li><a href="#dolor">Dolor</a></li>
-                </ul>
-                <img src="imgs/padrao_sem_fundo.png" alt="Logo Haia">
-            </head>
-            <div id="side"> <!--Sidebar-->
-                <div>
-                    <table>
-                        <tr>
-                            <th>Status</th>
-                            <th>Descrição</th>
-                            <th>Quantidade</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+        <div class='container-fluid'> 
+ <!--            <div class="abreMenuLateral">
+                <span class="material-icons-outlined">reorder</span>
+            </div> -->
+            <button type="button" onclick="teste()">
+                <span class="material-icons-outlined">reorder</span>
+            </button>
+            <nav class="menuLateral"> <!-- *** Usando width fora do bootstrap -->
+                    <ul class="empHigh">
+                        <li>
+                            <a href="#home">
+                                <span class="material-icons-outlined">home</span>
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#tarefas">
+                                <span class="material-icons-outlined">assignment</span>
+                                Tarefas
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#mensagens">
+                                <span class="material-icons-outlined">chat_bubble_outline</span>
+                                Mensagens
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#dashboards">
+                                <span class="material-icons-outlined">dashboard</span>
+                                Dashboards
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#calendario">
+                                <span class="material-icons-outlined">calendar_today</span>
+                                Calendário
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#forum">
+                                <span class="material-icons-outlined">forum</span>
+                                Fórum
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#config">
+                                <span class="material-icons-outlined">settings</span>
+                                Configurações
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-                <div>
-                    <table>
-                        <tr>
-                            <th>Código</th>
-                            <th>Colaborador</th>
-                            <th>Data/Hora</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                </div>
-            </div>
-            <div>
-                <div>
-                    <h2>Mensagens</h2>
-                    <button></button>
-                    <button></button>
-                </div>
-            </div>
-
-            <div id="permissoes" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class=modal-header>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Permissões</h4>
-                        </div>
-                        <div class="modal-body">
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <!--
-            <footer>
-                <p>Lucas Buligon Antunes - 2021</p>
-                <a href="lukasbuligonantunes@gmail.com">lukasbuligonantunes</a>
-            </footer>
-        -->
+            </nav>
         </div>
     </body>
 </html>

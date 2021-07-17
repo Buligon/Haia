@@ -11,6 +11,7 @@ button {
     border-radius: 5px;
     border: none;
     outline: none;
+    cursor: pointer;
 }
 
 h1 {
@@ -57,6 +58,7 @@ a {
 }
 
 .menuLateral {
+    transition: 0.5s;
     margin: 0;
     width: 15%;
     height: 100%;
@@ -67,7 +69,15 @@ a {
     left: -15%;
 }
 
-.menuLateral.mostra {
+.menuLateralmostra {
+    transition: 0.5s;
+    margin: 0;
+    width: 15%;
+    height: 100%;
+    position: fixed;
+    text-align: left;
+    text-decoration: none;
+    line-height: 50px;
     left: 0%;
 }
 
@@ -85,13 +95,6 @@ nav ul li {
 ul {
     list-style-type: none;
     list-style: none;
-}
-
-.abreMenuLateral {
-    position: absolute;
-    top: 15px;
-    cursor: pointer;
-    background-color:pink;
 }
 
 .dp00 {
