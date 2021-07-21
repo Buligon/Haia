@@ -1,5 +1,4 @@
-function teste() {
-        console.log('Click');
+function abreMenu() {
         var foo = document.querySelector('.menuLateral, .menuLateralmostra');
 
         if (foo.classList.contains("menuLateral")) {
