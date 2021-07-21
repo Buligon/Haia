@@ -12,8 +12,10 @@ body {
     border: none;
     outline: none;
     cursor: pointer;
-    width: fit-content;
-    padding: 1%;
+    width: auto;
+    padding-top: 2%;
+    padding-bottom: 5%;
+    margin-bottom: 4%;
 }
 
 h1 {
@@ -58,6 +60,22 @@ a {
     text-decoration: inherit;
     cursor: pointer;
     
+}
+
+input {
+    color: #FFFFFF87;
+    background-color: #121212;
+    border-radius: 5px;
+    outline: none;
+    margin-bottom: 3%;
+    border: none;
+    height: 25px;
+    padding-left: 2%;
+}
+
+input:focus {
+    color: #BB86FC;
+    border-color: #BB86FC;
 }
 
 .newTab {
