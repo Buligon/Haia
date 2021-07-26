@@ -21,31 +21,37 @@ body {
 h1 {
     font-size: 96px;
     font-weight: 300;
+    margin: 0;
 }
 
 h2 {
     font-size: 60px;
     font-weight: 300;
+    margin: 0;
 }
 
 h3 {
     font-size: 48px;
     font-weight: 400;
+    margin: 0;
 }
 
 h4 {
     font-size: 34px;
     font-weight: 400;
+    margin: 0;
 }
 
 h5 {
     font-size: 24px;
     font-weight: 400;
+    margin: 0;
 }
 
 h6 {
     font-size: 20px;
     font-weight: 500;
+    margin: 0;
 }
 
 p {
@@ -76,6 +82,13 @@ input {
 input:focus {
     color: #BB86FC;
     border-color: #BB86FC;
+}
+
+.icone {
+    background-color: #03DAC6;
+    border-radius: 50%;
+    height: fit-content;
+    width: fit-content;
 }
 
 .newTab {
@@ -178,7 +191,7 @@ ul {
     color: #FFFFFF87;
 }
 
-.empMedium {
+.empMedium, label{
     color: #FFFFFF60;
 }
 
