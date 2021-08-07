@@ -210,7 +210,7 @@ li {
   position: fixed;
   left: 0;
   top: 0;
-  height: 100%;
+  height: 100vh;
   width: 78px;
   background: #ffffff14;
   padding: 6px 14px;
@@ -238,7 +238,7 @@ li {
   font-size: 20px;
   font-weight: 600;
   opacity: 0;
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 }
 .sidebar.open .logo-details .icon,
 .sidebar.open .logo-details .logo_name{
@@ -331,7 +331,7 @@ li {
   display: none;
 }
 .sidebar.open li a span{
-  display: flex;
+  display: inherit;
   height: 100%;
   width: 100%;
   border-radius: 3px;
@@ -339,7 +339,7 @@ li {
   text-decoration: none;
   transition: all 0.5s ease;
 }
-.sidebar li a:hover{
+.sidebar a:hover{
   color: #bb86fc;
 }
 .sidebar li a:hover .links_name,
@@ -353,6 +353,9 @@ li {
   border-radius: 12px;
 }
 
+.sidebar.open i{
+  color: inherit;
+}
 /* Profile */
 
 .sidebar li.profile{
