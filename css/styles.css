@@ -116,48 +116,6 @@ fieldset {
   position: static;
 }
 
-/* .menuLateral {
-  transition: 0.5s;
-  margin: 0;
-  height: 100%;
-  position: fixed;
-  text-align: left;
-  text-decoration: none;
-  line-height: 50px;
-  left: -5.5%;
-}
-
-.menuLateralmostra {
-  transition: 0.5s;
-  margin: 0;
-  height: 100%;
-  text-align: left;
-  text-decoration: none;
-  line-height: 50px;
-  left: 0%;
-}
-
-nav ul li:hover {
-  color: #bb86fc;
-  background-color: #bb86fc60;
-  transition: 0.5s;
-}
-
-nav ul li {
-  font-size: 34px;
-  font-weight: 400;
-  display: block;
-}
-
-ul {
-  list-style-type: none;
-  list-style: none;
-}
-
-li {
-  padding-left: 2%;
-} */
-
 .dp01 {
   background-color: #ffffff05;
   border-radius: 5px;
@@ -412,3 +370,11 @@ li {
 }
 
 /* END Profile */
+
+.card {
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #ffffff14;
+  border-radius: 5px;
+  width: 100%;
+}
