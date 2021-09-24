@@ -1,22 +1,30 @@
+html, body, .wrapper {
+  height: 100%;
+}
+
 body {
   background-color: #121212;
 }
 
-.btn {
-  font-family: Roboto, sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  background-color: #bb86fc;
-  color: #000000;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  width: auto;
-  padding-top: 2%;
-  padding-bottom: 5%;
-  margin-bottom: 4%;
+.modal-content {
+  background-color: #202020;
 }
+
+.btn, .modal-dialog .btn {
+  font-family: Roboto, sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  background-color: #bb86fc !important;
+  color: #000000 !important;
+  border-radius: 5px !important;
+  border: none !important;
+  outline: none !important;
+  cursor: pointer !important;
+  width: auto !important;
+  padding-top: 2% !important;
+  padding-bottom: 2% !important;
+  margin-bottom: 4% !important;
+} 
 
 h1 {
   font-size: 96px;
@@ -79,7 +87,15 @@ img {
   margin-right: auto;
 }
 
-input {
+.modal-header {
+  border-bottom: 0 none;
+}
+
+.modal-footer {
+  border-top: 0 none;
+}
+
+input, .modal-dialog input {
   color: #ffffff87;
   background-color: #121212;
   border-radius: 5px;
@@ -90,7 +106,7 @@ input {
   padding-left: 2%;
 }
 
-input:focus {
+input:focus, .modal-dialog input:focus {
   color: #bb86fc;
   border-color: #bb86fc;
 }
@@ -163,22 +179,6 @@ fieldset {
   padding: 0;
   font-family: Roboto, sans-serif;
 }
-
-.sidebar{
-  position: fixed;
-  left: 0;
-  top: 0;
-  height: 100vh;
-  width: 78px;
-  background: #ffffff14;
-  padding: 6px 14px;
-  z-index: 99;
-  transition: all 0.5s ease;
-}
-.sidebar.open{
-  width: 250px;
-}
-
 /* Configuracao logo */
 
 .sidebar .logo-details{
@@ -237,35 +237,6 @@ fieldset {
   margin: 8px 0;
   list-style: none;
 }
-/* Configuracoes do tooltip*/
-
-.sidebar li .tooltip{
-  position: absolute;
-  top: -20px;
-  left: calc(100% + 15px);
-  z-index: 3;
-  background: #bb86fc60;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-weight: 400;
-  opacity: 0;
-  white-space: nowrap;
-  pointer-events: none;
-  transition: 0s;
-  color: #bb86fc;
-}
-.sidebar li:hover .tooltip{
-  opacity: 1;
-  pointer-events: auto;
-  transition: all 0.5s ease;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.sidebar.open li .tooltip{
-  display: none;
-}
 
 /* END Configuracoes do tooltip*/
 
@@ -303,78 +274,4 @@ fieldset {
 .sidebar li a:hover .links_name,
 .sidebar li a:hover i{
   transition: all 0.5s ease;
-}
-.sidebar li i{
-  height: 50px;
-  line-height: 50px;
-  font-size: 18px;
-  border-radius: 12px;
-}
-
-.sidebar.open i{
-  color: inherit;
-}
-/* Profile */
-
-.sidebar li.profile{
-  position: fixed;
-  height: 60px;
-  width: 78px;
-  left: 0;
-  bottom: -8px;
-  padding: 10px 14px;
-  background: #1d1b31;
-  transition: all 0.5s ease;
-  overflow: hidden;
-}
-.sidebar.open li.profile{
-  width: 250px;
-}
-.sidebar li .profile-details{
-  display: flex;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-.sidebar li img{
-  height: 45px;
-  width: 45px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-right: 10px;
-}
-.home-section{
-  position: relative;
-  background: #E4E9F7;
-  min-height: 100vh;
-  top: 0;
-  left: 78px;
-  width: calc(100% - 78px);
-  transition: all 0.5s ease;
-  z-index: 2;
-}
-.sidebar.open ~ .home-section{
-  left: 250px;
-  width: calc(100% - 250px);
-}
-.home-section .text{
-  display: inline-block;
-  color: #11101d;
-  font-size: 25px;
-  font-weight: 500;
-  margin: 18px
-}
-@media (max-width: 420px) {
-  .sidebar li .tooltip{
-    display: none;
-  }
-}
-
-/* END Profile */
-
-.card {
-  margin-left: 10%;
-  margin-right: 10%;
-  background-color: #ffffff14;
-  border-radius: 5px;
-  width: 100%;
 }

@@ -27,68 +27,90 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="/css/bootstrap-grid.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
 
-    <!-- Javascript -->
-    <script type="text/javascript" src="/js/script.js"></script>
-
     <title>Haia</title>
 </head>
 
-<body >
-    <div class='container'>
-        <div class='row'>
-            <div class='col-md'></div>
-            <div class='col-md-5'>
-                <div class='dp12'>
-                    <div class="telaLogin">
-                        <div style="padding: 10%; margin-bottom: 7%;">
-                            <img src="/imgs/padrao_sem_fundo_aproximado.png" style="width: 100%">
-                        </div>
-                        <div style="padding-left: 25%; padding-right: 25%; margin-bottom: 5%;">
-                            <div class="btn">
-                                <div style="width: min-content; float: left; margin-right: 5px; margin-left: 5px;">
-                                    <img src="/imgs/google_logo.png" style="width: 30px; height: 30px;">
-                                </div>
-                                <div style="padding-top: 5%; padding-bottom: 2%;">
-                                    Continuar com o Google
-                                </div>
+<body class='container'>
+    <div class='row'>
+        <div class='col-md'></div>
+        <div class='col-md-5'>
+            <div class='dp12'>
+                <div class="telaLogin">
+                    <div style="padding: 10%; margin-bottom: 7%;">
+                        <img src="/imgs/padrao_sem_fundo_aproximado.png" style="width: 100%">
+                    </div>
+                    <div style="padding-left: 25%; padding-right: 25%; margin-bottom: 5%;">
+                        <div class="btn">
+                            <div style="width: min-content; float: left; margin-right: 5px; margin-left: 5px;">
+                                <img src="/imgs/google_logo.png" style="width: 30px; height: 30px;">
+                            </div>
+                            <div style="padding-top: 5%; padding-bottom: 2%;">
+                                Continuar com o Google
                             </div>
                         </div>
-                        <div class='row' style="padding-left: 5%; padding-right: 5%; margin-bottom: 5%;">
-                            <div class='col-md-5' style="height: 3px; background-color: #ffffff60; margin-top: 6%;">
-                            </div>
-                            <p class="col-md-2" style="width: 5%; padding-left: 6%; color: #ffffff60;">Ou</p>
-                            <div class='col-md-5' style="height: 3px; background-color: #ffffff60; margin-top: 6%;">
-                            </div>
+                    </div>
+                    <div class='row' style="padding-left: 5%; padding-right: 5%; margin-bottom: 5%;">
+                        <div class='col-md-5' style="height: 3px; background-color: #ffffff60; margin-top: 6%;">
                         </div>
-                        <div style="padding-left: 20%; padding-right: 20%; margin-bottom: 5%;">
-                            <form autocomplete="off">
-                                <fieldset>
-                                    <input class="dp06" style="width: 100%;" type="email" id="email" name="email"
-                                        placeholder="Email" required>
-                                    <input class="dp06" style="width: 100%;" type="password" id="pwd" name="pwd"
-                                        placeholder="Senha" required>
-                                    <a class="newTab" href="recuperacao.html">Esqueceu sua senha?</a>
-                                    <input class="btn" style="margin-left: 10%; padding-right: 3%;" type="submit" value="Enviar">
+                        <p class="col-md-2" style="width: 5%; padding-left: 6%; color: #ffffff60;">Ou</p>
+                        <div class='col-md-5' style="height: 3px; background-color: #ffffff60; margin-top: 6%;">
+                        </div>
+                    </div>
+                    <div style="padding-left: 20%; padding-right: 20%; margin-bottom: 5%;">
+                        <form autocomplete="off">
+                            <fieldset>
+                                <input class="dp06" style="width: 100%;" type="email" id="email" name="email"
+                                    placeholder="Email" required>
+                                <input class="dp06" style="width: 100%;" type="password" id="pwd" name="pwd"
+                                    placeholder="Senha" required>
+                                <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua senha?</a>
+                                <input class="btn" style="margin-left: 10%; padding-right: 3%;" type="submit"
+                                    value="Enviar">
 
-                                </fieldset>
-                            </form>
+                            </fieldset>
+                        </form>
 
-                        </div>
-                        <div class="empHigh" style="margin-left: 5%;">
-                            Ainda não tem uma conta? <a class="newTab" href="cadastro.html">Registre-se</a>
-                        </div>
+                    </div>
+                    <div class="empHigh" style="margin-left: 5%;">
+                        Ainda não tem uma conta? <a class="newTab" href="cadastro.html">Registre-se</a>
                     </div>
                 </div>
             </div>
-            <div class='col-md'></div>
+        </div>
+        <div class='col-md'></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Recuperação de conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off">
+                        <fieldset>
+                            <label for="email">Email:</label>
+                            <input class="dp06" style="width: 100%;" type="email" id="email" name="email"
+                                placeholder="Ex.: email@exemplo.com" required>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto">Enviar</button>
+                </div>
+            </div>
         </div>
     </div>
+
 </body>
 
 </html>
