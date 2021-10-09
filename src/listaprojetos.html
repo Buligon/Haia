@@ -9,7 +9,7 @@
   <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento" />
   <meta name="author" content="Lucas Buligon Antunes" />
   <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Material_icons -->
   <!-- https://material.io/resources/icons/?style=baseline -->
@@ -31,113 +31,113 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
+  <link rel="stylesheet" type="text/css" href="/css/projetos.css" />
+
 
   <title>Haia</title>
 </head>
 
 <body class="container-fluid">
-  <div class="row" style="height:100vh">
-    <div class="col-md-1">
-      <div class="sidebar">
-        <div class="logo-details">
-          <i class=""></i>
-          <div class="logo_name">CodingLab</div>
-          <i id="btn"><span class="material-icons-outlined">reorder</span></i>
-        </div>
-        <ul class="nav-list">
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">assignment</i>
-              <span class="links_name">Tarefas</span>
-            </a>
-            <span class="tooltip">Tarefas</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">chat_bubble_outline</i>
-              <span class="links_name">Mensagens</span>
-            </a>
-            <span class="tooltip">Mensagens</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">dashboard</i>
-              <span class="links_name">Dashboard</span>
-            </a>
-            <span class="tooltip">Dashboard</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">calendar_today</i>
-              <span class="links_name">Calendário</span>
-            </a>
-            <span class="tooltip">Calendário</span>
-          </li>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">forum</i>
-              <span class="links_name">Fórum</span>
-            </a>
-            <span class="tooltip">Fórum</span>
-          </li>
-          <li style="bottom:0px; position: fixed;">
-            <a href="#">
-              <i class="material-icons-outlined">settings</i>
-              <span class="links_name">Configurações</span>
-            </a>
-            <span class="tooltip">Configurações</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md">
-      <div class="row" style="padding-bottom: 4%">
-        <div class="dp06"></div>
-        <div class="col-md"></div>
-        <div class="col-md">
-          <div class="dp06" style="width: 100%;">
-            <h2 class="empHigh">
-              Projetos
-            </h2>
-          </div>
-        </div>
-        <div class="col-md"></div>
-      </div>
-      <div class="row">
-        <div class="col-md">
-          <div class="card">
-            <div class="dp12">
-              1
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="active">
+      <ul class="list-unstyled components mb-5">
+        <li class="active" id="btnToggleSidebar">
+          <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <span class="material-icons-outlined">reorder</span>
+          </button>
+        </li>
+        <li class="active">
+          <a href="#">
+            <i class="material-icons-outlined">assignment</i>
+            <span>Tarefas</span>
+          </a>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">chat_bubble_outline</i>
+            <span>Mensagens</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">dashboard</i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">calendar_today</i>
+            <span>Calendário</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">forum</i>
+            <span>Fórum</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+
+    <div id="content" class="p-4 p-md-5">
+
+      <section class="pt-4">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="col">
+            <div class="card">
+              <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
+                  content. This content is a little bit longer.</p>
+              </div>
             </div>
-            1
           </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md">
-          <div class="card">
-            <div class="dp12">
-              1
+          <div class="col">
+            <div class="card">
+              <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
+                  content. This content is a little bit longer.</p>
+              </div>
             </div>
-            1
           </div>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md">
-          <div class="card">
-            <div class="dp12">
-              1
+          <div class="col">
+            <div class="card">
+              <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
+                  content. This content is a little bit longer.</p>
+              </div>
             </div>
-            1
+          </div>
+          <div class="col">
+            <div class="card">
+              <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
+                  content. This content is a little bit longer.</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="col-md-1"></div>
-      </div>
+      </section>
+
     </div>
   </div>
+  </div>
+
 
   <!-- Javascript -->
-  <script type="text/javascript" src="/js/script.js"></script>
-
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script src="/js/popper.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/main.js"></script>
 </body>
 
 </html>
