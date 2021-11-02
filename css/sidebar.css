@@ -18,6 +18,7 @@
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;
   transition: all 0.3s;
+  height: 100%;
 }
 
 #sidebar.active {
@@ -89,4 +90,12 @@
   #sidebar.active {
     margin-left: 0 !important;
   }
+}
+
+#sidebarCollapse span{
+  color: #ffffff87;
+}
+
+#sidebarCollapse:hover span{
+  color: #ffffff !important; 
 }

@@ -23,12 +23,12 @@
   <!-- https://material.io/resources/icons/?style=twotone -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
 
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- Bootstrap -->
   <link rel="stylesheet" href="/css/bootstrap-grid.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-  <!-- Jquery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
   <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
@@ -40,43 +40,26 @@
 
 <body class="container-fluid">
 
-  <div class="wrapper d-flex align-items-stretch">
+  <div class="wrapper d-flex">
     <nav id="sidebar" class="active">
-      <ul class="list-unstyled components mb-5">
-        <li class="active" id="btnToggleSidebar">
+      <ul class="list-unstyled components mb-5" style="height: 100%;">
+        <li id="btnToggleSidebar">
           <button type="button" id="sidebarCollapse" class="btn btn-primary">
             <span class="material-icons-outlined">reorder</span>
           </button>
         </li>
-        <li class="active">
-          <a href="#">
-            <i class="material-icons-outlined">assignment</i>
-            <span>Tarefas</span>
-          </a>
-        <li>
-          <a href="#">
-            <i class="material-icons-outlined">chat_bubble_outline</i>
-            <span>Mensagens</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="material-icons-outlined">dashboard</i>
-            <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="material-icons-outlined">calendar_today</i>
-            <span>Calendário</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="material-icons-outlined">forum</i>
-            <span>Fórum</span>
-          </a>
-        </li>
+          <li>
+            <a href="#">
+              <i class="material-icons-outlined">portrait</i>
+              <span>Perfil</span>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <i class="material-icons-outlined">settings</i>
+              <span>Configurações</span>
+            </a>
+          </li>
       </ul>
 
     </nav>
@@ -89,9 +72,9 @@
             <div class="card">
               <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
+                <h5 class="card-title">Lorem ipsum dolor</h5>
+                <p class="card-text empMedium">Sed vulputate tellus est, a scelerisque nisl imperdiet sit amet. Donec
+                  vitae commodo metus.</p>
               </div>
             </div>
           </div>
@@ -99,9 +82,9 @@
             <div class="card">
               <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
+                <h5 class="card-title">Consectetur adipiscing</h5>
+                <p class="card-text empMedium">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras justo
+                  lectus, consequat ut tempus eget, imperdiet et ex.</p>
               </div>
             </div>
           </div>
@@ -109,9 +92,8 @@
             <div class="card">
               <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
+                <h5 class="card-title">Donec</h5>
+                <p class="card-text empMedium">Nunc rhoncus ultrices turpis, nec viverra tellus pharetra sit amet.</p>
               </div>
             </div>
           </div>
@@ -119,9 +101,9 @@
             <div class="card">
               <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Card title</h5>
-                <p class="card-text empMedium">This is a longer card with supporting text below as a natural lead-in to additional
-                  content. This content is a little bit longer.</p>
+                <h5 class="card-title">Interdum</h5>
+                <p class="card-text empMedium">Nunc eget ante consectetur, lacinia leo sed, dignissim nibh. Duis ornare
+                  suscipit ultrices. </p>
               </div>
             </div>
           </div>
@@ -130,8 +112,6 @@
 
     </div>
   </div>
-  </div>
-
 
   <!-- Javascript -->
   <script src="/js/jquery-3.6.0.min.js"></script>

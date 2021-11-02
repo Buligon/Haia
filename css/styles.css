@@ -23,7 +23,7 @@ body {
   width: fit-content !important;
   vertical-align: middle !important;
   padding: 2% !important;
-} 
+}
 
 h1 {
   font-size: 96px;
@@ -143,7 +143,6 @@ fieldset {
   width: 100%;
 }
 
-
 .dp06 {
   background-color: #ffffff11;
   border-radius: 5px;
@@ -178,30 +177,34 @@ fieldset {
   padding: 0;
   font-family: Roboto, sans-serif;
 }
+
 /* Configuracao logo */
 
-.sidebar .logo-details{
+.sidebar .logo-details {
   height: 60px;
   display: flex;
   align-items: center;
   position: relative;
 }
-.sidebar .logo-details .icon{
+
+.sidebar .logo-details .icon {
   opacity: 0;
   transition: all 0.5s ease;
 }
-.sidebar .logo-details .logo_name{
+
+.sidebar .logo-details .logo_name {
   color: #fff;
   font-size: 20px;
   font-weight: 600;
   opacity: 0;
   transition: all 0.2s ease;
 }
-.sidebar.open .logo-details .icon,
-.sidebar.open .logo-details .logo_name{
+
+.sidebar.open .logo-details .icon, .sidebar.open .logo-details .logo_name {
   opacity: 1;
 }
-.sidebar .logo-details #btn{
+
+.sidebar .logo-details #btn {
   position: absolute;
   top: 50%;
   right: 0;
@@ -213,13 +216,14 @@ fieldset {
   cursor: pointer;
   transition: all 0.5s ease;
 }
-.sidebar.open .logo-details #btn{
+
+.sidebar.open .logo-details #btn {
   text-align: right;
 }
 
 /* END Configuracao logo */
 
-.sidebar i{
+.sidebar i {
   color: #fff;
   height: 60px;
   min-width: 50px;
@@ -227,11 +231,13 @@ fieldset {
   text-align: center;
   line-height: 60px;
 }
-.sidebar .nav-list{
+
+.sidebar .nav-list {
   margin-top: 20px;
   height: 100%;
 }
-.sidebar li{
+
+.sidebar li {
   position: relative;
   margin: 8px 0;
   list-style: none;
@@ -239,7 +245,7 @@ fieldset {
 
 /* END Configuracoes do tooltip*/
 
-.sidebar{
+.sidebar {
   position: absolute;
   top: 50%;
   left: 0;
@@ -248,17 +254,21 @@ fieldset {
   background: #1d1b31;
   color: #FFF;
 }
-.sidebar.open{
+
+.sidebar.open {
   color: #FFF;
 }
-.sidebar{
+
+.sidebar {
   background-color: #bb86fc60;
   color: #ffffff00;
 }
-.sidebar li a span{
+
+.sidebar li a span {
   display: none;
 }
-.sidebar.open li a span{
+
+.sidebar.open li a span {
   display: inherit;
   height: 100%;
   width: 100%;
@@ -267,10 +277,11 @@ fieldset {
   text-decoration: none;
   transition: all 0.5s ease;
 }
-.sidebar a:hover{
+
+.sidebar a:hover {
   color: #bb86fc;
 }
-.sidebar li a:hover .links_name,
-.sidebar li a:hover i{
+
+.sidebar li a:hover .links_name, .sidebar li a:hover i {
   transition: all 0.5s ease;
 }

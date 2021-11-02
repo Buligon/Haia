@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Language" content="pt-br" />
+  <meta charset="UTF-8" />
+  <meta name="description" content="Software para gerenciamento de projetos" />
+  <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento" />
+  <meta name="author" content="Lucas Buligon Antunes" />
+  <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Material_icons -->
+  <!-- https://material.io/resources/icons/?style=baseline -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=outline -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=round -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=sharp -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=twotone -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
+
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
+  <link rel="stylesheet" type="text/css" href="/css/dropdown.css" />
+
+  <title>Haia</title>
+</head>
+
+<body class="container-fluid">
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="active">
+      <ul class="list-unstyled components mb-5">
+        <li class="active" id="btnToggleSidebar">
+          <button type="button" id="sidebarCollapse" class="btn btn-primary" >
+            <span class="material-icons-outlined">reorder</span>
+          </button>
+        </li>
+        <li class="active">
+          <a href="/src/listatarefas.html">
+            <i class="material-icons-outlined">assignment</i>
+            <span>Tarefas</span>
+          </a>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">chat_bubble_outline</i>
+            <span>Mensagens</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">dashboard</i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">calendar_today</i>
+            <span>Calendário</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">forum</i>
+            <span>Fórum</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">portrait</i>
+            <span>Perfil</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">settings</i>
+            <span>Configurações</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+    <div class="col"></div>
+    <div id="content" class="m-2 p-4 p-md-5 col-10">
+      <div class="align-content-center " style="width: 100%;">
+        <div class="field">
+          <label for="dataInicial">Data Inicial:</label><br>
+          <input class="dp06 data" type="date" id="dataInicial">
+        </div>
+        <div class="field" style="margin-left: 1ch;">
+          <label for="dataFinal">Data Final:</label>
+          <input class="dp06 data" type="date" id="dataFinal">
+        </div>
+
+        <div class="field">
+          <label for="dropsprints">Sprint:</label>
+          <select class="dropdown" name="sprint" id="dropsprints">
+            <option value="sprint1">Todas</option>
+            <option value="sprint2">2 - Sprint</option>
+          </select>
+        </div>
+
+        <div class="field" id="search">
+          <label for="search2">Pesquisa:</label>
+          <input class="dp06" type="text" id="search2" size="30">
+        </div>
+
+        <div class="field">
+          <label for="search">Critérios:</label>
+          <select class="dropdown" name="searchfields" id="droppesquisa">
+            <option value="codigo">Código</option>
+            <option value="assunto">Assunto</option>
+            <option value="Autor">Autor</option>
+          </select>
+        </div>
+
+        <button class="btn align-self-center" id="filtrar" type="submit">Filtrar</button>
+      </div>
+
+      <div id="grid" class="m-2">
+        <table class="table empHigh">
+          <colgroup>
+            <col span="1" style="min-width: 10ch; max-width: fit-content;">
+            <col span="1" style="min-width: 30ch; max-width: fit-content;">
+            <col span="1" style="min-width: 12ch; max-width: fit-content;">
+            <col span="1" style="min-width: 20ch; max-width: fit-content;">
+            <col span="1" style="min-width: 11ch; max-width: fit-content;">
+            <col span="1" style="min-width: 11ch; max-width: fit-content;">
+            <col span="1" style="min-width: 15ch; max-width: fit-content;">
+          </colgroup>
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Assunto</th>
+              <th scope="col">Prioridade</th>
+              <th scope="col">Autor</th>
+              <th scope="col">Última resposta</th>
+              <th scope="col">Data de criação</th>
+              <th scope="col">Sprint</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="background-color: #DFA81B;">
+              <td>1565</td>
+              <td>Lorem ipsum dolor sit amet</td>
+              <td>Baixa</td>
+              <td>Lucas Buligon Antunes</td>
+              <td>18:07 05/08/2021</td>
+              <td>18:07 05/08/2021</td>
+              <td>51 - Buligon</td>
+            </tr>
+            <tr style="background-color: #4A4659;">
+              <td>47357</td>
+              <td>Consectetur adipiscing elit</td>
+              <td>Baixa</td>
+              <td>Gabriel Santos</td>
+              <td>19:43 05/12/2020</td>
+              <td>19:43 05/12/2020</td>
+              <td>26 - Gabriel</td>
+            </tr>
+            <tr style="background-color: #5D75A6;">
+              <td>65445</td>
+              <td>Nulla eget fermentum nisl</td>
+              <td>Baixa</td>
+              <td>Gabriel Santos</td>
+              <td>21:27 12/03/2021</td>
+              <td>21:27 12/03/2021</td>
+              <td>26 - Gabriel</td>
+            </tr>
+            <tr style="background-color: #5D75A6;">
+              <td>65447</td>
+              <td>Proin blandit risus mi</td>
+              <td>Baixa</td>
+              <td>Pedro Henrique Karnoski</td>
+              <td>00:41 28/01/2021</td>
+              <td>00:41 28/01/2021</td>
+              <td>51 - Buligon</td>
+            </tr>
+            <tr>
+              <td>67678</td>
+              <td>Vitae pretium libero egestas nec</td>
+              <td>Normal</td>
+              <td>Gabriel Santos</td>
+              <td>23:01 12/01/2021</td>
+              <td>23:01 30/11/2020</td>
+              <td>12 - André Luis</td>
+            </tr>
+            <tr>
+              <td>78678</td>
+              <td>Maecenas nec rutrum sapien</td>
+              <td>Normal</td>
+              <td>André Luis Sehnem</td>
+              <td>13:52 07/12/2020</td>
+              <td>13:52 07/12/2020</td>
+              <td>12 - André Luis</td>
+            </tr>
+            <tr>
+              <td>25751</td>
+              <td>Morbi tristique vestibulum erat ac porttitor</td>
+              <td>Normal</td>
+              <td>André Luis Sehnem</td>
+              <td>05:54 20/09/2021</td>
+              <td>05:54 20/09/2021</td>
+              <td>12 - André Luis</td>
+            </tr>
+
+            <tr>
+              <td>57635</td>
+              <td>Aliquam eu eros fermentum</td>
+              <td>Normal</td>
+              <td>Gabriel Santos</td>
+              <td>18:52 20/09/2021</td>
+              <td>18:52 20/09/2021</td>
+              <td>26 - Gabriel</td>
+            </tr>
+            <tr style="background-color: #5D75A6;">
+              <td>25756</td>
+              <td>Integer cursus maximus nulla</td>
+              <td>Alta</td>
+              <td>Lucas Buligon Antunes</td>
+              <td>19:52 05/04/2021</td>
+              <td>19:52 05/04/2021</td>
+              <td>51 - Buligon</td>
+            </tr>
+            <tr>
+              <td>2574</td>
+              <td>Etiam maximus vitae risus ut venenatis</td>
+              <td>Alta</td>
+              <td>André Luis Sehnem</td>
+              <td>12:34 05/04/2021</td>
+              <td>12:34 05/04/2021</td>
+              <td>12 - André Luis</td>
+            </tr>
+            <tr style="background-color: #5D75A6;">
+              <td>4271</td>
+              <td>Curabitur a pretium tortor</td>
+              <td>Alta</td>
+              <td>Lucas Buligon Antunes</td>
+              <td>06:50 12/03/2021</td>
+              <td>06:50 12/03/2021</td>
+              <td>51 - Buligon</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col"></div>
+
+  </div>
+  <!-- Javascript -->
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script src="/js/popper.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

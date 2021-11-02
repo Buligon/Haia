@@ -1,0 +1,75 @@
+.dropdown {
+  height: 3ch; 
+  width: 15ch;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-radius: 5px;
+  background-color: #bb86fc;
+  font-family: Roboto, sans-serif;
+  font-weight: bold;
+}
+
+.dropdown:hover, .data:hover {
+  cursor: pointer;
+}
+
+.data {
+  width: 18ch;
+}
+
+#search {
+  width: auto !important;
+  min-width: 30ch;
+  max-width: 50ch;
+}
+
+#content {
+  background-color: #ffffff14;
+  border-radius: 5px;
+}
+
+.field {
+  width: min-content;
+  display: inline-block;
+  margin-left: 2%;
+}
+
+
+#filtrar {
+  float: right;
+  height: 4ch;
+  width: 10ch !important;
+  text-align: center;
+  padding: 0 !important;
+}
+/*------------------------------------------------------------------------------*/
+#grid {
+  background-color: #191919;
+  height: 90%;
+  position: relative;
+  overflow-x: scroll;
+  overflow: scroll;
+  float: left;
+  width: 100%;
+}
+
+.table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table thead tr th {
+  border: #ffffff40;
+  border-style: solid;
+  border-width: 1px;
+}
+
+.table tr td {
+  border: #ffffff15;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 5px;
+  padding-right: 5px;
+  flex-wrap: nowrap;
+  white-space:nowrap;
+}

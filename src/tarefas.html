@@ -3,97 +3,107 @@
 <html lang="pt-br">
 
 <head>
-
-    <meta http-equiv="Content-Language" content="pt-br">
-    <meta charset="UTF-8">
-    <meta name="description" content="Software para gerenciamento de projetos">
-    <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento">
-    <meta name="author" content="Lucas Buligon Antunes">
-    <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Language" content="pt-br" />
+    <meta charset="UTF-8" />
+    <meta name="description" content="Software para gerenciamento de projetos" />
+    <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento" />
+    <meta name="author" content="Lucas Buligon Antunes" />
+    <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Material_icons -->
     <!-- https://material.io/resources/icons/?style=baseline -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
     <!-- https://material.io/resources/icons/?style=outline -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
     <!-- https://material.io/resources/icons/?style=round -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet" />
     <!-- https://material.io/resources/icons/?style=sharp -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
     <!-- https://material.io/resources/icons/?style=twotone -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="/css/bootstrap-grid.css">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
 
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-    <!-- Javascript -->
-    <script type="text/javascript" src="/js/script.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
 
     <title>Haia</title>
 </head>
 
-<body>
-    <div class='container-fluid'>
-        <button type="button" onclick="abreMenu()">
-            <span class="material-icons-outlined">reorder</span>
-        </button>
-        <nav class="menuLateral">
-            <ul class="empHigh">
+<body class="container-fluid">
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar" class="active">
+            <ul class="list-unstyled components mb-5">
+                <li class="active" id="btnToggleSidebar">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <span class="material-icons-outlined">reorder</span>
+                    </button>
+                </li>
+                <li class="active">
+                    <a href="/src/listatarefas.html">
+                        <!-- Verificar comportamento -->
+                        <i class="material-icons-outlined">assignment</i>
+                        <span>Tarefas</span>
+                    </a>
                 <li>
-                    <a href="#home">
-                        Home
-                        <span class="material-icons-outlined">home</span>
+                    <a href="#">
+                        <i class="material-icons-outlined">chat_bubble_outline</i>
+                        <span>Mensagens</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#tarefas">
-                        Tarefas
-                        <span class="material-icons-outlined">assignment</span>
+                    <a href="#">
+                        <i class="material-icons-outlined">dashboard</i>
+                        <span>Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#mensagens">
-                        Mensagens
-                        <span class="material-icons-outlined">chat_bubble_outline</span>
+                    <a href="#">
+                        <i class="material-icons-outlined">calendar_today</i>
+                        <span>Calendário</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#dashboards">
-                        Dashboards
-                        <span class="material-icons-outlined">dashboard</span>
+                    <a href="#">
+                        <i class="material-icons-outlined">forum</i>
+                        <span>Fórum</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#calendario">
-                        Calendário
-                        <span class="material-icons-outlined">calendar_today</span>
+                    <a href="#">
+                        <i class="material-icons-outlined">portrait</i>
+                        <span>Perfil</span>
                     </a>
                 </li>
                 <li>
-                    <a href="#forum">
-                        Fórum
-                        <span class="material-icons-outlined">forum</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#config">
-                        Configurações
-                        <span class="material-icons-outlined">settings</span>
-
+                    <a href="#">
+                        <i class="material-icons-outlined">settings</i>
+                        <span>Configurações</span>
                     </a>
                 </li>
             </ul>
+
+        </nav>
     </div>
-    </nav>
+
+    <div class="m-2">
+        <!--
+            
+        -->
     </div>
+    <!-- Javascript -->
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
+
 </body>
 
 </html>

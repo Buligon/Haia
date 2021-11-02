@@ -23,161 +23,82 @@
     <!-- https://material.io/resources/icons/?style=twotone -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="/css/bootstrap-grid.css" />
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <!-- Jquery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/index.css"/>
+
 
     <title>Haia</title>
 </head>
 
 <body class="container-fluid">
-    <div class="row" style="height:100vh">
-        <div class="col-md-1">
-            <div class="sidebar">
-                <div class="logo-details">
-                    <i class=""></i>
-                    <div class="logo_name">CodingLab</div>
-                    <i id="btn"><span class="material-icons-outlined">reorder</span></i>
-                </div>
-                <ul class="nav-list">
-                    <li>
-                        <a href="#">
-                            <i class="material-icons-outlined">assignment</i>
-                            <span class="links_name">Tarefas</span>
-                        </a>
-                        <span class="tooltip">Tarefas</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons-outlined">chat_bubble_outline</i>
-                            <span class="links_name">Mensagens</span>
-                        </a>
-                        <span class="tooltip">Mensagens</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons-outlined">dashboard</i>
-                            <span class="links_name">Dashboard</span>
-                        </a>
-                        <span class="tooltip">Dashboard</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons-outlined">calendar_today</i>
-                            <span class="links_name">Calendário</span>
-                        </a>
-                        <span class="tooltip">Calendário</span>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="material-icons-outlined">forum</i>
-                            <span class="links_name">Fórum</span>
-                        </a>
-                        <span class="tooltip">Fórum</span>
-                    </li>
-                    <li style="bottom:0px; position: fixed;">
-                        <a href="#">
-                            <i class="material-icons-outlined">settings</i>
-                            <span class="links_name">Configurações</span>
-                        </a>
-                        <span class="tooltip">Configurações</span>
-                    </li>
-<!--                     <li class="profile">
-                        <div class="profile-details"> 
-                          <img src="/imgs/profile.jpg" alt="profileImg">
-                          <div class="name_job">
-                            <div class="name">Nome Teste</div>
-                            <div class="job">QA Analyst</div>
-                          </div>
-                        </div>
-                        <i class='bx bx-log-out' id="log_out" ></i>
-                    </li> -->
-                </ul>
-            </div>
-        </div>
+    <div class="wrapper d-flex align-items-stretch">
+        <nav id="sidebar" class="active">
+            <ul class="list-unstyled components mb-5">
+                <li class="active" id="btnToggleSidebar">
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        <span class="material-icons-outlined">reorder</span>
+                    </button>
+                </li>
+                <li class="active">
+                    <a href="tarefas.html">
+                        <i class="material-icons-outlined">assignment</i>
+                        <span>Tarefas</span>
+                    </a>
+                <li>
+                    <a href="#">
+                        <i class="material-icons-outlined">chat_bubble_outline</i>
+                        <span>Mensagens</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons-outlined">dashboard</i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons-outlined">calendar_today</i>
+                        <span>Calendário</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="material-icons-outlined">forum</i>
+                        <span>Fórum</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
         <div class="col-md">
-            <div class="row" style="margin-top: 3%; margin-bottom: 3%;">
-                <div class="col-md"></div>
-                <div class="col-md-8">
-                    <div class="dp12" style="padding: 2%">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <img src="/imgs/padrao_sem_fundo_aproximado.png" style="width: 100%" />
-                            </div>
-                            <div class="col-md">
-                                <h1>placeholder</h1>
-                            </div>
-                        </div>
-                    </div>
+            <img id="banner" src="/imgs/wallpaper.png" class="img-fluid" alt="Responsive image">
+
+            <div class="row justify-content-around">
+                <div class="col-md-4 informativo">
+                    safafa
                 </div>
-                <div class="col-md"></div>
-            </div>
-            <div class="row">
-                <div class="col-md">
+                <div class="col-md-4 informativo">
+                    asfaf
                 </div>
-                <div class="col-md-4">
-                    <div class="dp12">
-                        <div class="dp24" style="padding: 2%">
-                            <h4>Posts do Fórum</h3>
-                        </div>
-                        <table>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md"></div>
-                <div class="col-md-4">
-                    <div class="dp12">
-                        <div class="dp24" style="padding: 2%">
-                            <h4>Sprints</h3>
-                        </div>
-                        <table>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md"></div>
             </div>
         </div>
     </div>
 
     <!-- Javascript -->
-    <script type="text/javascript" src="/js/script.js"></script>
-
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 
 </html>
