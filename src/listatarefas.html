@@ -23,13 +23,12 @@
   <!-- https://material.io/resources/icons/?style=twotone -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
 
-  <!-- Jquery -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
   <!-- Bootstrap -->
   <link rel="stylesheet" href="/css/bootstrap-grid.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+  <!--important-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
   <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
@@ -39,11 +38,36 @@
 </head>
 
 <body class="container-fluid">
+  <!-- Modal -->
+  <div class="modal fade" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h5 class="modal-title" id="ModalLongTitle">Tags</h5>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+          <div class="tag">v</div>
+          <div class="tag">v</div>
+          <div class="tag">v</div>
+          <div class="tag">v</div>
+          <div class="tag">v</div>
+          <div class="tag">v</div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="wrapper d-flex align-items-stretch">
+
     <nav id="sidebar" class="active">
       <ul class="list-unstyled components mb-5">
         <li class="active" id="btnToggleSidebar">
-          <button type="button" id="sidebarCollapse" class="btn btn-primary" >
+          <button type="button" id="sidebarCollapse" class="btn btn-primary">
             <span class="material-icons-outlined">reorder</span>
           </button>
         </li>
@@ -91,9 +115,10 @@
       </ul>
 
     </nav>
+
     <div class="col"></div>
     <div id="content" class="m-2 p-4 p-md-5 col-10">
-      <div class="align-content-center " style="width: 100%;">
+      <div class="d-flex align-content-center " style="width: 100%;">
         <div class="field">
           <label for="dataInicial">Data Inicial:</label><br>
           <input class="dp06 data" type="date" id="dataInicial">
@@ -125,10 +150,21 @@
           </select>
         </div>
 
-        <button class="btn align-self-center" id="filtrar" type="submit">Filtrar</button>
+        <div class="field d-flex align-content-center">
+          <button type="button" class="btn btn-primary align-self-center filtrar"" data-toggle=" modal"
+            data-target="#tagmodal">
+            Tags
+          </button>
+        </div>
+
+        <div class="field d-flex align-content-center">
+          <button class="btn align-self-center filtrar" type="submit">
+            Filtrar
+          </button>
+        </div>
       </div>
 
-      <div id="grid" class="m-2">
+      <div id="grid" class="row m-2">
         <table class="table empHigh">
           <colgroup>
             <col span="1" style="min-width: 10ch; max-width: fit-content;">
@@ -254,15 +290,40 @@
           </tbody>
         </table>
       </div>
+
+      <div class="row" style="width: 100%;">
+        <div class="field d-flex align-content-center">
+          <button class="btn align-self-center" data-toggle=" modal"
+          data-target="#previsualizarmodal">
+            Pré-visualizar
+          </button>
+        </div>
+        <div class="field d-flex align-content-center">
+          <button class="btn align-self-center">
+           Visualizar
+          </button>
+        </div>
+      </div>
+
     </div>
     <div class="col"></div>
 
   </div>
+
   <!-- Javascript -->
   <script src="/js/jquery-3.6.0.min.js"></script>
   <script src="/js/popper.js"></script>
   <script src="/js/main.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
 
 </body>
 
