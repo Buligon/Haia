@@ -29,10 +29,14 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/css/bootstrap-grid.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <!--important-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/css/styles.css" />
     <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
+    <link rel="stylesheet" type="text/css" href="/css/visualizartarefas.css" />
 
     <title>Haia</title>
 </head>
@@ -48,7 +52,6 @@
                 </li>
                 <li class="active">
                     <a href="/src/listatarefas.html">
-                        <!-- Verificar comportamento -->
                         <i class="material-icons-outlined">assignment</i>
                         <span>Tarefas</span>
                     </a>
@@ -91,13 +94,111 @@
             </ul>
 
         </nav>
+        <div class="col"></div>
+        <div id="content" class="m-2 p-md-3 col-10 h-100">
+            <div class="row cabecalho h-15 empHigh mx-auto P-2">
+                <div class="row">
+                    <div class="col">
+                        <div class="campofixo">Código: </div>
+                        <div class="dadostarefa" id="cabecalhocodigo"></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="campofixo">Assunto: </div>
+                        <div class="dadostarefa" id="cabecalhoassunto"></div>
+                    </div>
+                    <div class="col-3">
+                        <div class="campofixo">Autor: </div>
+                        <div class="dadostarefa" id="cabecalhoautor"></div>
+                    </div>
+                    <div class="col">
+                        <div class="campofixo">Data de criação: </div>
+                        <div class="dadostarefa" id="cabecalhodatacriacao"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-2">
+                        <div class="campofixo">Prioridade: </div>
+                        <div class="dadostarefa" id="cabecalhoprioridade"></div>
+                    </div>
+                    <div class="col-2">
+                        <div class="campofixo">Status: </div>
+                        <div class="dadostarefa" id="cabecalhostatus"></div>
+                    </div>
+                    <div class="col-4">
+                        <div class="campofixo">Sprint: </div>
+                        <div class="dadostarefa" id="cabecalhosprint"></div>
+                    </div>
+                    <div class="col">
+                        <div class="campofixo">Tags: </div>
+                        <div class="dadostarefa" id="cabecalhotags"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mostrarespostas m-2 empHigh h-55">
+                <div class="resposta empHigh">
+                    <p class="respostatexto">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in erat eget enim pulvinar
+                        ullamcorper quis hendrerit mi. In in magna sodales, consectetur urna sed, laoreet magna. Orci
+                        varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Morbi iaculis
+                        risus et lacus fermentum, sit amet finibus ipsum gravida. Duis nec felis vitae tellus feugiat
+                        varius. Praesent varius ipsum in eros accumsan mattis. Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit. Suspendisse id eros metus. Aenean elementum velit vitae mauris porta tempus.
+
+                        Nunc massa nisl, vehicula in arcu sed, malesuada sagittis arcu. Morbi pretium semper dapibus.
+                        Nullam sodales metus id ex vestibulum, quis finibus lorem sollicitudin. Donec lobortis vitae
+                        mauris nec imperdiet. Duis sit amet porta arcu, at commodo ipsum. Morbi eu luctus enim. Donec
+                        eleifend diam at ipsum sagittis, eget egestas ligula porttitor.
+                    </p>
+                    <div class="row respostadados p-1">
+                        <div class="col">
+                            <div>Autor: </div>
+                            <div></div>
+                        </div>
+                        <div class="col">
+                            <div>Hora: </div>
+                            <div></div>
+                        </div>
+                        <div class="col">
+                            <div> Status anterior: </div>
+                            <div></div>
+                        </div>
+                        <div class="col">
+                            <div>Novo status: </div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row rodape m-2 empHigh h-25 d-flex">
+                <div class="col-4 contagemtempo p-0 mx-auto">
+                    <table class="table table-striped table-dark table-hover table-bordered">
+                        <thead class="text-center">
+                            <tr>
+                                <th scope="col">Status</th>
+                                <th scope="col">Quantidade de tempo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" class="text-center">1</th>
+                                <td>00:00:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-7 mx-auto">
+                    <textarea class="row novaresposta p-2 h-78 w-100 m-0" name="Text1"></textarea>
+                    <div class="row mx-auto p-2 justify-content-end">
+                        <button class="btn">Cancelar</button>
+                        <button class="btn" style="margin-left: 5%;">Postar resposta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
     </div>
 
-    <div class="m-2">
-        <!--
-            
-        -->
-    </div>
     <!-- Javascript -->
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/popper.js"></script>
