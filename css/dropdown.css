@@ -47,31 +47,18 @@
   background-color: #191919;
   height: 90%;
   position: relative;
-  overflow-x: scroll;
-  overflow: scroll;
+  overflow-y: scroll;
   float: left;
   width: 100%;
+  border-radius: 5px;
 }
 
-.table {
-  border-collapse: collapse;
-  table-layout: fixed;
+.table tr .codigo, .table th {
+  text-align: center;
 }
 
-.table thead tr th {
-  border: #ffffff40;
-  border-style: solid;
-  border-width: 1px;
-}
-
-.table tr td {
-  border: #ffffff15;
-  border-style: solid;
-  border-width: 1px;
-  padding-left: 5px;
-  padding-right: 5px;
-  flex-wrap: nowrap;
-  white-space: nowrap;
+.table td, .table th {
+  vertical-align: middle;
 }
 
 /*------------------------------------------------------------------------------*/
@@ -100,3 +87,8 @@
   flex-wrap: wrap;
 }
 
+.modal-dialog {
+  max-width: 50%;
+}
+
+/*-----------------------------------------------------------------------------------*/

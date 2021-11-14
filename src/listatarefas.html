@@ -38,7 +38,7 @@
 </head>
 
 <body class="container-fluid">
-  <!-- Modal -->
+  <!-- Modal tags-->
   <div class="modal fade" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -62,6 +62,60 @@
     </div>
   </div>
 
+  <!-- Modal previsualizar-->
+  <div class="modal fade" id="previsualizarmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="row modal-header justify-content-center">
+
+          <div class="row d-flex p-2">
+            <h5 class="modal-title" id="ModalLgTitle">000000 - TEste tarea </h5>
+          </div>
+
+          <div class="row empHigh">
+            <div class="row mx-auto">
+              <div class="col-md d-flex">
+                <p class="cabecalho">Autor: </p>
+                <p class="cabecalhoinfo">Lucas Buligon Antunes</p>
+              </div>
+              <div class="col-md-3 d-flex">
+                <p class="cabecalho">Prioridade: </p>
+                <p class="cabecalhoinfo">Crítica</p>
+              </div>
+              <div class="col-md d-flex">
+                <p class="cabecalho">Data de criação: </p>
+                <p class="cabecalhoinfo">12/02/2004</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md d-flex">
+                <p class="cabecalho">Sprint: </p>
+                <p class="cabecalhoinfo">51 - Buligon</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="row empHigh">
+            <div class="field d-flex mx-auto">
+              <p class="cabecalho">Tags: </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-body d-flex justify-content-center m-3" style="background-color: #4A4659">
+          <!--
+            respostas
+          -->
+        </div>
+        <div class="modal-footer row d-flex" style="width: 100%; justify-content: flex-end">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Visualizar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="wrapper d-flex align-items-stretch">
 
     <nav id="sidebar" class="active">
@@ -72,10 +126,19 @@
           </button>
         </li>
         <li class="active">
+          <a href="/src/listaprojetos.html">
+            <i class="material-icons-outlined">
+              home
+            </i>
+            <span>Início</span>
+          </a>
+        </li>
+        <li class="active">
           <a href="/src/listatarefas.html">
             <i class="material-icons-outlined">assignment</i>
             <span>Tarefas</span>
           </a>
+        </li>
         <li>
           <a href="#">
             <i class="material-icons-outlined">chat_bubble_outline</i>
@@ -150,8 +213,18 @@
           </select>
         </div>
 
+        <div class="field">
+          <label for="status">Status:</label>
+          <select class="dropdown" name="status" id="dropstatus">
+            <option value="codigo">0 - Todos</option>
+            <option value="assunto">1 - Análise</option>
+            <option value="Autor">2 - Desenvolvimento</option>
+          </select>
+        </div>
+
+
         <div class="field d-flex align-content-center">
-          <button type="button" class="btn btn-primary align-self-center filtrar"" data-toggle=" modal"
+          <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
             data-target="#tagmodal">
             Tags
           </button>
@@ -164,8 +237,8 @@
         </div>
       </div>
 
-      <div id="grid" class="row m-2">
-        <table class="table empHigh">
+      <div id="grid" class="row m-2 table-responsive-xl">
+        <table class="table table-striped table-dark table-bordered table-hover">
           <colgroup>
             <col span="1" style="min-width: 10ch; max-width: fit-content;">
             <col span="1" style="min-width: 30ch; max-width: fit-content;">
@@ -188,7 +261,7 @@
           </thead>
           <tbody>
             <tr style="background-color: #DFA81B;">
-              <td>1565</td>
+              <td class="codigo">1565</td>
               <td>Lorem ipsum dolor sit amet</td>
               <td>Baixa</td>
               <td>Lucas Buligon Antunes</td>
@@ -197,7 +270,7 @@
               <td>51 - Buligon</td>
             </tr>
             <tr style="background-color: #4A4659;">
-              <td>47357</td>
+              <td class="codigo">47357</td>
               <td>Consectetur adipiscing elit</td>
               <td>Baixa</td>
               <td>Gabriel Santos</td>
@@ -206,7 +279,7 @@
               <td>26 - Gabriel</td>
             </tr>
             <tr style="background-color: #5D75A6;">
-              <td>65445</td>
+              <td class="codigo">65445</td>
               <td>Nulla eget fermentum nisl</td>
               <td>Baixa</td>
               <td>Gabriel Santos</td>
@@ -215,7 +288,7 @@
               <td>26 - Gabriel</td>
             </tr>
             <tr style="background-color: #5D75A6;">
-              <td>65447</td>
+              <td class="codigo">65447</td>
               <td>Proin blandit risus mi</td>
               <td>Baixa</td>
               <td>Pedro Henrique Karnoski</td>
@@ -224,7 +297,7 @@
               <td>51 - Buligon</td>
             </tr>
             <tr>
-              <td>67678</td>
+              <td class="codigo">67678</td>
               <td>Vitae pretium libero egestas nec</td>
               <td>Normal</td>
               <td>Gabriel Santos</td>
@@ -233,7 +306,7 @@
               <td>12 - André Luis</td>
             </tr>
             <tr>
-              <td>78678</td>
+              <td class="codigo">78678</td>
               <td>Maecenas nec rutrum sapien</td>
               <td>Normal</td>
               <td>André Luis Sehnem</td>
@@ -242,7 +315,7 @@
               <td>12 - André Luis</td>
             </tr>
             <tr>
-              <td>25751</td>
+              <td class="codigo">25751</td>
               <td>Morbi tristique vestibulum erat ac porttitor</td>
               <td>Normal</td>
               <td>André Luis Sehnem</td>
@@ -252,7 +325,7 @@
             </tr>
 
             <tr>
-              <td>57635</td>
+              <td class="codigo">57635</td>
               <td>Aliquam eu eros fermentum</td>
               <td>Normal</td>
               <td>Gabriel Santos</td>
@@ -261,7 +334,7 @@
               <td>26 - Gabriel</td>
             </tr>
             <tr style="background-color: #5D75A6;">
-              <td>25756</td>
+              <td class="codigo">25756</td>
               <td>Integer cursus maximus nulla</td>
               <td>Alta</td>
               <td>Lucas Buligon Antunes</td>
@@ -270,7 +343,7 @@
               <td>51 - Buligon</td>
             </tr>
             <tr>
-              <td>2574</td>
+              <td class="codigo">2574</td>
               <td>Etiam maximus vitae risus ut venenatis</td>
               <td>Alta</td>
               <td>André Luis Sehnem</td>
@@ -279,7 +352,7 @@
               <td>12 - André Luis</td>
             </tr>
             <tr style="background-color: #5D75A6;">
-              <td>4271</td>
+              <td class="codigo">4271</td>
               <td>Curabitur a pretium tortor</td>
               <td>Alta</td>
               <td>Lucas Buligon Antunes</td>
@@ -291,16 +364,16 @@
         </table>
       </div>
 
-      <div class="row" style="width: 100%;">
-        <div class="field d-flex align-content-center">
-          <button class="btn align-self-center" data-toggle=" modal"
-          data-target="#previsualizarmodal">
+      <div class="row d-flex" style="width: 100%; justify-content: flex-end">
+        <div class="field">
+          <button class="btn align-self-center" data-toggle="modal" data-target="#previsualizarmodal"
+            style="width: 13ch; height: 4ch;">
             Pré-visualizar
           </button>
         </div>
-        <div class="field d-flex align-content-center">
-          <button class="btn align-self-center">
-           Visualizar
+        <div class="field">
+          <button class="btn align-self-center" style="width: 13ch; height: 4ch;">
+            Visualizar
           </button>
         </div>
       </div>
