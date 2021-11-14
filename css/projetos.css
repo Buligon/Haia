@@ -2,6 +2,7 @@
   background-color: #ffffff11;
   border-radius: 5px;
   transition: transform .2s;
+  height: 90%;
 }
 
 .card:hover {
@@ -20,17 +21,30 @@
 .card-body {
   margin-top: -20px;
   padding-bottom: 2%;
+  height: 30%;
 }
 
-.card-body .card-text {
+.card-body {
   padding-left: 3%;
   padding-right: 3%;
-  text-align: justify;
-  text-justify: inter-word;
+  min-width: 17vw;
 }
 
 .card-title{
   font-size: 35px;
   font-weight: 500;
+  white-space: nowrap; 
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
+.cadastrodescricao {
+  border-radius: 5px;
+  overflow-y: scroll;
+  background-color: #121212;
+  border: none;
+}
+
+.cadastrodescricao:focus {
+  outline: none;
+}

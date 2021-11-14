@@ -29,6 +29,9 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="/css/bootstrap-grid.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!--important-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="/css/styles.css" />
   <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
@@ -39,6 +42,41 @@
 </head>
 
 <body class="container-fluid">
+  <!-- Novo projeto Modal -->
+  <div class="modal" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md p-2" role="document">
+      <div class="modal-content">
+        <div class="modal-header d-flex justify-content-center">
+          <h5 class="modal-title" id="ModalLongTitle">Cadastro de projetos</h5>
+        </div>
+        <div class="modal-body d-flex justify-content-center">
+          <form autocomplete="off" class="d-flex align-content-center">
+            <fieldset>
+              <div class="row">
+                <div class="row mx-auto">
+                  <label for="nome">Nome:</label>
+                  <input type="text" id="nome" name="nome" required>
+                </div>
+                <div class="row mx-auto">
+                  <label for="Text1">Descrição:</label>
+                    <textarea name="Text1" class="cadastrodescricao empHigh"></textarea>
+                </div>
+                <div class="row mx-auto">
+                  <label for="nome">Banner:</label>
+                  <input type="file" id="banner" name="banner">
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <div class="wrapper d-flex">
     <nav id="sidebar" class="active">
@@ -48,18 +86,18 @@
             <span class="material-icons-outlined">reorder</span>
           </button>
         </li>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">portrait</i>
-              <span>Perfil</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="material-icons-outlined">settings</i>
-              <span>Configurações</span>
-            </a>
-          </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">portrait</i>
+            <span>Perfil</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">settings</i>
+            <span>Configurações</span>
+          </a>
+        </li>
       </ul>
 
     </nav>
@@ -101,15 +139,15 @@
             <div class="card">
               <img src="/imgs/wallpaper.png" class="card-img-top" alt="...">
               <div class="card-body">
-                <h5 class="card-title">Interdum</h5>
-                <p class="card-text empMedium">Nunc eget ante consectetur, lacinia leo sed, dignissim nibh. Duis ornare
-                  suscipit ultrices. </p>
+                <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
+                  data-target="#tagmodal">
+                  Tags
+                </button>
               </div>
             </div>
           </div>
         </div>
       </section>
-
     </div>
   </div>
 

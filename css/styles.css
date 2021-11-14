@@ -20,7 +20,7 @@ body {
   border: none !important;
   outline: none !important;
   cursor: pointer !important;
-  width: fit-content !important;
+  width: fit-content;
   vertical-align: middle !important;
   padding: 2% !important;
 }
