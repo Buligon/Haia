@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+  <meta http-equiv="Content-Language" content="pt-br" />
+  <meta charset="UTF-8" />
+  <meta name="description" content="Software para gerenciamento de projetos" />
+  <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento" />
+  <meta name="author" content="Lucas Buligon Antunes" />
+  <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Material_icons -->
+  <!-- https://material.io/resources/icons/?style=baseline -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=outline -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=round -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=sharp -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet" />
+  <!-- https://material.io/resources/icons/?style=twotone -->
+  <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
+
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="/css/bootstrap-grid.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <!--important-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+  <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
+  <link rel="stylesheet" type="text/css" href="/css/paginaprojeto.css" />
+
+  <title>Haia</title>
+</head>
+
+<body class="container-fluid">
+  <div class="wrapper d-flex">
+    <nav id="sidebar" class="active">
+      <ul class="list-unstyled components mb-5" style="height: 100%;">
+        <li id="btnToggleSidebar">
+          <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <span class="material-icons-outlined">reorder</span>
+          </button>
+        </li>
+        <li class="active">
+          <a href="/src/listaprojetos.html">
+            <i class="material-icons-outlined">
+              home
+            </i>
+            <span>Início</span>
+          </a>
+        </li>
+        <li class="active">
+          <a href="/src/listatarefas.html">
+            <i class="material-icons-outlined">assignment</i>
+            <span>Tarefas</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">chat_bubble_outline</i>
+            <span>Mensagens</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">calendar_today</i>
+            <span>Calendário</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">forum</i>
+            <span>Fórum</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">portrait</i>
+            <span>Perfil</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="material-icons-outlined">settings</i>
+            <span>Configurações</span>
+          </a>
+        </li>
+      </ul>
+
+    </nav>
+    <div class="col"></div>
+    <div id="content" class="col-10 p-4 p-md-5">
+      <div class="row">
+
+        <div class="col-md"></div>
+        <div class="col-md" id="header">
+          <div id="bannerProjeto"></div>
+          <h1 id="nomeProjeto">
+          </h1><p id="descProjeto"></p>
+        </div>
+        <div class="col-md"></div>
+
+      </div>
+
+      <div class="row">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-dashboards-tab" data-bs-toggle="tab"
+              data-bs-target="#nav-dashboards" type="button" role="tab" aria-controls="nav-dashboards"
+              aria-selected="true">Dashboards</button>
+            <button class="nav-link" id="nav-colaboradores-tab" data-bs-toggle="tab" data-bs-target="#nav-colaboradores"
+              type="button" role="tab" aria-controls="nav-colaboradores" aria-selected="false">Colaboradores</button>
+            <button class="nav-link" id="nav-cargos-tab" data-bs-toggle="tab" data-bs-target="#nav-cargos" type="button"
+              role="tab" aria-controls="nav-cargos" aria-selected="false">Cargos</button>
+            <button class="nav-link" id="nav-auditoria-tab" data-bs-toggle="tab" data-bs-target="#nav-auditoria"
+              type="button" role="tab" aria-controls="nav-auditoria" aria-selected="false">Auditoria</button>
+          </div>
+      </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-dashboards" role="tabpanel" aria-labelledby="nav-dashboards-tab">
+          A
+        </div>
+        <div class="tab-pane fade" id="nav-colaboradores" role="tabpanel" aria-labelledby="nav-colaboradores-tab">
+          <div class="row cabecalhoUsuarios d-flex">
+            <div>
+              <p>Colaboradores:</p>
+              <p id="qtdMembros"></p>
+            </div>
+            <input class="dp06" type="text" id="buscaUsuario" placeholder="Usuário">
+            <button type="button" class="btn btn-primary align-self-center">Filtrar</button>
+            <button type="button" class="btn btn-primary align-self-center">Convidar</button>
+          </div>
+          <div class="row mx-auto">
+            <div class="borda">
+              <img src="" style="border-radius: 50%;">
+              <div class="empHigh">
+                <p class="nomeUsuario"></p>
+                <p> - </p>
+                <p class="codUsuario"></p>
+              </div>
+              <button type="button" class="btn btn-primary align-self-center"><span class="material-icons-outlined">
+                  add
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-cargos" role="tabpanel" aria-labelledby="nav-cargos-tab">
+          <div class="col-2">
+
+          </div>
+          <div class="col">
+            <div class="row borda">
+              <input class="dp06" type="text" id="buscaUsuario" placeholder="Buscar permissões">
+              <button type="button" class="btn btn-primary align-self-center">Filtrar</button>
+            </div>
+            <div class="row">
+              <!-- Registro Começo-->
+              <div class="borda">
+                <div>
+                  <h5 class="nomePermissao"></h5>
+                  <p class="descricaoPermissao"></p>
+                </div>
+                <label class="switch">
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <!-- Registro Fim-->
+            </div>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="nav-auditoria" role="tabpanel" aria-labelledby="nav-auditoria-tab">
+          <div class="row borda">
+            <h5>Registro de auditoria</h5>
+          </div>
+          <div class="row">
+            <!-- Registro Começo-->
+            <div>
+              <div>
+                <span class="material-icons-outlined">
+                  change_history
+                </span>
+                <img src="" style="border-radius: 50%;">
+              </div>
+              <div>
+                <div>
+                  <p>Nome c/ ID</p>
+                  <p> - </p>
+                  <p>Ação</p>
+                </div>
+                <p>Data/hora</p>
+              </div>
+            </div>
+            <!-- Registro Fim-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col"></div>
+  </div>
+
+  <!-- Javascript -->
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script src="/js/popper.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/bootstrap.js"></script>
+</body>
+
+</html>
