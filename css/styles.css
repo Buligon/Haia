@@ -20,9 +20,9 @@ body {
   border: none !important;
   outline: none !important;
   cursor: pointer !important;
-  width: fit-content;
   vertical-align: middle !important;
-  padding: 2% !important;
+  text-align  : center;
+  width       : auto;
 }
 
 h1 {
@@ -99,7 +99,6 @@ input, .modal-dialog input {
   background-color: #121212;
   border-radius: 5px;
   outline: none;
-  margin-bottom: 3%;
   border: none;
   height: 25px;
   padding-left: 2%;

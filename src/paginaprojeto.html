@@ -99,18 +99,25 @@
     <div class="col"></div>
     <div id="content" class="col-10 p-4 p-md-5">
       <div class="row">
-
         <div class="col-md"></div>
-        <div class="col-md" id="header">
-          <div id="bannerProjeto"></div>
-          <h1 id="nomeProjeto">
-          </h1><p id="descProjeto"></p>
+        <div class="col-md-6" id="header">
+          <div class="row h-15">
+            <div id="bannerProjetoDiv">
+              <!-- <img id="bannerProjeto" src="https://www.sitepoint.com/wp-content/uploads/2010/03/image6.png" alt="bannerProjeto"> -->
+            </div>
+            <h3 id="nomeProjeto">
+              Nome exemplo de projeto
+            </h3>
+            <p id="descProjeto" class="empHigh">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce justo mauris, luctus quis venenatis sed,
+              iaculis sit amet risus. Aliquam iaculis magna id enim accumsan hendrerit eget a neque.
+            </p>
+          </div>
         </div>
         <div class="col-md"></div>
 
       </div>
-
-      <div class="row">
+      <div class="row"> 
         <nav>
           <div class="nav nav-tabs" id="nav-tab" role="tablist">
             <button class="nav-link active" id="nav-dashboards-tab" data-bs-toggle="tab"
@@ -125,55 +132,161 @@
           </div>
       </div>
       </nav>
-      <div class="tab-content" id="nav-tabContent">
+      <div class="row tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="nav-dashboards" role="tabpanel" aria-labelledby="nav-dashboards-tab">
           A
         </div>
         <div class="tab-pane fade" id="nav-colaboradores" role="tabpanel" aria-labelledby="nav-colaboradores-tab">
-          <div class="row cabecalhoUsuarios d-flex">
-            <div>
-              <p>Colaboradores:</p>
-              <p id="qtdMembros"></p>
+          <div class="row cabecalhoUsuarios d-flex p-3 mx-auto">
+            <div class="col-2 empHigh mx-auto d-flex">
+              <p class="align-self-center m-0">Colaboradores:</p>
+              <p class="align-self-center m-0" id="qtdMembros"></p>
             </div>
-            <input class="dp06" type="text" id="buscaUsuario" placeholder="Usuário">
-            <button type="button" class="btn btn-primary align-self-center">Filtrar</button>
-            <button type="button" class="btn btn-primary align-self-center">Convidar</button>
+            <div class="col d-flex">
+              <input class="dp06 mx-auto align-self-center" type="text" id="buscaUsuario" placeholder="Usuário">
+              <button type="button" class="btn btn-primary align-self-center mx-auto">Filtrar</button>
+            </div>
+            <div class="col-3 d-flex">
+
+              <button type="button" class="btn btn-primary align-self-center mx-auto">Convidar</button>
+            </div>
           </div>
           <div class="row mx-auto">
-            <div class="borda">
-              <img src="" style="border-radius: 50%;">
-              <div class="empHigh">
-                <p class="nomeUsuario"></p>
-                <p> - </p>
-                <p class="codUsuario"></p>
+            <!-- Registro Começo-->
+            <div class="row borda p-3 mx-auto">
+
+              <div class="col-2">
+                <img src="" style="border-radius: 50%;">
               </div>
-              <button type="button" class="btn btn-primary align-self-center"><span class="material-icons-outlined">
-                  add
-                </span>
-              </button>
+
+              <div class="col-5">
+                <div class="empHigh d-flex">
+                  <h4 class="nomeUsuario">Tesde de usuário</h4>
+                  <h4 style="width: 7ch;">   -   </h4>
+                  <h4 class="codUsuario">3532523</h4>
+                </div>
+              </div>
+
+              <div class="col d-flex">
+                <button type="button" class="btn btn-primary align-self-center">
+                  <span class="material-icons-outlined align-middle">add</span>
+                </button>
+              </div>
+
             </div>
+            <div class="row borda p-3 mx-auto">
+
+              <div class="col-2">
+                <img src="" style="border-radius: 50%;">
+              </div>
+
+              <div class="col-5">
+                <div class="empHigh d-flex">
+                  <h4 class="nomeUsuario">Tesde de usuário</h4>
+                  <h4 style="width: 7ch;">   -   </h4>
+                  <h4 class="codUsuario">3532523</h4>
+                </div>
+              </div>
+
+              <div class="col d-flex">
+                <button type="button" class="btn btn-primary align-self-center">
+                  <span class="material-icons-outlined align-middle">add</span>
+                </button>
+              </div>
+
+            </div>
+            <div class="row borda p-3 mx-auto">
+
+              <div class="col-2">
+                <img src="" style="border-radius: 50%;">
+              </div>
+
+              <div class="col-5">
+                <div class="empHigh d-flex">
+                  <h4 class="nomeUsuario">Tesde de usuário</h4>
+                  <h4 style="width: 7ch;">   -   </h4>
+                  <h4 class="codUsuario">3532523</h4>
+                </div>
+              </div>
+
+              <div class="col d-flex">
+                <button type="button" class="btn btn-primary align-self-center">
+                  <span class="material-icons-outlined align-middle">add</span>
+                </button>
+              </div>
+
+            </div>
+            <div class="row borda p-3 mx-auto">
+
+              <div class="col-2">
+                <img src="" style="border-radius: 50%;">
+              </div>
+
+              <div class="col-5">
+                <div class="empHigh d-flex">
+                  <h4 class="nomeUsuario">Tesde de usuário</h4>
+                  <h4 style="width: 7ch;">   -   </h4>
+                  <h4 class="codUsuario">3532523</h4>
+                </div>
+              </div>
+
+              <div class="col d-flex">
+                <button type="button" class="btn btn-primary align-self-center">
+                  <span class="material-icons-outlined align-middle">add</span>
+                </button>
+              </div>
+
+            </div>
+            <div class="row borda p-3 mx-auto">
+
+              <div class="col-2">
+                <img src="" style="border-radius: 50%;">
+              </div>
+
+              <div class="col-5">
+                <div class="empHigh d-flex">
+                  <h4 class="nomeUsuario">Tesde de usuário</h4>
+                  <h4 style="width: 7ch;">   -   </h4>
+                  <h4 class="codUsuario">3532523</h4>
+                </div>
+              </div>
+
+              <div class="col d-flex">
+                <button type="button" class="btn btn-primary align-self-center">
+                  <span class="material-icons-outlined align-middle">add</span>
+                </button>
+              </div>
+
+            </div>
+            <!-- Registro Fim-->
           </div>
         </div>
         <div class="tab-pane fade" id="nav-cargos" role="tabpanel" aria-labelledby="nav-cargos-tab">
           <div class="col-2">
 
           </div>
-          <div class="col">
-            <div class="row borda">
-              <input class="dp06" type="text" id="buscaUsuario" placeholder="Buscar permissões">
-              <button type="button" class="btn btn-primary align-self-center">Filtrar</button>
+          <div class="col p-0">
+            <div class="row borda d-flex align-content-center mx-auto p-3">
+              <input class="dp06 mx-auto" type="text" id="buscaUsuario" placeholder="Buscar permissões">
+              <button type="button" class="btn btn-primary align-self-center mx-auto">Filtrar</button>
             </div>
-            <div class="row">
+            <div class="row mx-auto borda">
               <!-- Registro Começo-->
-              <div class="borda">
-                <div>
-                  <h5 class="nomePermissao"></h5>
-                  <p class="descricaoPermissao"></p>
+              <div class="row p-2">
+                <div class="col-1"></div>
+                <div class="col">
+                  <h5 class="nomePermissao">Teste</h5>
+                  <p class="descricaoPermissao empHigh">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis tristique
+                    velit mi, nec vestibulum ex convallis sed. Sed faucibus volutpat quam, vel iaculis sem tempus
+                    posuere. Etiam ut lacinia ante.</p>
                 </div>
-                <label class="switch">
-                  <input type="checkbox">
-                  <span class="slider round"></span>
-                </label>
+                <div class="col-3 d-flex">
+                  <label class="switch align-middle align-self-center">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+                <div class="col-1"></div>
               </div>
               <!-- Registro Fim-->
             </div>

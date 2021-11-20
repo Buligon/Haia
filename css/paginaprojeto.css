@@ -2,19 +2,20 @@
   background-color: #FFFFFF12;
   border-radius: 5px;
   height: 100%;
+  overflow-y: scroll;
 }
 
 .cabecalhoUsuarios {
   border-bottom: 1px;
   border-bottom-style: solid;
-  border-color: #FFFFFF;
+  border-color: #FFFFFF80;
   display: inline-block;
 }
 
 .borda {
   border-bottom: 1px;
   border-bottom-style: solid;
-  border-color: #FFFFFF;
+  border-color: #FFFFFF80;
 }
 
 /* The switch - the box around the slider */
@@ -83,4 +84,24 @@ input:checked + .slider:before {
 #header {
   background-color: #FFFFFF12;
   border-radius: 5px;
+}
+
+#descProjeto {
+  text-align: justify;
+  text-overflow: ellipsis;
+}
+
+#bannerProjeto {
+  width: 500px;  
+  height: 150px;
+  object-fit: contain; 
+  overflow: hidden;
+}
+
+#buscaUsuario {
+  width: 40ch;
+}
+
+.nomePermissao {
+  width: min-content;
 }
