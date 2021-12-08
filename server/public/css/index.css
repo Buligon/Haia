@@ -1,0 +1,14 @@
+#banner {
+  width: 90%;
+  height: 20%; 
+  object-fit: cover;
+  border-radius: 5px;
+  margin-top: 1%;
+}
+
+.informativo {
+  margin-top: 5%;
+  background-color: #FFFFFF12;
+  height: 50vh;
+  border-radius: 5px;
+}

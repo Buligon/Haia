@@ -1,0 +1,42 @@
+{
+  "name": "haia",
+  "version": "1.0.0",
+  "description": "Software para gestão de projetos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Buligon/Haia.git"
+  },
+  "keywords": [
+    "Haia",
+    "Gestão",
+    "de",
+    "Projetos",
+    "Software",
+    "de",
+    "Gestão",
+    "Tarefas"
+  ],
+  "author": "Lucas Buligon Antunes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Buligon/Haia/issues"
+  },
+  "homepage": "https://github.com/Buligon/Haia#readme",
+  "dependencies": {
+    "@types/sequelize": "^4.28.10",
+    "body-parser": "^1.19.0",
+    "connect-flash": "^0.1.1",
+    "consign": "^0.1.6",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.2",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.12.0-alpha.1"
+  }
+}

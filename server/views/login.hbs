@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta http-equiv="Content-Language" content="pt-br">
+    <meta charset="UTF-8">
+    <meta name="description" content="Software para gerenciamento de projetos">
+    <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento">
+    <meta name="author" content="Lucas Buligon Antunes">
+    <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Material_icons -->
+    <!-- https://material.io/resources/icons/?style=baseline -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=outline -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=round -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=sharp -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp" rel="stylesheet">
+    <!-- https://material.io/resources/icons/?style=twotone -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet">
+
+    <!-- Jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+
+    <title>Haia</title>
+</head>
+
+<body class='container'>
+    <div class='row h-100'>
+        <div class='col-md'></div>
+        <div class='col-md-5 h-100'>
+            <div class='dp12 align-middle'>
+                <div class="telaLogin">
+                    <div style="padding: 10%; margin-bottom: 7%;">
+                        <img src="/img/padrao_sem_fundo_aproximado.png" style="width: 100%">
+                    </div>
+                    <div class="d-flex justify-content-center" style="margin-bottom: 5%;">
+                        <div class="btn d-flex align-items-center">
+                            <div style="width: min-content; float: left; margin-right: 5px; margin-left: 5px;">
+                                <img src="/img/google_logo.png" style="width: 30px; height: 30px;">
+                            </div>
+                            <div>
+                                Continuar com o Google
+                            </div>
+                        </div>
+                    </div>
+                    <div class='d-flex align-items-center justify-content-around' style="margin-bottom: 5%;">
+                        <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
+                        <p style="width: 5%; color: #ffffff60;">Ou</p>
+                        <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
+                    </div>
+                    <div class='d-flex align-items-center justify-content-center' style="margin-bottom: 5%;">
+                        <form autocomplete="off" class="col-md-8">
+                            <fieldset>
+                                <input class="dp06 m-2" type="email" id="email" name="email" placeholder="Email" required>
+                                <input class="dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" required>
+                                <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
+                                    senha?</a>
+                                <button class="btn" style="margin-left: 7%;">Enviar</button>
+                            </fieldset>
+                        </form>
+
+                    </div>
+                    <div class="empHigh" style="margin-left: 5%;">
+                        Ainda não tem uma conta? <a class="newTab" href="/cadUsuario" action="/cadUsuario" >Registre-se</a>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <div class='col-md'></div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Recuperação de conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off">
+                        <fieldset>
+                            <label for="email">Email:</label>
+                            <input class="dp06" style="width: 100%;" type="email" id="emailcad" name="email"
+                                placeholder="Ex.: email@exemplo.com" required>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto">Enviar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

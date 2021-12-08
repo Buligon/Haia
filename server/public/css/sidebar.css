@@ -1,0 +1,101 @@
+.d-flex {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.align-items-stretch {
+  -webkit-box-align: stretch !important;
+  -ms-flex-align: stretch !important;
+  align-items: stretch !important;
+}
+
+#sidebar {
+  min-width: 270px;
+  max-width: 270px;
+  background-color: #bb86fc60;
+  color: #ffffff00;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  height: 100%;
+}
+
+#sidebar.active {
+  min-width: 80px;
+  max-width: 80px;
+  text-align: center;
+}
+
+#sidebar.active ul.components li a span {
+  display: none;
+}
+
+#sidebar ul li a  {
+  display: inline;
+}
+
+#sidebar ul.components {
+  padding: 0;
+  -webkit-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #sidebar ul.components {
+    -webkit-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+}
+
+#sidebar ul li {
+  font-size: 16px;
+}
+
+#sidebar ul li>ul {
+  margin-left: 10px;
+}
+
+#sidebar ul li>ul li {
+  font-size: 14px;
+}
+
+#sidebar ul li a, #sidebar ul #btnToggleSidebar{
+  padding: 10px 30px;
+  display: block;
+  color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#sidebar ul li:hover span, #sidebar ul li:hover i{
+  color: #bb86fc;
+  transition: all 0.5s ease;
+}
+
+@media (max-width: 991.98px) {
+  #sidebar ul li a span {
+    display: block;
+  }
+}
+
+@media (max-width: 991.98px) {
+  #sidebar {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+    margin-left: -80px !important;
+  }
+  #sidebar.active {
+    margin-left: 0 !important;
+  }
+}
+
+#sidebarCollapse span{
+  color: #ffffff87;
+}
+
+#sidebarCollapse:hover span{
+  color: #ffffff !important; 
+}
