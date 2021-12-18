@@ -34,6 +34,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^6.0.2",
     "express-session": "^1.17.2",
+    "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "mysql2": "^2.3.3",

@@ -28,7 +28,7 @@ const flash = require("connect-flash");
   // Middleware
     app.use((req, res, next) => {
       res.locals.success_msg = req.flash("succes_msg");
-      res.locals.erro_msg = req.flash("error_msg");
+      res.locals.error_msg = req.flash("error_msg");
       next();
     })
   // Public 

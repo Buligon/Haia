@@ -1,21 +1,14 @@
 const db = require('../config/database');
 
 const Usuario = db.sequelize.define('Usuarios', {
-  // I don't want createdAt
-  createdAt: false,
-  // I want updatedAt to actually be called updateTimestamp
-  updatedAt: false,
   idUsuarios: {
     type: db.Sequelize.INTEGER,
     primaryKey: true
   },
-  nome: {
+  nomeUsuario: {
     type: db.Sequelize.STRING
   },
-  sobrenome: {
-    type: db.Sequelize.STRING
-  },
-  dataNascimento: {
+   dataNascimento: {
     type: db.Sequelize.DATEONLY
   },
   email: {
@@ -24,6 +17,9 @@ const Usuario = db.sequelize.define('Usuarios', {
   senha: {
     type: db.Sequelize.STRING
   },
+}, {
+  createdAt: false,
+  updatedAt: false,
 });
 
 module.exports = Usuario;
