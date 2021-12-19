@@ -20,7 +20,7 @@ const flash = require("connect-flash");
 
   // Sessão
     app.use(session({
-      secret: "@ifpr#s3ss10n",
+      secret: "HQh%k%r*2yZn",
       resave: true,
       saveUninitialized: true
     }));
