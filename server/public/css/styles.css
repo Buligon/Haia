@@ -6,6 +6,30 @@ body {
   background-color: #121212;
 }
 
+.alinhaCentro {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#containerlogin {
+  width: 50%;
+  height: 50%;;
+}
+
+#conteudoFormulario {
+  height: 90%;
+}
+
+#cabecalhoCadastro {
+  height: 10%;
+}
+
+#telaLogin {
+  height: 70%;
+}
+
 .modal-content {
   background-color: #202020;
 }
@@ -21,8 +45,8 @@ body {
   outline: none !important;
   cursor: pointer !important;
   vertical-align: middle !important;
-  text-align  : center;
-  width       : auto;
+  text-align: center;
+  width: auto;
 }
 
 h1 {
@@ -122,11 +146,6 @@ input:focus, .modal-dialog input:focus {
 
 fieldset {
   border-style: none;
-}
-
-.telaLogin {
-  padding: 5%;
-  position: static;
 }
 
 .dp01 {

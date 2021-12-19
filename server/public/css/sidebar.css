@@ -62,11 +62,12 @@
   font-size: 14px;
 }
 
-#sidebar ul li a, #sidebar ul #btnToggleSidebar{
-  padding: 10px 30px;
-  display: block;
-  color: white;
+#sidebar ul li a, #btnToggleSidebar {
+  padding: 10px ;
+  color: #ffffff95;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
 }
 
 #sidebar ul li:hover span, #sidebar ul li:hover i{
@@ -93,9 +94,5 @@
 }
 
 #sidebarCollapse span{
-  color: #ffffff87;
-}
-
-#sidebarCollapse:hover span{
-  color: #ffffff !important; 
+  color: #ffffff95 !important;
 }

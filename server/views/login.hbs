@@ -1,66 +1,59 @@
 <div class='row h-100'>
-    <div class='col-md'></div>
-    <div class='col-md-5 h-100'>
-        <div class='dp12 align-middle'>
-            <div class="telaLogin">
-                <div style="padding: 10%; margin-bottom: 7%;">
-                    <img src="/img/padrao_sem_fundo_aproximado.png" style="width: 100%">
-                </div>
-                <div class="d-flex justify-content-center" style="margin-bottom: 5%;">
-                    <div class="btn d-flex align-items-center">
-                        <div style="width: min-content; float: left; margin-right: 5px; margin-left: 5px;">
-                            <img src="/img/google_logo.png" style="width: 30px; height: 30px;">
-                        </div>
-                        <div>
-                            Continuar com o Google
-                        </div>
-                    </div>
-                </div>
-                <div class='d-flex align-items-center justify-content-around' style="margin-bottom: 5%;">
-                    <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
-                    <p style="width: 5%; color: #ffffff60;">Ou</p>
-                    <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
-                </div>
-                <div class='d-flex align-items-center justify-content-center' style="margin-bottom: 5%;">
-                    <form autocomplete="off" class="col-md-8">
-                        <fieldset>
-                            <input class="dp06 m-2" type="email" id="email" name="email" placeholder="Email" required>
-                            <input class="dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" required>
-                            <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
-                                senha?</a>
-                            <button class="btn" style="margin-left: 7%;">Enviar</button>
-                        </fieldset>
-                    </form>
+    <div class='col-md-3 h-100 alinhaCentro'>
+        <div id="telaLogin" class='dp12 alinhaCentro' style="display:inline-grid;">
 
-                </div>
-                <div class="empHigh" style="margin-left: 5%;">
-                    Ainda não tem uma conta? <a class="newTab" href="/cadUsuario" action="/cadUsuario">Registre-se</a>
-                </div>
+            <img src="/img/padrao_sem_fundo_aproximado.png" class="mx-auto m-5" width="75%" height="auto">
+
+            <div class="btn col-5 mx-auto d-flex align-items-center" style="height: 50%;">
+                <img src="/img/google_logo.png" width="20%" height="auto">
+                Continuar com o Google
             </div>
+
+            <div class='d-flex align-items-center justify-content-around'>
+                <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
+                <p style="width: 5%; color: #ffffff60;">Ou</p>
+                <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
+            </div>
+
+            <form autocomplete="off" class="col-md-8 mx-auto">
+                <fieldset>
+                    <input class="dp06 m-2" type="email" id="email" name="email" placeholder="Email" required>
+                    <input class="dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" required>
+                    <div class="d-flex justify-content-around">
+                        <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
+                            senha?</a>
+                        <button class="btn">Enviar</button>
+                    </div>
+                </fieldset>
+            </form>
+
+            <div class="empHigh" style="padding-left: 10%;">
+                Ainda não tem uma conta? <a class="newTab" href="/cadUsuario" action="/cadUsuario">Registre-se</a>
+            </div>
+
         </div>
     </div>
-    <div class='col-md'></div>
-</div>
 
-<!-- Modal -->
-<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Recuperação de conta</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form autocomplete="off">
-                    <fieldset>
-                        <label for="email">Email:</label>
-                        <input class="dp06" style="width: 100%;" type="email" id="emailcad" name="email"
-                            placeholder="Ex.: email@exemplo.com" required>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary mx-auto">Enviar</button>
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Recuperação de conta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form autocomplete="off">
+                        <fieldset>
+                            <label for="email">Email:</label>
+                            <input class="dp06" style="width: 100%;" type="email" id="emailcad" name="email"
+                                placeholder="Ex.: email@exemplo.com" required>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary mx-auto">Enviar</button>
+                </div>
             </div>
         </div>
     </div>
