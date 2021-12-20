@@ -15,25 +15,30 @@
                 <div style="width:40%; height: 3px; background-color: #ffffff60; "></div>
             </div>
 
-            <form autocomplete="off" class="col-md-8 mx-auto">
+            <form autocomplete="off" class="col-md-8 mx-auto" action="" method="POST">
                 <fieldset>
                     <input class="dp06 m-2" type="email" id="email" name="email" placeholder="Email" required>
                     <input class="dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" required>
                     <div class="d-flex justify-content-around">
                         <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
                             senha?</a>
-                        <button class="btn">Enviar</button>
+                        <button type="submit" class="btn">Enviar</button>
                     </div>
                 </fieldset>
             </form>
 
             <div class="empHigh" style="padding-left: 10%;">
-                Ainda não tem uma conta? <a class="newTab" href="/usuarios/cadUsuario" action="/cadUsuario">Registre-se</a>
+                Ainda não tem uma conta? <a class="newTab" href="/usuarios/cadUsuario"
+                    action="/cadUsuario">Registre-se</a>
             </div>
 
         </div>
-    </div>
+        {{#if error}}
+        <div class="alert alert-danger text-center">{{error}}</div>
+        {{else}}
 
+        {{/if}}
+    </div>
     <!-- Modal -->
     <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
