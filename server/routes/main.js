@@ -5,6 +5,8 @@ const passport = require("passport");
 
 const Projeto = require('../models/Projeto.js');
 
+const { autenticado }= require("../helpers/validaAutenticacao.js");
+
 router.get('/', (req, res) => {
   res.render('login', {
     style: 'styles.css'
@@ -21,7 +23,16 @@ router.post('/', (req, res, next) => {
 
 });
 
-router.get('/listaProjetos', async (req, res) => {
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', "Deslogado com sucesso!")
+  res.redirect("/");
+})
+
+router.get('/listaProjetos', autenticado, async (req, res) => {
+
+  // TODO: Validar projetos por usuario
+
   await Projeto.findAll().then((projetos) => {
     res.render('listaProjetos', {
       layout: 'listaProjetosLayout.hbs',
