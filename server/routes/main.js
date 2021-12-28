@@ -4,8 +4,10 @@ const { sequelize } = require("../config/database.js");
 const passport = require("passport");
 
 const Projeto = require('../models/Projeto.js');
+const ProjetoColaboradores = require('../models/ProjetoColaboradores');
 
-const { autenticado }= require("../helpers/validaAutenticacao.js");
+const { autenticado } = require("../helpers/validaAutenticacao.js");
+const { is } = require("sequelize/dist/lib/operators");
 
 router.get('/', (req, res) => {
   res.render('login', {
@@ -31,14 +33,19 @@ router.get('/logout', (req, res) => {
 
 router.get('/listaProjetos', autenticado, async (req, res) => {
 
-  // TODO: Validar projetos por usuario
-
-  await Projeto.findAll().then((projetos) => {
+  await Projeto.findAll({
+    include: [{
+      model: ProjetoColaboradores,
+      where: { 'idUsuario': req.user.idUsuarios }
+    }], 
+    where: {cancelado: null}
+  }).then((projetos) => {
     res.render('listaProjetos', {
       layout: 'listaProjetosLayout.hbs',
       style: 'styles.css',
-      projetos: projetos.map(projetos => projetos.toJSON()) 
+      projetos: projetos.map(projetos => projetos.toJSON())
     });
+    console.log(projetos => projetos.toJSON())
   }).catch((err) => {
     req.flash("error_msg", "Houve um erro ao listar os projetos!" + JSON.stringify(err));
     res.redirect("/")

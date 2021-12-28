@@ -5,14 +5,21 @@ const Tarefa = db.sequelize.define('Tarefas', {
     type: db.Sequelize.STRING
   },
   prioridade: {
-    type: db.Sequelize.INTEGER
+    type: db.Sequelize.INTEGER.UNSIGNED
   },
   idStatus: {
-    type: db.Sequelize.INTEGER
+    // todo: Criar model status
+    /* type: db.Sequelize.INTEGER.UNSIGNED,
+    references: {
+      model: Status,
+      key: 'idStatus'
+    } */
   },
   /* idSprint: {
     type: db.Sequelize.
   } */
+}, {
+  timestamps: false
 });
 
 module.exports = Tarefa;
