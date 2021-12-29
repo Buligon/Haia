@@ -26,4 +26,10 @@ router.get('/logout', (req, res) => {
   res.redirect("/");
 })
 
+router.get('/emConstrucao', (req, res) => {
+  res.render('emConstrucao', {
+    style: 'styles.css'
+  });
+})
+
 module.exports = router;
