@@ -96,3 +96,10 @@
 #sidebarCollapse span{
   color: #ffffff95 !important;
 }
+
+#sidebar ul li a span {
+  width: 70%;
+}
+#sidebar ul li a i {
+  width: 30%;
+}
