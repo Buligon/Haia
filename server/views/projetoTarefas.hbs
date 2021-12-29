@@ -1,0 +1,267 @@
+<!-- Modal tags-->
+<div class="modal fade" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Tags</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <div class="tag">v</div>
+        <div class="tag">v</div>
+        <div class="tag">v</div>
+        <div class="tag">v</div>
+        <div class="tag">v</div>
+        <div class="tag">v</div>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal previsualizar-->
+<div class="modal fade" id="previsualizarmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="row modal-header justify-content-center">
+
+        <div class="row d-flex p-2">
+          <h5 class="modal-title" id="ModalLgTitle">000000 - TEste tarea </h5>
+        </div>
+
+        <div class="row empHigh">
+          <div class="row mx-auto">
+            <div class="col-md d-flex">
+              <p class="cabecalho">Autor: </p>
+              <p class="cabecalhoinfo">Lucas Buligon Antunes</p>
+            </div>
+            <div class="col-md-3 d-flex">
+              <p class="cabecalho">Prioridade: </p>
+              <p class="cabecalhoinfo">Crítica</p>
+            </div>
+            <div class="col-md d-flex">
+              <p class="cabecalho">Data de criação: </p>
+              <p class="cabecalhoinfo">12/02/2004</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md d-flex">
+              <p class="cabecalho">Sprint: </p>
+              <p class="cabecalhoinfo">51 - Buligon</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row empHigh">
+          <div class="field d-flex mx-auto">
+            <p class="cabecalho">Tags: </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body d-flex justify-content-center m-3" style="background-color: #4A4659">
+        <!--
+            respostas
+          -->
+      </div>
+      <div class="modal-footer row d-flex" style="width: 100%; justify-content: flex-end">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Visualizar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrapper d-flex align-items-stretch">
+
+  <nav id="sidebar" class="active">
+    <ul class="list-unstyled components mb-5">
+      <li class="active" id="btnToggleSidebar">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <span class="material-icons-outlined">reorder</span>
+        </button>
+      </li>
+      <li class="active">
+        <a href="/src/listaprojetos.html">
+          <i class="material-icons-outlined">
+            home
+          </i>
+          <span>Início</span>
+        </a>
+      </li>
+      <li class="active">
+        <a href="/src/listatarefas.html">
+          <i class="material-icons-outlined">assignment</i>
+          <span>Tarefas</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">chat_bubble_outline</i>
+          <span>Mensagens</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">dashboard</i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">calendar_today</i>
+          <span>Calendário</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">forum</i>
+          <span>Fórum</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">portrait</i>
+          <span>Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">settings</i>
+          <span>Configurações</span>
+        </a>
+      </li>
+    </ul>
+
+  </nav>
+
+  <div class="col"></div>
+  <div id="content" class="m-2 p-4 p-md-5 col-10">
+    <div class="d-flex align-content-center " style="width: 100%;">
+      <div class="field">
+        <label for="dataInicial">Data Inicial:</label><br>
+        <input class="dp06 data" type="date" id="dataInicial">
+      </div>
+      <div class="field" style="margin-left: 1ch;">
+        <label for="dataFinal">Data Final:</label>
+        <input class="dp06 data" type="date" id="dataFinal">
+      </div>
+
+      <div class="field">
+        <label for="dropsprints">Sprint:</label>
+        <select class="dropdown" name="sprint" id="dropsprints">
+          <option value="sprint1">Todas</option>
+          <option value="sprint2">2 - Sprint</option>
+        </select>
+      </div>
+
+      <div class="field" id="search">
+        <label for="search2">Pesquisa:</label>
+        <input class="dp06" type="text" id="search2" size="30">
+      </div>
+
+      <div class="field">
+        <label for="search">Critérios:</label>
+        <select class="dropdown" name="searchfields" id="droppesquisa">
+          <option value="codigo">Código</option>
+          <option value="assunto">Assunto</option>
+          <option value="Autor">Autor</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="status">Status:</label>
+        <select class="dropdown" name="status" id="dropstatus">
+          <option value="codigo">0 - Todos</option>
+          <option value="assunto">1 - Análise</option>
+          <option value="Autor">2 - Desenvolvimento</option>
+        </select>
+      </div>
+
+
+      <div class="field d-flex align-content-center">
+        <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
+          data-target="#tagmodal">
+          Tags
+        </button>
+      </div>
+
+      <div class="field d-flex align-content-center">
+        <button class="btn align-self-center filtrar" type="submit">
+          Filtrar
+        </button>
+      </div>
+    </div>
+
+    <div id="grid" class="row m-2 table-responsive-xl">
+      <table class="table table-striped table-dark table-bordered table-hover">
+        <colgroup>
+          <col span="1" style="min-width: 10ch; max-width: fit-content;">
+          <col span="1" style="min-width: 30ch; max-width: fit-content;">
+          <col span="1" style="min-width: 12ch; max-width: fit-content;">
+          <col span="1" style="min-width: 20ch; max-width: fit-content;">
+          <col span="1" style="min-width: 11ch; max-width: fit-content;">
+          <col span="1" style="min-width: 11ch; max-width: fit-content;">
+          <col span="1" style="min-width: 15ch; max-width: fit-content;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Assunto</th>
+            <th scope="col">Prioridade</th>
+            <th scope="col">Autor</th>
+            <th scope="col">Última resposta</th>
+            <th scope="col">Data de criação</th>
+            <th scope="col">Sprint</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each Tarefa}}
+          <tr {{!-- style="background-color: #DFA81B;" --}}>
+            <td class="codigo">{{idTarefas}}</td>
+            <td>{{assunto}}</td>
+            <td>{{prioridade}}</td>
+            <td>{{autorRazaoSocial}}</td>
+            <td>{{ultimaResposta}}</td>
+            <td>{{dataCriacao}}</td>
+            <td>{{idSprint}}</td>
+          </tr>
+          {{else}}
+
+        {{/each}}
+      </table>
+    </div>
+
+    <div class="row d-flex" style="width: 100%; justify-content: flex-end">
+      <div class="field">
+        <button class="btn align-self-center" data-toggle="modal" data-target="#previsualizarmodal"
+          style="width: 13ch; height: 4ch;">
+          Pré-visualizar
+        </button>
+      </div>
+      <div class="field">
+        <button class="btn align-self-center" style="width: 13ch; height: 4ch;">
+          Visualizar
+        </button>
+      </div>
+    </div>
+
+  </div>
+  <div class="col"></div>
+
+</div>
+
+<!-- Javascript -->
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/popper.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
