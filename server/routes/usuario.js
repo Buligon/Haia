@@ -1,3 +1,5 @@
+// Rota utilizada para telas relacionadas diretamente ao usuário e suas informações
+
 const express = require("express");
 const router = express.Router();
 
@@ -6,11 +8,19 @@ const { sequelize } = require("../config/database.js");
 const bcrypt = require('bcryptjs');
 const flash = require("connect-flash/lib/flash");
 
+
+// Tela de cadastro de usuários
+
 router.get('/cadUsuario', (req, res) => {
+
   res.render('cadastros/cadUsuario', {
     style: 'styles.css'
   });
+
 });
+
+
+// Rota para envio do formulário de cadastro de usuários
 
 router.post('/cadUsuario', (req, res) => {
   var erros = [];
@@ -33,17 +43,14 @@ router.post('/cadUsuario', (req, res) => {
     erros.push({ texto: "Senha inválida!" });
   }
 
-  if (req.body.pwd.length < 5) {
-    erros.push({ texto: "Senha muito curta!" });
-  }
-
-  if (req.body.pwd.length < 5) {
-    erros.push({ texto: "Senha muito curta!" });
-  }
-
   if (req.body.pwd != req.body.pwd2) {
     erros.push({ texto: "Senhas não coincidem!" });
   }
+
+  if (req.body.pwd2.length < 5) {
+    erros.push({ texto: "Senha muito curta!" });
+  }
+  
 
   /* ------ FINAL VALIDAÇÕES SEM CONSULTAS AO BANCO DE DADOS ------*/
 
@@ -66,6 +73,7 @@ router.post('/cadUsuario', (req, res) => {
         res.redirect("cadUsuario")
 
       } else {
+
         // Caso os os dados enviados atendam os requisitos, recebe os dados do formulário
         const novoUsuario = new Usuario({
           nomeUsuario: req.body.nome,
