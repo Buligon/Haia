@@ -1,0 +1,168 @@
+<div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" class="active">
+        <ul class="list-unstyled components mb-5">
+            <li class="active" id="btnToggleSidebar">
+                <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                    <span class="material-icons-outlined">reorder</span>
+                </button>
+            </li>
+            <li class="active">
+                <a href="/src/listaprojetos.html">
+                    <i class="material-icons-outlined">
+                        home
+                    </i>
+                    <span>Início</span>
+                </a>
+            </li>
+            <li class="active">
+                <a href="/src/listatarefas.html">
+                    <i class="material-icons-outlined">assignment</i>
+                    <span>Tarefas</span>
+                </a>
+            <li>
+                <a href="/src/emconstrucao.html">
+                    <i class="material-icons-outlined">chat_bubble_outline</i>
+                    <span>Mensagens</span>
+                </a>
+            </li>
+            <li>
+                <a href="/src/emconstrucao.html">
+                    <i class="material-icons-outlined">dashboard</i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a href="/src/emconstrucao.html">
+                    <i class="material-icons-outlined">calendar_today</i>
+                    <span>Calendário</span>
+                </a>
+            </li>
+            <li>
+                <a href="/src/emconstrucao.html">
+                    <i class="material-icons-outlined">forum</i>
+                    <span>Fórum</span>
+                </a>
+            </li>
+            <li>
+                <a href="/src/emconstrucao.html">
+                    <i class="material-icons-outlined">portrait</i>
+                    <span>Perfil</span>
+                </a>
+            </li>
+            <li>
+                <a href="/src/emconstrucao.html">
+                    <i class="material-icons-outlined">settings</i>
+                    <span>Configurações</span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+    <div class="col"></div>
+    <div id="content" class="m-2 p-md-3 col-10 h-100">
+        <div class="row cabecalho h-15 empHigh mx-auto P-2">
+            <div class="row">
+                {{#each Tarefa}}
+                <div class="col">
+                    <div class="campofixo">Código: </div>
+                    <div class="dadostarefa" id="cabecalhocodigo">{{idTarefas}}</div>
+                </div>
+                <div class="col-4">
+                    <div class="campofixo">Assunto: </div>
+                    <div class="dadostarefa" id="cabecalhoassunto">{{assunto}}</div>
+                </div>
+                <div class="col-3">
+                    <div class="campofixo">Autor: </div>
+                    <div class="dadostarefa" id="cabecalhoautor">{{idAutor}}</div>
+                </div>
+                <div class="col">
+                    <div class="campofixo">Data de criação: </div>
+                    <div class="dadostarefa" id="cabecalhodatacriacao"> {{formatDate dataCriacao "long"}}</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <div class="campofixo">Prioridade: </div>
+                    <div class="dadostarefa" id="cabecalhoprioridade">{{prioridade}}</div>
+                </div>
+                <div class="col-2">
+                    <div class="campofixo">Status: </div>
+                    <div class="dadostarefa" id="cabecalhostatus">{{idStatus}}</div>
+                </div>
+                <div class="col-4">
+                    <div class="campofixo">Sprint: </div>
+                    <div class="dadostarefa" id="cabecalhosprint">{{idSprint}}</div>
+                </div>
+                <div class="col">
+                    <div class="campofixo">Tags: </div>
+                    <div class="dadostarefa" id="cabecalhotags"></div>
+                </div>
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+
+        <div class="row mostrarespostas m-2 empHigh h-55">
+            {{#each TarefaRespostas}}
+            <div class="resposta empHigh">
+                <p class="respostatexto">
+                    {{resposta}}
+                </p>
+                <div class="row respostadados p-1">
+                    <div class="col">
+                        <div>Autor: {{nomeUsuario}}</div>
+                    </div>
+                    <div class="col">
+                        <div>Data: {{formatDate dataResposta "long"}}</div>
+                        <div></div>
+                    </div>
+                    <div class="col">
+                        <div> Status anterior: {{statusAnterior}}</div>
+                        <div></div>
+                    </div>
+                    <div class="col">
+                        <div>Novo status: {{statusNovo}}</div>
+                        <div></div>
+                    </div>
+                </div>
+
+            </div>
+            {{else}}
+
+            {{/each}}
+        </div>
+        <div class="row rodape m-2 empHigh h-25 d-flex">
+            <div class="col-4 contagemtempo p-0 mx-auto">
+                <table class="table table-striped table-dark table-hover table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th scope="col">Status</th>
+                            <th scope="col">Quantidade de tempo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-center">1</th>
+                            <td>00:00:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-7 mx-auto">
+                <textarea class="row novaresposta p-2 h-78 w-100 m-0" name="Text1"></textarea>
+                <div class="row mx-auto p-2 justify-content-end">
+                    <button class="btn">Cancelar</button>
+                    <button class="btn" style="margin-left: 5%;">Postar resposta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col"></div>
+</div>
+
+<!-- Javascript -->
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/popper.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>

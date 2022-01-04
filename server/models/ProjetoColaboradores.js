@@ -41,5 +41,9 @@ const ProjetoColaboradores = db.sequelize.define('ProjetoColaboradores', {
   timestamps: false
 });
 
+ProjetoColaboradores.hasMany(Usuario, {
+  foreignKey: 'idUsuarios',
+  sourceKey: 'idUsuario'
+});
 
 module.exports = ProjetoColaboradores;

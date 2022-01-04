@@ -84,53 +84,53 @@
           <span class="material-icons-outlined">reorder</span>
         </button>
       </li>
-      <li class="active">
-        <a href="/src/listaprojetos.html">
-          <i class="material-icons-outlined">
+      <li>
+        <a href="/projetos/listaProjetos" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">
             home
           </i>
           <span>Início</span>
         </a>
       </li>
-      <li class="active">
-        <a href="/src/listatarefas.html">
-          <i class="material-icons-outlined">assignment</i>
+      <li>
+        <a href="/projetos/projetoTarefas/{{idProjeto}}" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">assignment</i>
           <span>Tarefas</span>
         </a>
       </li>
       <li>
-        <a href="/src/emconstrucao.html">
-          <i class="material-icons-outlined">chat_bubble_outline</i>
+        <a href="/emconstrucao" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">chat_bubble_outline</i>
           <span>Mensagens</span>
         </a>
       </li>
       <li>
-        <a href="/src/emconstrucao.html">
-          <i class="material-icons-outlined">dashboard</i>
+        <a href="/emconstrucao" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">dashboard</i>
           <span>Dashboard</span>
         </a>
       </li>
       <li>
-        <a href="/src/emconstrucao.html">
-          <i class="material-icons-outlined">calendar_today</i>
+        <a href="/emconstrucao" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">calendar_today</i>
           <span>Calendário</span>
         </a>
       </li>
       <li>
-        <a href="/src/emconstrucao.html">
-          <i class="material-icons-outlined">forum</i>
+        <a href="/emconstrucao" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">forum</i>
           <span>Fórum</span>
         </a>
       </li>
       <li>
-        <a href="/src/emconstrucao.html">
-          <i class="material-icons-outlined">portrait</i>
+        <a href="/emconstrucao" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">portrait</i>
           <span>Perfil</span>
         </a>
       </li>
       <li>
-        <a href="/src/emconstrucao.html">
-          <i class="material-icons-outlined">settings</i>
+        <a href="/emconstrucao" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">settings</i>
           <span>Configurações</span>
         </a>
       </li>
@@ -220,7 +220,7 @@
         </thead>
         <tbody>
           {{#each Tarefa}}
-          <tr {{!-- style="background-color: #DFA81B;" --}}>
+          <tr {{!-- style="background-color: #DFA81B;" --}} onclick="abreTarefa({{idTarefas}})">
             <td class="codigo">{{idTarefas}}</td>
             <td>{{assunto}}</td>
             <td>{{prioridade}}</td>
@@ -265,3 +265,4 @@
   integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
   integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="/js/AbreTarefa.js"></script>

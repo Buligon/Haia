@@ -57,10 +57,9 @@
   text-align: center;
 }
 
-.table td, .table th {
-  vertical-align: middle;
+.table tr {
+  height: 3ch;
 }
-
 /*------------------------------------------------------------------------------*/
 
 .tag {
