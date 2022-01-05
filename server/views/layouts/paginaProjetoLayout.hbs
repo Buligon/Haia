@@ -9,7 +9,7 @@
   <meta name="keywords" content="Gestão, Projetos, Software, Gerenciamento" />
   <meta name="author" content="Lucas Buligon Antunes" />
   <link rel="icon" href="/imgs/icone_sem_fundo_aproximado.png" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <!-- Material_icons -->
   <!-- https://material.io/resources/icons/?style=baseline -->
@@ -23,24 +23,25 @@
   <!-- https://material.io/resources/icons/?style=twotone -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone" rel="stylesheet" />
 
+  <!-- Jquery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   <!-- Bootstrap -->
   <link rel="stylesheet" href="/css/bootstrap-grid.css" />
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <!--important-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="/js/fadeAlerta.js"></script>
   <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="/css/{{style}}">
+  <link rel="stylesheet" type="text/css" href="/css/{{style}}" />
   <link rel="stylesheet" type="text/css" href="/css/sidebar.css" />
-  <link rel="stylesheet" type="text/css" href="/css/dropdown.css" />
+  <link rel="stylesheet" type="text/css" href="/css/paginaprojeto.css" />
 
   <title>Haia</title>
 </head>
 
 <body class="container-fluid">
-  <div id="alerta" style="z-index: 2; position: absolute; left:50%; bottom: 5%;">{{> _msg}}</div>
-  {{{body}}}
-</body>
 
+</body>
+{{{body}}}
 </html>

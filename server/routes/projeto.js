@@ -3,7 +3,6 @@
 const express = require("express");
 const router = express.Router();
 const { sequelize } = require("../config/database.js");
-const passport = require("passport");
 const { autenticado } = require("../helpers/validaAutenticacao.js");
 
 // Importa models utilizados durante o escopo do código
@@ -12,12 +11,12 @@ const ProjetoColaboradores = require('../models/ProjetoColaboradores');
 const Tarefa = require('../models/Tarefa.js');
 const TarefasRespostas = require('../models/TarefasRespostas');
 const Usuario = require('../models/Usuario');
-const { Console } = require("console");
+const Tags = require('../models/Tags');
 const { json } = require("body-parser");
 
 var global_Projeto;
 
-// Lista todos os projetos
+//* Lista todos os projetos
 
 router.get('/listaProjetos', autenticado, async (req, res) => {
 
@@ -45,15 +44,30 @@ router.get('/listaProjetos', autenticado, async (req, res) => {
 });
 
 
-// Lista todas as tarefas não canceladas de um projeto
+//* Lista todas as tarefas não canceladas de um projeto
 
 router.get('/projetoTarefas/:codProjeto', autenticado, async (req, res) => {
   // Toda vez que o usuário entra em um projeto, a variável global recebe o código do mesmo
   global_Projeto = req.params.codProjeto;
 
-  /*
-  ? Seleciona todas as tarefas do projeto que não estejam canceladas
-  */
+  var tagsProjeto;
+
+  await Tags.findAll({
+    where: {
+      idProjeto: req.params.codProjeto,
+      cancelada: null
+    }
+  }).then((tags) => {
+    tagsProjeto = tags;
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
+    res.redirect("/");
+
+  });
+
+
+  //? Seleciona todas as tarefas do projeto que não estejam canceladas
   await Tarefa.findAll({
 
     where: {
@@ -67,7 +81,8 @@ router.get('/projetoTarefas/:codProjeto', autenticado, async (req, res) => {
       layout: 'projetoTarefasLayout.hbs',
       style: 'styles.css',
       Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
-      idProjeto: req.params.codProjeto
+      idProjeto: req.params.codProjeto,
+      Tags: tagsProjeto.map(Tarefa => Tarefa.toJSON())
     });
 
     /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
@@ -84,7 +99,45 @@ router.get('/projetoTarefas/:codProjeto', autenticado, async (req, res) => {
 });
 
 
-// Visualiza uma tarefa em específico
+//* Rota para cadastro de tags
+
+router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, res) => {
+  var erros = [];
+
+  // Verifica se o campo descrição foi preenchido
+  if (!req.body.descricao || typeof req.body.descricao == undefined || req.body.descricao == null) {
+    erros.push({ texto: "Preencha o campo descricao!" });
+  }
+
+  // Caso ele não tenha sido preenchido, redireciona o usuário para a rota pedindo para informar o campo
+  if (erros.length > 0) {
+    req.flash("error_msg", "Preencha o campo descrição antes de salvar a tag!");
+    res.redirect("/projetos/projetoTarefas/" + global_Projeto);
+  } else {
+
+    Tags.create({
+
+      descricao: req.body.descricao,
+      cor: req.body.cor,
+      idProjeto: global_Projeto
+
+    }).then(function () {
+
+      req.flash("succes_msg", "Tag criada com sucesso!");
+      res.redirect("/projetos/projetoTarefas/" + global_Projeto);
+
+    }).catch(function (erro) {
+
+      req.flash("error_msg", "Houve um erro ao criar tag!");
+      res.redirect('/projetos/tarefa/' + req.params.codTarefa);
+
+    });;
+
+  }
+});
+
+
+//* Visualiza uma tarefa em específico
 
 router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
   var tarefaRespostas;
@@ -93,7 +146,7 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
   ? O model TarefasRespostas é ligado ao model ProjetoColaboradores e Usuario por um Left Outer Join
   */
   await TarefasRespostas.findAll({
-    
+
 
     include: [{
       model: ProjetoColaboradores,
@@ -162,9 +215,9 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
 });
 
 
-// Rota utilizada para postar resposta na tarefa 
+//* Rota utilizada para postar resposta na tarefa 
 
-router.post('/tarefa/:codTarefa', async (req, res) => {
+router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
   var erros = [];
 
   // Valida se o campo resposta foi enviado vazio
@@ -314,6 +367,42 @@ router.post('/tarefa/:codTarefa', async (req, res) => {
     });
 
   }
+
+});
+
+
+router.get('/projetoConfig', autenticado, async (req, res) => {
+  var colaboradores
+
+  ProjetoColaboradores.findAll({
+    include: [{
+      model: Usuario,
+      attributes: []
+    }],
+    where: {
+      idProjeto: global_Projeto,
+      cancelado: null
+    },
+    attributes: [
+      'idProjetoColaborador',
+      'idCargo',
+      [sequelize.col('Usuarios.nomeUsuario'), 'nomeUsuario']
+    ]
+  }).then(projetoColaboradores => {
+
+    res.render('paginaProjeto', {
+      layout: 'paginaProjetoLayout.hbs',
+      style: 'styles.css',
+      idProjeto: global_Projeto,
+      Colaboradores: projetoColaboradores.map(projetoColaboradores => projetoColaboradores.toJSON())
+    });
+  }).catch(err => {
+
+    req.flash("error_msg", "Houve um erro carregar as informações do projeto!" + JSON.stringify(err));
+    res.redirect("/projetos/listaProjetos");
+
+  });
+
 
 });
 

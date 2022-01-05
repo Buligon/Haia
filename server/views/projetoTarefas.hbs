@@ -6,16 +6,42 @@
         <h5 class="modal-title" id="ModalLongTitle">Tags</h5>
       </div>
       <div class="modal-body d-flex justify-content-center">
-        <div class="tag">v</div>
-        <div class="tag">v</div>
-        <div class="tag">v</div>
-        <div class="tag">v</div>
-        <div class="tag">v</div>
-        <div class="tag">v</div>
+        {{#each Tags}}
+        <div class="tag" style="background-color: {{cor}};">{{descricao}}</div>
+        {{else}}
+        {{/each}}
+        <button class="tag" data-toggle="modal"
+          data-target="#cadastrotagmodal">Adicionar tag</button>
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal tags-->
+<div class="modal fade" id="cadastrotagmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Cadastro de tag</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <form autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTag" method="POST">
+          <fieldset>
+            <label for="descricao">Descrição:</label>
+            <input class="dp06" style="width: 100%;" type="text" id="descricao" name="descricao"
+              placeholder="Ex.: Impedida" required>
+            <label for="cor">Cor (opcional):</label>
+            <input class="dp06" style="width: 100%;" type="color" value="#bb86fc" id="cor" name="cor">
+          </fieldset>
+          <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+        </form>
       </div>
     </div>
   </div>
@@ -129,7 +155,7 @@
         </a>
       </li>
       <li>
-        <a href="/emconstrucao" class="d-flex align-content-center">
+        <a href="/projetos/projetoConfig" class="d-flex align-content-center">
           <i class="material-icons-outlined text-center">settings</i>
           <span>Configurações</span>
         </a>
