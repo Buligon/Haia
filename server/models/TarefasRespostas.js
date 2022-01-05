@@ -34,7 +34,8 @@ const TarefasRespostas = db.sequelize.define('TarefasRespostas', {
     type: db.Sequelize.TEXT
   },
   dataResposta: {
-    type: db.Sequelize.DATE
+    type: db.Sequelize.DATE,
+    defaultValue: db.Sequelize.fn('now')
   }
 },{
   timestamps: false

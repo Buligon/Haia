@@ -7,7 +7,7 @@
                 </button>
             </li>
             <li class="active">
-                <a href="/src/listaprojetos.html">
+                <a href="/projetos/listaProjetos">
                     <i class="material-icons-outlined">
                         home
                     </i>
@@ -15,42 +15,42 @@
                 </a>
             </li>
             <li class="active">
-                <a href="/src/listatarefas.html">
+                <a href="/projetos/projetoTarefas/{{idProjeto}}">
                     <i class="material-icons-outlined">assignment</i>
                     <span>Tarefas</span>
                 </a>
             <li>
-                <a href="/src/emconstrucao.html">
+                <a href="/emconstrucao">
                     <i class="material-icons-outlined">chat_bubble_outline</i>
                     <span>Mensagens</span>
                 </a>
             </li>
             <li>
-                <a href="/src/emconstrucao.html">
+                <a href="/emconstrucao">
                     <i class="material-icons-outlined">dashboard</i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li>
-                <a href="/src/emconstrucao.html">
+                <a href="/emconstrucao">
                     <i class="material-icons-outlined">calendar_today</i>
                     <span>Calendário</span>
                 </a>
             </li>
             <li>
-                <a href="/src/emconstrucao.html">
+                <a href="/emconstrucao">
                     <i class="material-icons-outlined">forum</i>
                     <span>Fórum</span>
                 </a>
             </li>
             <li>
-                <a href="/src/emconstrucao.html">
+                <a href="/emconstrucao">
                     <i class="material-icons-outlined">portrait</i>
                     <span>Perfil</span>
                 </a>
             </li>
             <li>
-                <a href="/src/emconstrucao.html">
+                <a href="/emconstrucao">
                     <i class="material-icons-outlined">settings</i>
                     <span>Configurações</span>
                 </a>
@@ -64,38 +64,39 @@
             <div class="row">
                 {{#each Tarefa}}
                 <div class="col">
-                    <div class="campofixo">Código: </div>
-                    <div class="dadostarefa" id="cabecalhocodigo">{{idTarefas}}</div>
+                    <div class="campofixo field">Código: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhocodigo">{{idTarefas}}</div>
                 </div>
                 <div class="col-4">
-                    <div class="campofixo">Assunto: </div>
-                    <div class="dadostarefa" id="cabecalhoassunto">{{assunto}}</div>
+                    <div class="campofixo field">Assunto: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhoassunto">{{assunto}}</div>
                 </div>
                 <div class="col-3">
-                    <div class="campofixo">Autor: </div>
-                    <div class="dadostarefa" id="cabecalhoautor">{{idAutor}}</div>
+                    <div class="campofixo field">Autor: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhoautor">{{idAutor}}</div>
                 </div>
                 <div class="col">
-                    <div class="campofixo">Data de criação: </div>
-                    <div class="dadostarefa" id="cabecalhodatacriacao"> {{formatDate dataCriacao "long"}}</div>
+                    <div class="campofixo field">Data de criação: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhodatacriacao"> {{formatDate dataCriacao
+                        "long"}}</div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-2">
-                    <div class="campofixo">Prioridade: </div>
-                    <div class="dadostarefa" id="cabecalhoprioridade">{{prioridade}}</div>
+                    <div class="campofixo field">Prioridade: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhoprioridade">{{prioridade}}</div>
                 </div>
                 <div class="col-2">
-                    <div class="campofixo">Status: </div>
-                    <div class="dadostarefa" id="cabecalhostatus">{{idStatus}}</div>
+                    <div class="campofixo field">Status: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhostatus">{{idStatus}}</div>
                 </div>
                 <div class="col-4">
-                    <div class="campofixo">Sprint: </div>
-                    <div class="dadostarefa" id="cabecalhosprint">{{idSprint}}</div>
+                    <div class="campofixo field">Sprint: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhosprint">{{idSprint}}</div>
                 </div>
                 <div class="col">
-                    <div class="campofixo">Tags: </div>
-                    <div class="dadostarefa" id="cabecalhotags"></div>
+                    <div class="campofixo field">Tags: </div>
+                    <div class="dadostarefa field align-middle" id="cabecalhotags"></div>
                 </div>
             </div>
             {{else}}
@@ -106,7 +107,7 @@
         <div class="row mostrarespostas m-2 empHigh h-55">
             {{#each TarefaRespostas}}
             <div class="resposta empHigh">
-                <p class="respostatexto">
+                <p class="respostatexto m-2">
                     {{resposta}}
                 </p>
                 <div class="row respostadados p-1">
@@ -150,12 +151,25 @@
                 </table>
             </div>
             <div class="col-7 mx-auto">
-                <textarea class="row novaresposta p-2 h-78 w-100 m-0" name="Text1"></textarea>
-                <div class="row mx-auto p-2 justify-content-end">
-                    <button class="btn">Cancelar</button>
-                    <button class="btn" style="margin-left: 5%;">Postar resposta</button>
-                </div>
+                {{#each Tarefa}}
+                <form autocomplete="off" action="{{idTarefas}}" method="POST">
+                    <fieldset>
+                        <textarea class="row novaresposta p-2 h-78 w-100 m-0" name="novaResposta"
+                            id="novaResposta"></textarea>
+                        <div class="row mx-auto p-2 justify-content-end">
+                            <button class="btn">Cancelar</button>
+                            <button class="btn" type="submit" style="margin-left: 5%;">Postar resposta</button>
+                        </div>
+                    </fieldset>
+                </form>
+                {{else}}
+
+                {{/each}}
             </div>
+            {{#each erros}}
+            <div class="alert alert-danger">{{texto}}</div>
+            {{else}}
+            {{/each}}
         </div>
     </div>
     <div class="col"></div>

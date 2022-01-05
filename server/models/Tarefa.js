@@ -14,7 +14,8 @@ const Tarefa = db.sequelize.define('Tarefas', {
     type: db.Sequelize.STRING
   },
   dataCriacao: {
-    type: db.Sequelize.TIME
+    type: db.Sequelize.DATE,
+    defaultValue: db.Sequelize.fn('now')
   },
   prioridade: {
     type: db.Sequelize.INTEGER.UNSIGNED

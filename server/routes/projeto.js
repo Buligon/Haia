@@ -12,7 +12,10 @@ const ProjetoColaboradores = require('../models/ProjetoColaboradores');
 const Tarefa = require('../models/Tarefa.js');
 const TarefasRespostas = require('../models/TarefasRespostas');
 const Usuario = require('../models/Usuario');
+const { Console } = require("console");
+const { json } = require("body-parser");
 
+var global_Projeto;
 
 // Lista todos os projetos
 
@@ -45,6 +48,8 @@ router.get('/listaProjetos', autenticado, async (req, res) => {
 // Lista todas as tarefas não canceladas de um projeto
 
 router.get('/projetoTarefas/:codProjeto', autenticado, async (req, res) => {
+  // Toda vez que o usuário entra em um projeto, a variável global recebe o código do mesmo
+  global_Projeto = req.params.codProjeto;
 
   /*
   ? Seleciona todas as tarefas do projeto que não estejam canceladas
@@ -83,12 +88,12 @@ router.get('/projetoTarefas/:codProjeto', autenticado, async (req, res) => {
 
 router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
   var tarefaRespostas;
-
+  /*
+  ? Query utilizada para buscar o nome do usuário e os outros campos das respostas na tarefa
+  ? O model TarefasRespostas é ligado ao model ProjetoColaboradores e Usuario por um Left Outer Join
+  */
   await TarefasRespostas.findAll({
-    /*
-    ? Query utilizada para buscar o nome do usuário e os outros campos das respostas na tarefa
-    ? O model TarefasRespostas é ligado ao model ProjetoColaboradores e Usuario por um Left Outer Join
-    */
+    
 
     include: [{
       model: ProjetoColaboradores,
@@ -125,7 +130,7 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
     res.redirect("/")
 
   });
-  
+
   /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
   *  console.log(tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON())) 
   */
@@ -143,7 +148,8 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
       layout: 'tarefasLayout.hbs',
       style: 'styles.css',
       Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
-      TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON())
+      TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
+      idProjeto: global_Projeto
     });
 
   }).catch((err) => {
@@ -152,6 +158,162 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
     res.redirect("/")
 
   })
+
+});
+
+
+// Rota utilizada para postar resposta na tarefa 
+
+router.post('/tarefa/:codTarefa', async (req, res) => {
+  var erros = [];
+
+  // Valida se o campo resposta foi enviado vazio
+  if (!req.body.novaResposta || typeof req.body.novaResposta == undefined || req.body.novaResposta == null) {
+    erros.push({ texto: "Preencha o campo resposta!" });
+  }
+
+  // Se o campo resposta não foi preenchido envia o usuário novamente solicitando o preenchimento
+  if (erros.length > 0) {
+
+
+    var tarefaRespostas;
+
+    await TarefasRespostas.findAll({
+      /*
+      ? Query utilizada para buscar o nome do usuário e os outros campos das respostas na tarefa
+      ? O model TarefasRespostas é ligado ao model ProjetoColaboradores e Usuario por um Left Outer Join
+      */
+
+      include: [{
+        model: ProjetoColaboradores,
+        include: [{
+
+          model: Usuario,
+          attributes: []
+
+        }],
+        attributes: []
+      }],
+      where: {
+
+        idTarefa: req.params.codTarefa
+
+      },
+      attributes: [
+        'resposta',
+        'dataResposta',
+        // Busca o nome do usuário com base no relacionamento das tabelas e "apelida" ele de nomeUsuario
+        [sequelize.col('ProjetoColaboradores.Usuarios.nomeUsuario'), 'nomeUsuario'],
+        'statusAnterior',
+        'statusNovo'
+      ]
+
+    }).then(TarefasRespostas => {
+
+      // Joga o resultado na variável que será informada ao rendenizar o tarefas.hbs
+      tarefaRespostas = TarefasRespostas;
+
+    }).catch((err) => {
+
+      req.flash("error_msg", "Houve um erro ao carregar a tarefa!" + JSON.stringify(err));
+      res.redirect("/")
+
+    });
+
+    /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
+    *  console.log(tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON())) 
+    */
+
+    // todo: otimizar busca, não utilizando findall
+    await Tarefa.findAll({
+
+      where: {
+        idTarefas: req.params.codTarefa
+      }
+
+    }).then((Tarefa) => {
+
+      res.render('tarefas', {
+        layout: 'tarefasLayout.hbs',
+        style: 'styles.css',
+        Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
+        TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
+        erros: erros
+      });
+
+    }).catch((err) => {
+
+      req.flash("error_msg", "Houve um erro ao carregar a tarefa!" + JSON.stringify(err));
+      res.redirect("/")
+
+    })
+
+  } else {
+    var statusAnterior, idColaborador;
+
+
+    //? Busca o status atual da tarefa com base na última resposta
+    await TarefasRespostas.findAll({
+      where: {
+        idTarefa: req.params.codTarefa
+      },
+      attributes: [
+        'statusNovo'
+      ],
+      order: [['idTarefasResposta', 'DESC']],
+      limit: 1,
+      plain: true
+    }).then(ultimostatus => {
+      statusAnterior = ultimostatus
+    }).catch(err => {
+
+      req.flash("error_msg", "Houve um erro ao postar resposta!" + JSON.stringify(err));
+      res.redirect("/");
+
+    });
+
+    //? Busca o id do usuário que postou a resposta
+    await ProjetoColaboradores.findAll({
+      where: {
+        idUsuario: req.user.idUsuarios,
+        cancelado: null,
+        idProjeto: global_Projeto
+      },
+      attributes: [
+        'idProjetoColaborador'
+      ],
+      plain: true
+    }).then(colaboradorId => {
+      idColaborador = colaboradorId;
+    }).catch((err) => {
+
+      req.flash("error_msg", "Houve um erro ao postar resposta!" + JSON.stringify(err));
+      res.redirect("/");
+
+    });
+
+    // Cria o registro da resposta no banco de dados
+    TarefasRespostas.create({
+
+      idTarefa: req.params.codTarefa,
+      idColaborador: idColaborador.idProjetoColaborador,
+      statusAnterior: statusAnterior.statusNovo,
+      statusNovo: 2,
+      resposta: req.body.novaResposta
+
+    }).then(function () {
+
+      req.flash("succes_msg", "Resposta publicada com sucesso!");
+      res.redirect("/projetos/tarefa/" + req.params.codTarefa);
+
+    }).catch(function (erro) {
+
+      req.flash("error_msg", "Houve um erro ao postar resposta!");
+      res.redirect('/projetos/tarefa/' + req.params.codTarefa);
+
+    });
+
+  }
 
 });
 
