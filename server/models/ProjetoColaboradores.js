@@ -3,7 +3,7 @@ const { deflate } = require('zlib');
 const db = require('../config/database');
 const Usuario = require('./Usuario');
 
-const Projeto = require('../models/Projeto.js')
+const Projeto = require('../models/Projeto.js');
 
 const ProjetoColaboradores = db.sequelize.define('ProjetoColaboradores', {
   idProjetoColaborador: {
