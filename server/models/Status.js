@@ -1,5 +1,7 @@
 const db = require('../config/database');
 
+const Projeto = require('../models/Projeto.js');
+
 const Status = db.sequelize.define('Status', {
   idStatus: {
     type: db.Sequelize.INTEGER.UNSIGNED,
@@ -13,9 +15,17 @@ const Status = db.sequelize.define('Status', {
   },
   cancelado: {
     type: db.Sequelize.TINYINT.UNSIGNED
+  }, 
+  idProjeto: {
+    type: db.Sequelize.INTEGER.UNSIGNED,
+    references: {
+      model: Projeto,
+      key: 'idProjetos'
+    }
   }
 }, {
-  timestamps: false
+  timestamps: false,
+  freezeTableName: true
 });
 
 

@@ -2,6 +2,7 @@ const db = require('../config/database');
 
 const ProjetoColaboradores = require('./ProjetoColaboradores');
 const Projeto = require('./Projeto');
+const Status = require('../models/Status');
 
 const Tarefa = db.sequelize.define('Tarefas', {
   idTarefas: {
@@ -45,11 +46,10 @@ const Tarefa = db.sequelize.define('Tarefas', {
   },
   idStatus: {
     type: db.Sequelize.INTEGER.UNSIGNED,
-    // todo: Criar model status
-    /* references: {
+    references: {
       model: Status,
       key: 'idStatus'
-    } */
+    }
   },
   idSprint: {
     type: db.Sequelize.INTEGER.UNSIGNED,
