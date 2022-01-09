@@ -123,7 +123,7 @@
         </a>
       </li>
       <li>
-        <a href="/projetos/projetoTarefas/{{idProjeto}}" class="d-flex align-content-center">
+        <a onclick="abreProjeto({{idProjeto}})" class="d-flex align-content-center">
           <i class="material-icons-outlined text-center">assignment</i>
           <span>Tarefas</span>
         </a>
@@ -265,7 +265,8 @@
               Tags
             </button>
             {{#if Filtros.filtro_tagsSelecionadas}}
-            <input type="text" name="tagsSelecionadas" id="tagsSelecionadas" value="{{Filtros.filtro_tagsSelecionadas}}">
+            <input type="text" name="tagsSelecionadas" id="tagsSelecionadas"
+              value="{{Filtros.filtro_tagsSelecionadas}}">
             {{else}}
             <input type="text" name="tagsSelecionadas" id="tagsSelecionadas" value="">
             {{/if}}
@@ -282,7 +283,7 @@
     </form>
 
     <div id="grid" class="row m-2 table-responsive-xl">
-      <table class="table table-striped table-dark table-bordered table-hover">
+      <table class="table table-striped table-dark table-bordered table-hover ">
         <colgroup>
           <col span="1" style="min-width: 10ch; max-width: fit-content;">
           <col span="1" style="min-width: 30ch; max-width: fit-content;">
@@ -322,12 +323,6 @@
 
     <div class="row d-flex" style="width: 100%; justify-content: flex-end">
       <div class="field">
-        <button class="btn align-self-center" data-toggle="modal" data-target="#previsualizarmodal"
-          style="width: 13ch; height: 4ch;">
-          Pré-visualizar
-        </button>
-      </div>
-      <div class="field">
         <button class="btn align-self-center" style="width: 13ch; height: 4ch;">
           Visualizar
         </button>
@@ -353,3 +348,4 @@
 <script src="/js/AbreTarefa.js"></script>
 <script src="/js/fadeAlerta.js"></script>
 <script src="/js/filtraTarefas.js"></script>
+<script src="/js/abreProjeto.js"></script>
