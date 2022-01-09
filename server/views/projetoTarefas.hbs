@@ -175,11 +175,12 @@
         <div class="d-flex align-content-center " style="width: 100%;">
           <div class="field">
             <label for="dataInicial">Data Inicial:</label><br>
-            <input class="dp06 data" type="date" name="dataInicial" id="dataInicial">
+            <input class="dp06 data" type="date" name="dataInicial" id="dataInicial"
+              value="{{Filtros.filtro_dataInicial}}">
           </div>
           <div class="field" style="margin-left: 1ch;">
             <label for="dataFinal">Data Final:</label>
-            <input class="dp06 data" type="date" name="dataFinal" id="dataFinal">
+            <input class="dp06 data" type="date" name="dataFinal" id="dataFinal" value="{{Filtros.filtro_dataFinal}}">
           </div>
 
           <div class="field">
@@ -188,7 +189,13 @@
               <optgroup>
                 <option value="0">Todas</option>
                 {{#each Sprints}}
+
+                {{#selected idSprints ../Filtros.filtro_sprints }}
+                <option value="{{idSprints}}" selected>{{nome}}</option>
+                {{else}}
                 <option value="{{idSprints}}">{{nome}}</option>
+                {{/selected}}
+
                 {{else}}
                 {{/each}}
               </optgroup>
@@ -197,15 +204,37 @@
 
           <div class="field" id="search">
             <label for="pesquisa">Pesquisa:</label>
+
+            {{#if Filtros.filtro_pesquisa}}
+            <input class="dp06" type="text" name="pesquisa" id="pesquisa" size="30" value="{{Filtros.filtro_pesquisa}}">
+            {{else}}
             <input class="dp06" type="text" name="pesquisa" id="pesquisa" size="30">
+            {{/if}}
+
           </div>
 
           <div class="field">
             <label for="pesquisaOpcao">Critérios:</label>
             <select class="dropdown" name="pesquisaOpcao" id="pesquisaOpcao">
+
+              {{#selected 1 Filtros.filtro_pesquisaOP }}
+              <option value="1" selected>Código</option>
+              {{else}}
               <option value="1">Código</option>
+              {{/selected}}
+
+              {{#selected 2 Filtros.filtro_pesquisaOP }}
+              <option value="2" selected>Assunto</option>
+              {{else}}
               <option value="2">Assunto</option>
+              {{/selected}}
+
+              {{#selected 3 Filtros.filtro_pesquisaOP }}
+              <option value="3" selected>Autor</option>
+              {{else}}
               <option value="3">Autor</option>
+              {{/selected}}
+
             </select>
           </div>
 
@@ -216,7 +245,13 @@
               <optgroup>
                 <option value="">Todos</option>
                 {{#each Status}}
+
+                {{#selected idStatus ../Filtros.filtro_status }}
+                <option value="{{idStatus}}" selected>{{nome}}</option>
+                {{else}}
                 <option value="{{idStatus}}">{{nome}}</option>
+                {{/selected}}
+
                 {{else}}
                 {{/each}}
               </optgroup>
@@ -229,11 +264,16 @@
               data-target="#tagmodal">
               Tags
             </button>
+            {{#if Filtros.filtro_tagsSelecionadas}}
+            <input type="text" name="tagsSelecionadas" id="tagsSelecionadas" value="{{Filtros.filtro_tagsSelecionadas}}">
+            {{else}}
             <input type="text" name="tagsSelecionadas" id="tagsSelecionadas" value="">
+            {{/if}}
+
           </div>
 
           <div class="field d-flex align-content-center">
-            <button class="btn align-self-center filtrar"  type="submit" onclick="filtraTarefas()">
+            <button class="btn align-self-center filtrar" type="submit" onclick="filtraTarefas()">
               Filtrar
             </button>
           </div>

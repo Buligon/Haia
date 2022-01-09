@@ -33,10 +33,41 @@ function selecionatag(idtag) {
 
 }
 
+window.onload = function carregaTagsFiltradas() {
+  tagselecionadas.length = 0
+
+  function removeDuplicadas(a) {
+    return a.sort().filter(function (item, pos, ary) {
+      return !pos || item != ary[pos - 1];
+    });
+    // retirado de: https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+  }
+
+  // Pega a string do campo value e transforma em array
+  var inputTags = document.getElementById("tagsSelecionadas");
+  var value = inputTags.getAttribute("value");
+  tagselecionadas = value.split(",");
+  tagselecionadas = removeDuplicadas(tagselecionadas);
+  
+  // Ordena o vetor. Caso o último valor seja em branco, remove ele
+  tagselecionadas.sort(function (a, b) { return a - b })
+  if (tagselecionadas[tagselecionadas.length - 1] == "") {
+    tagselecionadas.pop()
+  }
+
+  // Marca como selecionadas as tags
+  tagselecionadas.forEach(idtag => {
+    var html2 = document.getElementById(idtag).innerHTML
+    document.getElementById(idtag).innerHTML = html2 + '<div><span class="material-icons">check</span> </div>';
+  });
+
+}
+
+// Joga o vetor para o campo value do input das tags no formulário e envia
 function filtraTarefas() {
 
-  document.getElementById("tagsSelecionadas").setAttribute('value',tagselecionadas.toString());
-  
+  document.getElementById("tagsSelecionadas").setAttribute('value', tagselecionadas.toString());
+
   document.getElementById('filtros').submit();
 
 }

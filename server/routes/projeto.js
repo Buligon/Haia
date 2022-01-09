@@ -53,6 +53,8 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   var tagsProjeto, statusProjeto, sprintProjeto;
 
+  // Salva os filtros utilizados para que eles sejam mantidos na tela
+  const filtros = { filtro_status: req.body.status, filtro_sprints: req.body.sprints, filtro_pesquisa: req.body.pesquisa, filtro_pesquisaOP: req.body.pesquisaOpcao, filtro_tagsSelecionadas: req.body.tagsSelecionadas, filtro_dataInicial: req.body.dataInicial, filtro_dataFinal: req.body.dataFinal }
 
   //? Seleciona todas as tags não canceladas do projeto
   await Tags.findAll({
@@ -121,16 +123,16 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
   // Se campo pesquisa contém alguma informação, valida qual opção foi escolhida
   if (!(!req.body.pesquisa || typeof req.body.pesquisa == undefined || req.body.pesquisa == null)) {
     console.log(typeof req.body.pesquisaOpcao)
-    
+
     switch (req.body.pesquisaOpcao) {
       case '1':
         where.push(["idTarefas LIKE '%" + req.body.pesquisa + "%'"]);
         break;
       case '2':
-        where.push(['assunto LIKE "%' + req.body.pesquisa + '%"']);
+        where.push(["assunto LIKE '%" + req.body.pesquisa + "%'"]);
         break;
       case '3':
-        where.push(['autorRazaoSocial LIKE "%' + req.body.pesquisa + '%"']);
+        where.push(["autorRazaoSocial LIKE '%" + req.body.pesquisa + "%'"]);
         break;
     }
   }
@@ -161,64 +163,65 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
   // Valida se data inicial foi preenchida
   if (!(!req.body.dataInicial || typeof req.body.dataInicial == undefined || req.body.dataInicial == null)) {
 
-  dataInicial = new Date(req.body.dataInicial)
-  
-  
-  if (!(!req.body.dataFinal || typeof req.body.dataFinal == undefined || req.body.dataFinal == null)) {
-    // ambos preenchidos
+    dataInicial = new Date(req.body.dataInicial)
 
+
+    if (!(!req.body.dataFinal || typeof req.body.dataFinal == undefined || req.body.dataFinal == null)) {
+      // ambos preenchidos
+
+      dataFinal = new Date(req.body.dataFinal)
+      where.push(["dataCriacao between '" + formataData(dataInicial, 1) + "' and '" + formataData(dataFinal, 0) + "'"])
+
+    } else {
+
+      // apenas data inicial
+      where.push(["dataCriacao > '" + formataData(dataInicial, 1) + "'"])
+
+    }
+  } else if (!(!req.body.dataFinal || typeof req.body.dataFinal == undefined || req.body.dataFinal == null)) {
+
+    // apenas data final
     dataFinal = new Date(req.body.dataFinal)
-    where.push(["dataCriacao between '" + formataData(dataInicial, 1) + "' and '" + formataData(dataFinal, 0) +"'"])
-
-  } else {
-
-    // apenas data inicial
-    where.push(["dataCriacao > '" + formataData(dataInicial, 1)+"'"])
+    where.push(["dataCriacao < '" + formataData(dataFinal, 0) + "'"])
 
   }
-} else if (!(!req.body.dataFinal || typeof req.body.dataFinal == undefined || req.body.dataFinal == null)) {
-  
-  // apenas data final
-  dataFinal = new Date(req.body.dataFinal)
-  where.push(["dataCriacao < '" + formataData(dataFinal, 0) + "'"])
-
-}
 
 
-// Monta o where, substituindo ',' por AND e removendo o resto
-const whereOp = "where " + JSON.stringify(where).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' AND ');
+  // Monta o where, substituindo ',' por AND e removendo o resto
+  const whereOp = "where " + JSON.stringify(where).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' AND ');
 
-//? Seleciona todas as tarefas do projeto com base nos filtros selecionados
-await sequelize.query(
+  //? Seleciona todas as tarefas do projeto com base nos filtros selecionados
+  await sequelize.query(
 
-  "select * from tarefas " + whereOp,
-  {
-    logging: console.log,
-    model: Tarefa
-  }
+    "select * from tarefas " + whereOp,
+    {
+      logging: console.log,
+      model: Tarefa
+    }
 
-).then(tarefa => {
+  ).then(tarefa => {
 
-  res.render('projetoTarefas', {
-    layout: 'projetoTarefasLayout.hbs',
-    style: 'styles.css',
-    Tarefa: tarefa.map(Tarefa => Tarefa.toJSON()),
-    idProjeto: req.params.codProjeto,
-    Tags: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON()),
-    Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
-    Sprints: sprintProjeto.map(sprintProjeto => sprintProjeto.toJSON())
+    res.render('projetoTarefas', {
+      layout: 'projetoTarefasLayout.hbs',
+      style: 'styles.css',
+      Tarefa: tarefa.map(Tarefa => Tarefa.toJSON()),
+      idProjeto: req.params.codProjeto,
+      Tags: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON()),
+      Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
+      Sprints: sprintProjeto.map(sprintProjeto => sprintProjeto.toJSON()),
+      Filtros: filtros
+    });
+
+    /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
+    *  console.log(Tarefa => Tarefa.toJSON())
+    */
+
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
+    res.redirect("/")
+
   });
-
-  /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
-  *  console.log(Tarefa => Tarefa.toJSON())
-  */
-
-}).catch((err) => {
-
-  req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
-  res.redirect("/")
-
-});
 
 });
 

@@ -25,6 +25,14 @@ var dateFormat = import('dateformat');
           else {
             return datetime;
           }
+        },
+        selected: function (idOpcao, idFiltros, options) {
+          if (idOpcao == idFiltros) {
+            
+            return options.fn(this);
+          } else {
+            return options.inverse(this);
+          }
         }
       },
       extname: '.hbs'
