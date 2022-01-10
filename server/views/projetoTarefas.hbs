@@ -283,7 +283,7 @@
     </form>
 
     <div id="grid" class="row m-2 table-responsive-xl">
-      <table class="table table-striped table-dark table-bordered table-hover ">
+      <table id="gridTabela"class="table table-striped table-dark table-bordered table-hover ">
         <colgroup>
           <col span="1" style="min-width: 10ch; max-width: fit-content;">
           <col span="1" style="min-width: 30ch; max-width: fit-content;">
@@ -295,13 +295,13 @@
         </colgroup>
         <thead>
           <tr>
-            <th scope="col">Código</th>
-            <th scope="col">Assunto</th>
-            <th scope="col">Prioridade</th>
-            <th scope="col">Autor</th>
-            <th scope="col">Última resposta</th>
-            <th scope="col">Data de criação</th>
-            <th scope="col">Sprint</th>
+            <th scope="col" onclick="sortTable(0)">Código</th>
+            <th scope="col" onclick="sortTable(1)">Assunto</th>
+            <th scope="col" onclick="sortTable(2)">Prioridade</th>
+            <th scope="col" onclick="sortTable(3)">Autor</th>
+            <th scope="col" onclick="sortTable(4)">Última resposta</th>
+            <th scope="col" onclick="sortTable(5)">Data de criação</th>
+            <th scope="col" onclick="sortTable(6)">Sprint</th>
           </tr>
         </thead>
         <tbody>
@@ -349,3 +349,4 @@
 <script src="/js/fadeAlerta.js"></script>
 <script src="/js/filtraTarefas.js"></script>
 <script src="/js/abreProjeto.js"></script>
+<script src="/js/ordenaGrid.js"></script>
