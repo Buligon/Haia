@@ -92,3 +92,13 @@
 }
 
 /*-----------------------------------------------------------------------------------*/
+.detalhamento {
+  border-radius: 5px;
+  overflow-y: scroll;
+  background-color: #ffffff10;
+  border: none;
+}
+
+.detalhamento:focus {
+  outline: none;
+}

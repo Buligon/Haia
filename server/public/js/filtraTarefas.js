@@ -1,34 +1,67 @@
 var tagselecionadas = [];
+var tagselecionadas_cadTarefa = [];
 
 // Função chamada ao clicar em uma tag
-function selecionatag(idtag) {
-  var html = document.getElementById(idtag).innerHTML;
+function selecionatag(idtag, idModal) {
 
-  // Valida se a tag já está marcada
-  if (html.includes('<div><span class="material-icons">check</span> </div>')) {
+  if (idModal == 0) {
+    var html = document.getElementById(idtag).innerHTML;
 
-    document.getElementById(idtag).innerHTML = html.replace('<div><span class="material-icons">check</span> </div>', " ");
+    // Valida se a tag já está marcada
+    if (html.includes('<div><span class="material-icons">check</span> </div>')) {
 
-    // Acha o index da tag no vetor e deleta
-    for (let index = 0; index < tagselecionadas.length; index++) {
-      if (tagselecionadas[index] == idtag) {
-        delete tagselecionadas[index]
-        break;
+      document.getElementById(idtag).innerHTML = html.replace('<div><span class="material-icons">check</span> </div>', " ");
+
+      // Acha o index da tag no vetor e deleta
+      for (let index = 0; index < tagselecionadas.length; index++) {
+        if (tagselecionadas[index] == idtag) {
+          delete tagselecionadas[index]
+          break;
+        }
       }
+
+      // Ordena o vetor e retira o último elemento, o qual está em branco devido o delete
+      tagselecionadas.sort(function (a, b) { return a - b })
+      tagselecionadas.pop()
+
+    } else {
+
+      document.getElementById(idtag).innerHTML = html + '<div><span class="material-icons">check</span> </div>';
+
+      // Joga o id no vetor e ordena
+      tagselecionadas.push(idtag);
+      tagselecionadas.sort(function (a, b) { return a - b })
+
     }
-
-    // Ordena o vetor e retira o último elemento, o qual está em branco devido o delete
-    tagselecionadas.sort(function (a, b) { return a - b })
-    tagselecionadas.pop()
-
   } else {
+    var html = document.getElementById(idtag+"cad").innerHTML;
 
-    document.getElementById(idtag).innerHTML = html + '<div><span class="material-icons">check</span> </div>';
+    // Valida se a tag já está marcada
+    if (html.includes('<div><span class="material-icons">check</span> </div>')) {
 
-    // Joga o id no vetor e ordena
-    tagselecionadas.push(idtag);
-    tagselecionadas.sort(function (a, b) { return a - b })
+      document.getElementById(idtag+"cad").innerHTML = html.replace('<div><span class="material-icons">check</span> </div>', " ");
 
+      // Acha o index da tag no vetor e deleta
+      for (let index = 0; index < tagselecionadas_cadTarefa.length; index++) {
+        if (tagselecionadas_cadTarefa[index] == idtag) {
+          delete tagselecionadas_cadTarefa[index]
+          break;
+        }
+      }
+
+      // Ordena o vetor e retira o último elemento, o qual está em branco devido o delete
+      tagselecionadas_cadTarefa.sort(function (a, b) { return a - b })
+      tagselecionadas_cadTarefa.pop()
+
+    } else {
+
+      document.getElementById(idtag+"cad").innerHTML = html + '<div><span class="material-icons">check</span> </div>';
+
+      // Joga o id no vetor e ordena
+      tagselecionadas_cadTarefa.push(idtag);
+      tagselecionadas_cadTarefa.sort(function (a, b) { return a - b })
+
+    }
   }
 
 }
@@ -48,7 +81,7 @@ window.onload = function carregaTagsFiltradas() {
   var value = inputTags.getAttribute("value");
   tagselecionadas = value.split(",");
   tagselecionadas = removeDuplicadas(tagselecionadas);
-  
+
   // Ordena o vetor. Caso o último valor seja em branco, remove ele
   tagselecionadas.sort(function (a, b) { return a - b })
   if (tagselecionadas[tagselecionadas.length - 1] == "") {

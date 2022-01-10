@@ -3,6 +3,7 @@ const db = require('../config/database');
 const ProjetoColaboradores = require('./ProjetoColaboradores');
 const Projeto = require('./Projeto');
 const Status = require('../models/Status');
+const Sprints = require('../models/Sprints');
 
 const Tarefa = db.sequelize.define('Tarefas', {
   idTarefas: {
@@ -31,9 +32,6 @@ const Tarefa = db.sequelize.define('Tarefas', {
       key: 'idProjetoColaborador'
     }
   },
-  autorRazaoSocial: {
-    type: db.Sequelize.STRING
-  },
   ultimaResposta: {
     type: db.Sequelize.TIME
   },
@@ -53,11 +51,10 @@ const Tarefa = db.sequelize.define('Tarefas', {
   },
   idSprint: {
     type: db.Sequelize.INTEGER.UNSIGNED,
-    // todo: Criar model sprint
-    /* references: {
-      model: Status,
-      key: 'idStatus'
-    } */
+    references: {
+      model: Sprints,
+      key: 'idSprints'
+    }
   } 
 }, {
   timestamps: false
@@ -65,7 +62,8 @@ const Tarefa = db.sequelize.define('Tarefas', {
 
 
 Tarefa.hasOne(ProjetoColaboradores, {
-  foreignKey: 'idProjetoColaborador'
+  foreignKey: 'idProjetoColaborador',
+  sourceKey: 'idAutor'
 });
 Tarefa.hasOne(Projeto, {
   foreignKey: 'idProjetos'

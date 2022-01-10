@@ -2,7 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const { sequelize } = require("../config/database.js");
+const { sequelize, Sequelize } = require("../config/database.js");
 const { autenticado } = require("../helpers/validaAutenticacao.js");
 
 // Importa models utilizados durante o escopo do código
@@ -225,6 +225,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
 });
 
+
 //* Rota para cadastro de tags
 
 router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, res) => {
@@ -258,6 +259,135 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
       res.redirect('/projetos/tarefa/' + req.params.codTarefa);
 
     });;
+
+  }
+});
+
+
+//* Rota para cadastro de tarefas
+router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req, res) => {
+  var erros = [];
+
+  // Verifica se o campo assunto foi preenchido
+  if (!req.body.cad_assunto || typeof req.body.cad_assunto == undefined || req.body.cad_assunto == null) {
+    erros.push({ texto: "Preencha o assunto!" });
+  }
+
+  // Verifica se o campo detalhamento foi preenchido
+  if (!req.body.cad_Detalhamento || typeof req.body.cad_Detalhamento == undefined || req.body.cad_Detalhamento == null) {
+    erros.push({ texto: "Preencha o detalhamento!" });
+  }
+
+  // Caso hajam erros, transforma o json em uma string amigável ao usuário e retorna o mesmo para listaprojetos
+  if (erros.length > 0) {
+    stringerros = JSON.stringify(erros).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' ').replace(/{texto:/g, '').replace(/}/g, '');
+    req.flash("error_msg", stringerros);
+    res.redirect("/projetos/listaProjetos");
+  } else {
+    var idColaborador, idTarefaCriada;
+
+    //? Busca o id do usuário que postou a resposta
+    await ProjetoColaboradores.findAll({
+      where: {
+        idUsuario: req.user.idUsuarios,
+        cancelado: null,
+        idProjeto: global_Projeto
+      },
+      attributes: [
+        'idProjetoColaborador'
+      ],
+      plain: true
+    }).then(colaboradorId => {
+      idColaborador = colaboradorId;
+    }).catch((err) => {
+
+      req.flash("error_msg", "Houve um erro ao postar resposta!" + JSON.stringify(err));
+      res.redirect("/");
+
+    });
+
+    // Valida se foi escolhida sprint para então montar o insert
+    if (req.body.cad_sprint == "sem sprint") {
+      Tarefa.create({
+
+        assunto: req.body.cad_assunto,
+        dataCraicao: Sequelize.fn('now'),
+        prioridade: req.body.cad_Prioridade,
+        idAutor: idColaborador.idProjetoColaborador,
+        ultimaResposta: Sequelize.fn('now'),
+        idProjeto: req.params.idProjeto,
+        idStatus: req.body.cad_idstatus
+
+      }).then(function (result) {
+        idTarefaCriada = result.idTarefas
+
+        TarefasRespostas.create({
+
+          idTarefa: idTarefaCriada,
+          idColaborador: idColaborador.idProjetoColaborador,
+          statusAnterior: req.body.cad_idstatus,
+          statusNovo: req.body.cad_idstatus,
+          resposta: req.body.cad_Detalhamento,
+          dataResposta: Sequelize.fn('now')
+    
+        })
+        //* Código abaixo comentado pois não irá cair na condição, entretanto pode ser utilizado para testes
+        /* .then(function () {
+          req.flash("succes_msg", "Tarefa criada com sucesso!");
+          res.redirect('/');
+        }).catch(function (erro) {
+          req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
+          res.redirect('/');
+        }); */
+        req.flash("succes_msg", "Tarefa criada com sucesso!");
+        res.redirect('/projetos/tarefa/' + idTarefaCriada);   
+      }).catch(function (err) {
+        req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
+        res.redirect('/');
+      });
+
+    } else {
+      
+      Tarefa.create({
+
+        assunto: req.body.cad_assunto,
+        dataCraicao: Sequelize.fn('now'),
+        prioridade: req.body.cad_Prioridade,
+        idAutor: idColaborador.idProjetoColaborador,
+        ultimaResposta: Sequelize.fn('now'),
+        idProjeto: req.params.idProjeto,
+        idStatus: req.body.cad_idstatus,
+        idSprint: req.body.cad_sprint
+
+      }).then(function (result) {
+        idTarefaCriada = result.idTarefas
+        
+        TarefasRespostas.create({
+
+          idTarefa: idTarefaCriada,
+          idColaborador: idColaborador.idProjetoColaborador,
+          statusAnterior: req.body.cad_idstatus,
+          statusNovo: req.body.cad_idstatus,
+          resposta: req.body.cad_Detalhamento,
+          dataResposta: Sequelize.fn('now')
+    
+        })
+        //* Código abaixo comentado pois não irá cair na condição, entretanto pode ser utilizado para testes
+        /* .then(function () {
+          req.flash("succes_msg", "Tarefa criada com sucesso!");
+          res.redirect('/');
+        }).catch(function (erro) {
+          req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
+          res.redirect('/');
+        }); */
+        req.flash("succes_msg", "Tarefa criada com sucesso!");
+        res.redirect('/projetos/tarefa/' + idTarefaCriada);   
+      }).catch(function (err) {
+        req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
+        res.redirect('/');
+      });
+      
+    }
 
   }
 });

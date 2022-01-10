@@ -1,4 +1,4 @@
-<!-- Modal tags-->
+<!-- Modal tags Filtro -->
 <div class="modal fade" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -7,7 +7,8 @@
       </div>
       <div class="modal-body d-flex justify-content-center">
         {{#each Tags}}
-        <div class="tag d-flex" style="background-color: {{cor}};" id="{{idTags}}" onclick="selecionatag({{idTags}})">
+        <div class="tag d-flex" style="background-color: {{cor}};" id="{{idTags}}"
+          onclick="selecionatag({{idTags}}, 0)">
           <div class="mx-auto">
             {{descricao}}
           </div>
@@ -51,55 +52,93 @@
   </div>
 </div>
 
-<!-- Modal previsualizar-->
-<div class="modal fade" id="previsualizarmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+<!-- Modal Cadastro tarefas -->
+<div class="modal fade" id="cadastrotarefasmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="row modal-header justify-content-center">
 
         <div class="row d-flex p-2">
-          <h5 class="modal-title" id="ModalLgTitle">000000 - TEste tarea </h5>
+          <h5 class="modal-title" id="ModalLgTitle">Cadastro de tarefa </h5>
         </div>
 
         <div class="row empHigh">
-          <div class="row mx-auto">
-            <div class="col-md d-flex">
-              <p class="cabecalho">Autor: </p>
-              <p class="cabecalhoinfo">Lucas Buligon Antunes</p>
-            </div>
-            <div class="col-md-3 d-flex">
-              <p class="cabecalho">Prioridade: </p>
-              <p class="cabecalhoinfo">Crítica</p>
-            </div>
-            <div class="col-md d-flex">
-              <p class="cabecalho">Data de criação: </p>
-              <p class="cabecalhoinfo">12/02/2004</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md d-flex">
-              <p class="cabecalho">Sprint: </p>
-              <p class="cabecalhoinfo">51 - Buligon</p>
-            </div>
+          <form autocomplete="off" class="m-2" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa" method="POST">
+            <fieldset>
+              <label for="cad_assunto">Assunto:</label>
+              <input type="text" id="cad_assunto" name="cad_assunto" required>
+
+              <label for="cad_Prioridade">Prioridade:</label>
+              <select class="dropdown" name="cad_Prioridade" id="cad_Prioridade">
+                <optgroup>
+                  <option value="Alta">Alta</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Baixa">Baixa</option>
+                </optgroup>
+              </select>
+
+              <label for="cad_idstatus">Status:</label>
+
+              <select class="dropdown" name="cad_idstatus" id="cad_idstatus">
+                <optgroup>
+                  {{#each Status}}
+                  <option value="{{idStatus}}">{{nome}}</option>
+                  {{else}}
+                  {{/each}}
+                </optgroup>
+              </select>
+
+              <label for="cad_sprint">Sprint:</label>
+              <select class="dropdown" name="cad_sprint" id="cad_sprint">
+                <optgroup>
+                  <option value="sem sprint">Sem sprint</option>
+                  {{#each Sprints}}
+                  <option value="{{idSprints}}">{{nome}}</option>
+                  {{else}}
+                  {{/each}}
+                </optgroup>
+              </select>
+
+              <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
+                data-target="#cad_tagmodal">
+                Tags
+              </button>
+
+              <label for="cad_Detalhamento">Detalhamento:</label>
+              <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="empHigh detalhamento" required></textarea>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Visualizar</button>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal tags Cadastro -->
+<div class="modal fade" id="cad_tagmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Tags</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        {{#each Tags}}
+        <div class="tag d-flex" style="background-color: {{cor}};" id="{{idTags}}cad"
+          onclick="selecionatag({{idTags}}, 1)">
+          <div class="mx-auto">
+            {{descricao}}
           </div>
         </div>
 
-        <div class="row empHigh">
-          <div class="field d-flex mx-auto">
-            <p class="cabecalho">Tags: </p>
-          </div>
-        </div>
+        {{else}}
+        {{/each}}
       </div>
-
-      <div class="modal-body d-flex justify-content-center m-3" style="background-color: #4A4659">
-        <!--
-            respostas
-          -->
-      </div>
-      <div class="modal-footer row d-flex" style="width: 100%; justify-content: flex-end">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary">Visualizar</button>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
       </div>
     </div>
   </div>
@@ -283,7 +322,7 @@
     </form>
 
     <div id="grid" class="row m-2 table-responsive-xl">
-      <table id="gridTabela"class="table table-striped table-dark table-bordered table-hover ">
+      <table id="gridTabela" class="table table-striped table-dark table-bordered table-hover ">
         <colgroup>
           <col span="1" style="min-width: 10ch; max-width: fit-content;">
           <col span="1" style="min-width: 30ch; max-width: fit-content;">
@@ -323,8 +362,9 @@
 
     <div class="row d-flex" style="width: 100%; justify-content: flex-end">
       <div class="field">
-        <button class="btn align-self-center" style="width: 13ch; height: 4ch;">
-          Visualizar
+        <button class="btn align-self-center" style="width: 13ch; height: 4ch;" data-toggle="modal"
+          data-target="#cadastrotarefasmodal">
+          Criar tarefa
         </button>
       </div>
     </div>

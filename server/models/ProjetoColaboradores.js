@@ -1,8 +1,5 @@
-const { devNull } = require('os');
-const { deflate } = require('zlib');
 const db = require('../config/database');
-const Usuario = require('./Usuario');
-
+const Usuario = require('../models/Usuario.js');
 const Projeto = require('../models/Projeto.js');
 
 const ProjetoColaboradores = db.sequelize.define('ProjetoColaboradores', {
@@ -45,5 +42,6 @@ ProjetoColaboradores.hasMany(Usuario, {
   foreignKey: 'idUsuarios',
   sourceKey: 'idUsuario'
 });
+
 
 module.exports = ProjetoColaboradores;
