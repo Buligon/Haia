@@ -55,60 +55,88 @@
 <!-- Modal Cadastro tarefas -->
 <div class="modal fade" id="cadastrotarefasmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
   aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="row modal-header justify-content-center">
+  <div class="modal-dialog modal-dialog-centered modal-lg h-100" role="document">
+    <div class="modal-content h-100">
+      <div class="row modal-header justify-content-center h-100">
 
         <div class="row d-flex p-2">
           <h5 class="modal-title" id="ModalLgTitle">Cadastro de tarefa </h5>
         </div>
 
-        <div class="row empHigh">
-          <form autocomplete="off" class="m-2" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa" method="POST">
-            <fieldset>
-              <label for="cad_assunto">Assunto:</label>
-              <input type="text" id="cad_assunto" name="cad_assunto" required>
+        <div class="row empHigh h-100">
+          <form autocomplete="off" class="h-100" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa"
+            method="POST">
+            <fieldset class="h-100">
 
-              <label for="cad_Prioridade">Prioridade:</label>
-              <select class="dropdown" name="cad_Prioridade" id="cad_Prioridade">
-                <optgroup>
-                  <option value="Alta">Alta</option>
-                  <option value="Normal">Normal</option>
-                  <option value="Baixa">Baixa</option>
-                </optgroup>
-              </select>
+              <div class="row">
 
-              <label for="cad_idstatus">Status:</label>
+                <label for="cad_assunto" id="label_cad_assunto" class="mx-auto">Assunto:</label>
+                <input type="text" id="cad_assunto" name="cad_assunto" class="mx-auto" required>
 
-              <select class="dropdown" name="cad_idstatus" id="cad_idstatus">
-                <optgroup>
-                  {{#each Status}}
-                  <option value="{{idStatus}}">{{nome}}</option>
-                  {{else}}
-                  {{/each}}
-                </optgroup>
-              </select>
+              </div>
 
-              <label for="cad_sprint">Sprint:</label>
-              <select class="dropdown" name="cad_sprint" id="cad_sprint">
-                <optgroup>
-                  <option value="sem sprint">Sem sprint</option>
-                  {{#each Sprints}}
-                  <option value="{{idSprints}}">{{nome}}</option>
-                  {{else}}
-                  {{/each}}
-                </optgroup>
-              </select>
+              <div class="row d-flex justify-content-around m-2 p-1">
 
-              <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
-                data-target="#cad_tagmodal">
-                Tags
-              </button>
+                <div class="col mx-auto">
+                  <label for="cad_Prioridade" class="label">Prioridade:</label>
+                  <select class="dropdown" name="cad_Prioridade" id="cad_Prioridade">
+                    <optgroup>
+                      <option value="Alta">Alta</option>
+                      <option value="Normal">Normal</option>
+                      <option value="Baixa">Baixa</option>
+                    </optgroup>
+                  </select>
+                </div>
 
-              <label for="cad_Detalhamento">Detalhamento:</label>
-              <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="empHigh detalhamento" required></textarea>
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="submit" class="btn btn-primary">Visualizar</button>
+                <div class="col mx-auto">
+                  <label for="cad_idstatus" class="label">Status:</label>
+                  <select class="dropdown" name="cad_idstatus" id="cad_idstatus">
+                    <optgroup>
+                      {{#each Status}}
+                      <option value="{{idStatus}}">{{nome}}</option>
+                      {{else}}
+                      {{/each}}
+                    </optgroup>
+                  </select>
+                </div>
+
+              </div>
+
+              <div class="row d-flex justify-content-around m-2 p-1">
+
+                <div class="col">
+
+                  <label for="cad_sprint" class="label">Sprint:</label>
+                  <select class="dropdown" name="cad_sprint" id="cad_sprint">
+                    <optgroup>
+                      <option value="sem sprint">Sem sprint</option>
+                      {{#each Sprints}}
+                      <option value="{{idSprints}}">{{nome}}</option>
+                      {{else}}
+                      {{/each}}
+                    </optgroup>
+                  </select>
+
+                </div>
+                <div class="col d-flex justify-content-center align-middle align-items-center">
+
+                  <button type="button" class="btn btn-primary filtrar" data-toggle="modal" data-target="#cad_tagmodal" id="btn_tags">
+                    Tags
+                  </button>
+
+                </div>
+
+              </div>
+              <div id="row_detalhamento" class="row col d-flex justify-content-center align-middle align-items-center mx-auto">
+                <label for="cad_Detalhamento">Detalhamento:</label>
+                <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="h-100 empHigh detalhamento"
+                  required></textarea>
+              </div>
+
+              <div class="row d-flex align-items-end justify-content-around m-2 p-1">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Criar tarefa</button>
+              </div>
             </fieldset>
           </form>
         </div>

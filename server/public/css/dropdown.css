@@ -102,3 +102,28 @@
 .detalhamento:focus {
   outline: none;
 }
+
+#cad_assunto {
+  width: 85%;
+}
+
+#label_cad_assunto {
+  width: 85%;
+}
+
+#modal_cadTarefa, #modalcontent_cadTarefa {
+  height: 100%;
+}
+
+#cadastrotarefasmodal {
+  height: 85%;
+}
+
+#row_detalhamento {
+  height: 45%;
+  margin-bottom: 5%;
+}
+
+.label {
+  width: 30%;
+}
