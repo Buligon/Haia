@@ -21,8 +21,10 @@ const Projeto = db.sequelize.define('Projetos', {
   },
   descricao: {
     type: db.Sequelize.TEXT
-  }
-  //foto
+  }/* ,
+  banner: {
+    type: db.Sequelize.BLOB
+  } */
 }, {
   timestamps: false
 });

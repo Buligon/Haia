@@ -32,18 +32,51 @@ router.get('/listaProjetos', autenticado, async (req, res) => {
     }],
     where: { cancelado: null }
   }).then((projeto) => {
+
     res.render('listaProjetos', {
       layout: 'listaProjetosLayout.hbs',
       style: 'styles.css',
-      projetos: projeto.map(projeto => projeto.toJSON())
+      projetos: projeto.map(projeto => projeto.toJSON()),
     });
-    console.log(projeto => projeto.toJSON())
+    
+
   }).catch((err) => {
     req.flash("error_msg", "Houve um erro ao listar os projetos!" + JSON.stringify(err));
     res.redirect("/")
   });
 });
 
+router.post('/listaProjetos', autenticado, async (req, res) => {
+
+  // Verifica se o campo nome foi preenchido. Caso não, redireciona o usuário para a rota pedindo para informar o campo
+  if (!req.body.nome || typeof req.body.nome == undefined || req.body.nome == null) {
+    req.flash("error_msg", "Preencha o campo nome!");
+    res.redirect("/listaProjetos");
+  } else {
+    Projeto.create({
+      nomeProjeto: req.body.nome,
+      codigoCriador: req.user.idUsuarios,
+      descricao: req.body.descricao/* ,
+      banner: req.body.banner */
+    }).then(function (result) {
+      ProjetoColaboradores.create({
+        idUsuario: req.user.idUsuarios,
+        idProjeto: result.idProjetos,
+        idCargo: 1,
+        dataCriacao: Sequelize.fn('now')
+      });
+      
+      req.flash("succes_msg", "Projeto criado com sucesso!");
+      res.redirect("/projetos/listaProjetos");
+
+    }).catch(function (erro) {
+
+      req.flash("error_msg", "Houve um erro ao criar tag!" + JSON.stringify(erro));
+      res.redirect('/');
+
+    });
+  }
+});
 
 //* Lista todas as tarefas de um projeto
 
