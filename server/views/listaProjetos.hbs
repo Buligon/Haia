@@ -59,7 +59,7 @@
   <div id="content" class="p-4 p-md-5">
 
     <section class="pt-4">
-      <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-start">
         {{#each projetos}}
 
         <div class="col">
@@ -74,7 +74,7 @@
         {{else}}
 
         {{/each}}
-        <div class="col">
+        <div class="col d-flex justify-content-start">
           <div class="card">
             <div class="card-body" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
               <button id="adicionaProjeto" type="button" class="btn btn-primary alinhaCentro" style="color: transparent !important; background-color: transparent !important; border-color: transparent  !important;" data-toggle="modal" data-target="#tagmodal">
