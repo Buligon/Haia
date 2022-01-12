@@ -6,7 +6,7 @@ const router = express.Router();
 const Usuario = require('../models/Usuario.js');
 const { sequelize } = require("../config/database.js");
 const bcrypt = require('bcryptjs');
-const flash = require("connect-flash/lib/flash");
+const transporter = require("../config/email.js");
 
 
 // Tela de cadastro de usuários
@@ -101,10 +101,23 @@ router.post('/cadUsuario', (req, res) => {
                 email: novoUsuario.email,
                 senha: novoUsuario.senha
       
-              }).then(function () {
+              }).then(function (result) {
       
                 req.flash("succes_msg", "Conta criada com sucesso!");
-                res.redirect('/listaProjetos')
+
+                transporter.sendMail({
+                  from: "Haia <haia.software.noreply@gmail.com>",
+                  to: result.email,
+                  subject: "Conta criada com sucesso",
+                  text: "Olá, "+ result.nomeUsuario +"! Ficamos muito feliz que esteja utilizando nossa plataforma! Sua conta foi criada com sucesso.",
+                 /*  html: */ 
+                }).then(message => {
+                  console.log(message);
+                }).catch(err => {
+                  console.log(err);
+                });
+
+                res.redirect('/projetos/listaProjetos')
       
               }).catch(function (erro) {
       

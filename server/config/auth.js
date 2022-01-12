@@ -13,7 +13,6 @@ module.exports = function(passport) {
 
       // Informa que a conta não existe caso o sistema não encontre nenhum registro com o email
       if(!usuario) {
-        console.log("teste")
         return done(null, false, {message: "Esta conta não existe"});
       }
 

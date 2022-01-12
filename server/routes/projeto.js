@@ -284,7 +284,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
     }).then(function () {
 
       req.flash("succes_msg", "Tag criada com sucesso!");
-      res.redirect("/projetos/projetoTarefas/" + global_Projeto);
+      res.redirect("/projetos/listaProjetos");
 
     }).catch(function (erro) {
 
