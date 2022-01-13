@@ -9,7 +9,6 @@ const passport = require("passport");
 require("../config/auth")(passport);
 const moment = require('moment');
 moment().format(); 
-var dateFormat = import('dateformat');
 
 // Configurações 
   // Template engine

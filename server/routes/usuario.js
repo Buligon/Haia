@@ -141,4 +141,7 @@ router.post('/cadUsuario', (req, res) => {
 
 });
 
+
+// Rota para convite de usuários 
+
 module.exports = router;

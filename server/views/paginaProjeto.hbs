@@ -1,3 +1,45 @@
+<!-- Modal convida colaborador -->
+<div class="modal" id="convidaColaborador" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Convidar colaborador</h5>
+      </div>
+      <form autocomplete="off" action="/projetoConfig/convidaColaborador/{{idProjeto}}" method="POST">
+        <fieldset>
+          <div class="modal-body">
+            <div class="row d-flex justify-content-center">
+              <label style="width: 80%;" for="emailColaborador">Email:</label>
+              <input class="dp06" style="width: 80%;" type="email" id="emailColaborador" name="emailColaborador"
+                placeholder="Ex.: email@exemplo.com" required>
+            </div>
+            <div class="row d-flex justify-content-around m-2">
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+              <button type="submit" class="btn btn-primary">Convidar</button>
+            </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal remove colaborador -->
+<div class="modal" id="convidaColaborador" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Remover colaborador</h5>
+      </div>
+      <form style="display: none;" autocomplete="off" action="/projetos/projetoConfig/removeColaborador" method="POST">
+        
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+      <button type="submit" class="btn btn-primary">Convidar</button>
+    </div>
+  </div>
+</div>
+
 <div class="wrapper d-flex">
   <nav id="sidebar" class="active">
     <ul class="list-unstyled components mb-5" style="height: 100%;">
@@ -20,7 +62,7 @@
           <span>Tarefas</span>
         </a>
       </li>
-      <li>
+      {{!-- <li>
         <a href="/emconstrucao">
           <i class="material-icons-outlined">chat_bubble_outline</i>
           <span>Mensagens</span>
@@ -37,7 +79,7 @@
           <i class="material-icons-outlined">forum</i>
           <span>Fórum</span>
         </a>
-      </li>
+      </li> --}}
       <li>
         <a href="/emconstrucao">
           <i class="material-icons-outlined">portrait</i>
@@ -77,22 +119,31 @@
     <div class="row">
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
-          <button class="nav-link active" id="nav-dashboards-tab" data-bs-toggle="tab" data-bs-target="#nav-dashboards"
-            type="button" role="tab" aria-controls="nav-dashboards" aria-selected="true">Dashboards</button>
-          <button class="nav-link" id="nav-colaboradores-tab" data-bs-toggle="tab" data-bs-target="#nav-colaboradores"
-            type="button" role="tab" aria-controls="nav-colaboradores" aria-selected="false">Colaboradores</button>
-          <button class="nav-link" id="nav-cargos-tab" data-bs-toggle="tab" data-bs-target="#nav-cargos" type="button"
-            role="tab" aria-controls="nav-cargos" aria-selected="false">Cargos</button>
-          <button class="nav-link" id="nav-auditoria-tab" data-bs-toggle="tab" data-bs-target="#nav-auditoria"
+          <button class="nav-link active" id="nav-colaboradores-tab" data-bs-toggle="tab"
+            data-bs-target="#nav-colaboradores" type="button" role="tab" aria-controls="nav-colaboradores"
+            aria-selected="true">Colaboradores</button>
+          <button class="nav-link disabled" id="nav-dashboards-tab" data-bs-toggle="tab"
+            data-bs-target="#nav-dashboards" type="button" role="tab" aria-controls="nav-dashboards"
+            aria-selected="false">Dashboards</button>
+          <button class="nav-link disabled" id="nav-cargos-tab" data-bs-toggle="tab" data-bs-target="#nav-cargos"
+            type="button" role="tab" aria-controls="nav-cargos" aria-selected="false">Cargos</button>
+          <button class="nav-link disabled" id="nav-auditoria-tab" data-bs-toggle="tab" data-bs-target="#nav-auditoria"
             type="button" role="tab" aria-controls="nav-auditoria" aria-selected="false">Auditoria</button>
         </div>
+      </nav>
     </div>
-    </nav>
+
     <div class="row tab-content" id="nav-tabContent">
-      <div class="tab-pane fade show active" id="nav-dashboards" role="tabpanel" aria-labelledby="nav-dashboards-tab">
+      {{! -------------- DASHBOARDS INÍCIO --------------}}
+      <div class="tab-pane fade" id="nav-dashboards" role="tabpanel" aria-labelledby="nav-dashboards-tab">
         A
       </div>
-      <div class="tab-pane fade" id="nav-colaboradores" role="tabpanel" aria-labelledby="nav-colaboradores-tab">
+      {{! -------------- DASHBOARDS FIM --------------}}
+
+
+      {{! -------------- COLABORADORES INÍCIO --------------}}
+      <div class="tab-pane fade show active" id="nav-colaboradores" role="tabpanel"
+        aria-labelledby="nav-colaboradores-tab">
         <div class="row cabecalhoUsuarios d-flex p-3 mx-auto">
           <div class="col-2 empHigh mx-auto d-flex">
             <p class="align-self-center m-0">Colaboradores:</p>
@@ -104,7 +155,8 @@
           </div>
           <div class="col-3 d-flex">
 
-            <button type="button" class="btn btn-primary align-self-center mx-auto">Convidar</button>
+            <button type="button" class="btn btn-primary align-self-center mx-auto" data-toggle="modal"
+              data-target="#convidaColaborador">Convidar</button>
           </div>
         </div>
         <div class="row mx-auto">
@@ -125,8 +177,8 @@
             </div>
 
             <div class="col d-flex">
-              <button type="button" class="btn btn-primary align-self-center">
-                <span class="material-icons-outlined align-middle">add</span>
+              <button type="button" class="btn btn-primary align-self-center" onclick="removeUsuario({{idProjetoColaborador}})">
+                <span class="material-icons-outlined">person_remove</span>
               </button>
             </div>
 
@@ -136,6 +188,10 @@
           {{/each}}
         </div>
       </div>
+      {{! -------------- COLABORADORES FIM --------------}}
+
+
+      {{! -------------- CARGOS INÍCIO --------------}}
       <div class="tab-pane fade" id="nav-cargos" role="tabpanel" aria-labelledby="nav-cargos-tab">
         <div class="col-2">
 
@@ -168,6 +224,10 @@
           </div>
         </div>
       </div>
+      {{! -------------- CARGOS FIM --------------}}
+
+
+      {{! -------------- AUDITORIA INÍCIO --------------}}
       <div class="tab-pane fade" id="nav-auditoria" role="tabpanel" aria-labelledby="nav-auditoria-tab">
         <div class="row borda">
           <h5>Registro de auditoria</h5>
@@ -193,6 +253,7 @@
           <!-- Registro Fim-->
         </div>
       </div>
+      {{! -------------- AUDITORIA FIM --------------}}
     </div>
   </div>
   <div class="col"></div>
@@ -205,3 +266,4 @@
 <script src="/js/main.js"></script>
 <script src="/js/bootstrap.js"></script>
 <script src="/js/abreProjeto.js"></script>
+<script src="/js/RemoveColaborador.js"></script>

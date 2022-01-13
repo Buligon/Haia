@@ -14,8 +14,7 @@ const Usuario = require('../models/Usuario');
 const Tags = require('../models/Tags');
 const Status = require('../models/Status');
 const Sprints = require('../models/Sprints');
-
-var global_Projeto;
+const ProjetoAcessos = require('../models/ProjetoAcessos');
 
 //* Lista todos os projetos
 
@@ -38,7 +37,7 @@ router.get('/listaProjetos', autenticado, async (req, res) => {
       style: 'styles.css',
       projetos: projeto.map(projeto => projeto.toJSON()),
     });
-    
+
 
   }).catch((err) => {
     req.flash("error_msg", "Houve um erro ao listar os projetos!" + JSON.stringify(err));
@@ -65,7 +64,7 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
         idCargo: 1,
         dataCriacao: Sequelize.fn('now')
       });
-      
+
       req.flash("succes_msg", "Projeto criado com sucesso!");
       res.redirect("/projetos/listaProjetos");
 
@@ -78,11 +77,39 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
   }
 });
 
+
 //* Lista todas as tarefas de um projeto
 
 router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
-  // Toda vez que o usuário entra em um projeto, a variável global recebe o código do mesmo
-  global_Projeto = req.params.codProjeto;
+  var idProjeto;
+
+  await ProjetoAcessos.findAndCountAll({
+    where: {
+      idUsuario: req.user.idUsuarios
+    },
+    plain: true
+  }).then(result => {
+    if (result.count > 1) {
+      ProjetoAcessos.destroy({
+        where: {
+          idUsuario: req.user.idUsuarios
+        },
+        order: [['idProjetoAcessos', 'ASC']],
+        limit: (result.count - 1)
+      })
+    }
+  }).catch(err => {
+    console.log(err)
+  });
+
+  await ProjetoAcessos.create({
+    idUsuario: req.user.idUsuarios,
+    idProjeto: req.params.codProjeto
+  }).then(result => {
+    console.log(result)
+  }).catch(err => {
+    console.log(err)
+  });
 
   var tagsProjeto, statusProjeto, sprintProjeto;
 
@@ -172,7 +199,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   // Adiciona um subselect caso o usuário selecione uma ou mais tags
   if (!(!req.body.tagsSelecionadas || typeof req.body.tagsSelecionadas == undefined || req.body.tagsSelecionadas == null)) {
-    where.push(['idtarefas IN ( SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idtag = tags.idTags where tt.cancelado IS NULL AND tags.cancelada IS NULL AND tags.idProjeto = ' + global_Projeto + ')'])
+    where.push(['idtarefas IN ( SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idtag = tags.idTags where tt.cancelado IS NULL AND tags.cancelada IS NULL AND tags.idProjeto = ' + req.params.codProjeto + ')'])
   }
 
   // Função adicionada para formatar data no padrão 'YYYY-MM-DD'
@@ -272,14 +299,14 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
   // Caso ele não tenha sido preenchido, redireciona o usuário para a rota pedindo para informar o campo
   if (erros.length > 0) {
     req.flash("error_msg", "Preencha o campo descrição antes de salvar a tag!");
-    res.redirect("/projetos/projetoTarefas/" + global_Projeto);
+    res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
   } else {
 
     Tags.create({
 
       descricao: req.body.descricao,
       cor: req.body.cor,
-      idProjeto: global_Projeto
+      idProjeto: req.params.idProjeto
 
     }).then(function () {
 
@@ -324,7 +351,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
       where: {
         idUsuario: req.user.idUsuarios,
         cancelado: null,
-        idProjeto: global_Projeto
+        idProjeto: req.params.idProjeto
       },
       attributes: [
         'idProjetoColaborador'
@@ -362,7 +389,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
           statusNovo: req.body.cad_idstatus,
           resposta: req.body.cad_Detalhamento,
           dataResposta: Sequelize.fn('now')
-    
+
         })
         //* Código abaixo comentado pois não irá cair na condição, entretanto pode ser utilizado para testes
         /* .then(function () {
@@ -373,14 +400,14 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
           res.redirect('/');
         }); */
         req.flash("succes_msg", "Tarefa criada com sucesso!");
-        res.redirect('/projetos/tarefa/' + idTarefaCriada);   
+        res.redirect('/projetos/tarefa/' + idTarefaCriada);
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
         res.redirect('/');
       });
 
     } else {
-      
+
       Tarefa.create({
 
         assunto: req.body.cad_assunto,
@@ -394,7 +421,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 
       }).then(function (result) {
         idTarefaCriada = result.idTarefas
-        
+
         TarefasRespostas.create({
 
           idTarefa: idTarefaCriada,
@@ -403,7 +430,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
           statusNovo: req.body.cad_idstatus,
           resposta: req.body.cad_Detalhamento,
           dataResposta: Sequelize.fn('now')
-    
+
         })
         //* Código abaixo comentado pois não irá cair na condição, entretanto pode ser utilizado para testes
         /* .then(function () {
@@ -414,12 +441,12 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
           res.redirect('/');
         }); */
         req.flash("succes_msg", "Tarefa criada com sucesso!");
-        res.redirect('/projetos/tarefa/' + idTarefaCriada);   
+        res.redirect('/projetos/tarefa/' + idTarefaCriada);
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
         res.redirect('/');
       });
-      
+
     }
 
   }
@@ -491,7 +518,7 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
       style: 'styles.css',
       Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
       TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
-      idProjeto: global_Projeto
+      idProjeto: Tarefa.idProjeto
     });
 
   }).catch((err) => {
@@ -507,6 +534,18 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
 //* Rota utilizada para postar resposta na tarefa 
 
 router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
+  var idProjeto;
+
+  await Tarefa.findAll({
+    where: {
+      idTarefas: req.params.codTarefa
+    },
+    plain: true
+  }).then(result => {
+    idProjeto = result.idProjeto
+  }).catch(err => {
+    console.log(err)
+  })
 
   function informaErro(textoErro) {
     req.flash("error_msg", textoErro);
@@ -547,7 +586,7 @@ router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
     where: {
       idUsuario: req.user.idUsuarios,
       cancelado: null,
-      idProjeto: global_Projeto
+      idProjeto: idProjeto
     },
     attributes: [
       'idProjetoColaborador'
@@ -584,41 +623,6 @@ router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
   });
 
   // ----- FINAL DA GRAVAÇÃO DA RESPOSTA NO BANCO DE DADOS -----
-
-});
-
-
-router.get('/projetoConfig', autenticado, async (req, res) => {
-
-  ProjetoColaboradores.findAll({
-    include: [{
-      model: Usuario,
-      attributes: []
-    }],
-    where: {
-      idProjeto: global_Projeto,
-      cancelado: null
-    },
-    attributes: [
-      'idProjetoColaborador',
-      'idCargo',
-      [sequelize.col('Usuarios.nomeUsuario'), 'nomeUsuario']
-    ]
-  }).then(projetoColaboradores => {
-
-    res.render('paginaProjeto', {
-      layout: 'paginaProjetoLayout.hbs',
-      style: 'styles.css',
-      idProjeto: global_Projeto,
-      Colaboradores: projetoColaboradores.map(projetoColaboradores => projetoColaboradores.toJSON())
-    });
-  }).catch(err => {
-
-    req.flash("error_msg", "Houve um erro carregar as informações do projeto!" + JSON.stringify(err));
-    res.redirect("/projetos/listaProjetos");
-
-  });
-
 
 });
 
