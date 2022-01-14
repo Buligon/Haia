@@ -379,6 +379,64 @@ router.post('/projetoTarefas/:idProjeto/editaStatus/:idStatus', autenticado, asy
 });
 
 
+//* Rota para cadastro de sprints
+
+router.post('/projetoTarefas/:idProjeto/cadastroSprint', autenticado, async (req, res) => {
+  if (!req.body.nomeSprintCadastro || typeof req.body.nomeSprintCadastro == undefined || req.body.nomeSprintCadastro == null) {
+    req.flash("error_msg", "Preencha o nome antes de salvar a sprint!");
+    res.redirect("/projetos/listaProjeots");
+  } else {
+    await Sprints.create({
+      nome: req.body.nomeSprintCadastro,
+      idProjeto: req.params.idProjeto,
+      dataCriacao: Sequelize.fn('now')
+    }).then(result => {
+      req.flash("success_msg", "Sprint criada com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+});
+
+
+//* Rota para edição de sprints
+
+router.post('/projetoTarefas/:idProjeto/editaSprint/:idSprint', autenticado, async (req, res) => {
+  console.log(req.body.checkApagaSprint)
+  if (req.body.checkApagaSprint == "on") {
+    await Sprints.update(
+      {
+        cancelada: 1,
+        dataAlteracao: Sequelize.fn('now')
+      },
+      { where: { idSprints: req.params.idSprint } }
+    ).then(result => {
+      req.flash("success_msg", "Sprint excluída com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    })
+  }
+
+  if (!req.body.nomeSprint || typeof req.body.nomeSprint == undefined || req.body.nomeSprint == null) {
+    req.flash("error_msg", "Preencha o nome antes de alterar a sprint!");
+    res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
+  } else {
+    await Sprints.update(
+      {
+        nome: req.body.nomeSprint,
+        dataAlteracao: Sequelize.fn('now')
+      },
+      { where: { idSprints: req.params.idSprint } }
+    ).then(result => {
+      req.flash("success_msg", "Sprint alterada com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+});
+
+
 //* Rota para cadastro de tarefas
 
 router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req, res) => {

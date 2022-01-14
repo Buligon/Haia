@@ -13,9 +13,6 @@ const Sprints = db.sequelize.define('Sprints', {
     type: db.Sequelize.STRING,
     allowNull: false
   },
-  descricao: {
-    type: db.Sequelize.STRING
-  },
   dataCriacao: {
     type: db.Sequelize.DATE,
     defaultValue: db.Sequelize.fn('now')

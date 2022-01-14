@@ -52,13 +52,16 @@
   </div>
 </div>
 
+
+{{!-- ------------------- INÍCIO SEÇÃO DE STATUS ------------------- --}}
+
 <!-- Modal gerenciar status -->
 <div class="modal fade" id="statusmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header d-flex justify-content-center">
-        <h5 class="modal-title" id="ModalLongTitle">Tags</h5>
+        <h5 class="modal-title" id="ModalLongTitle">Gerenciar Status</h5>
       </div>
       <div class="modal-body d-flex justify-content-center">
         {{#each Status}}
@@ -128,6 +131,91 @@
     </div>
   </div>
 </div>
+
+{{!-- ------------------- FINAL SEÇÃO DE STATUS ------------------- --}}
+
+
+{{!-- ------------------- INÍCIO SEÇÃO DE SPRINTS ------------------- --}}
+
+<!-- Modal gerenciar Sprints -->
+<div class="modal fade" id="sprintsmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Gerenciar Sprints</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        {{#each Sprints}}
+        <div class="tag d-flex" onclick="editaSprint({{idSprints}}, {{../idProjeto}})">
+          <div class="mx-auto" id="sprint{{idSprints}}" data-toggle="modal"
+              data-target="#editaSprintsmodal">
+            {{nome}}
+          </div>
+        </div>
+        {{else}}
+        {{/each}}
+        <button class="tag" onclick="editaSprint({{idSprints}})" data-toggle="modal" data-target="#cadastroSprintsmodal">Adicionar sprint</button>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cadastro Sprints -->
+<div class="modal fade" id="cadastroSprintsmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Cadastro de sprint</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <form autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroSprint" method="POST">
+          <fieldset>
+            <label for="nomeSprintCadastro">Nome:</label>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeSprintCadastro" name="nomeSprintCadastro" placeholder="Ex.: Desenvolvimento" required>
+          </fieldset>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edita Sprints -->
+<div class="modal" id="editaSprintsmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Edição de Sprint</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <form id="formEdicaoSprint" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaSprint/" method="POST">
+          <fieldset>
+            <label for="nomeSprint">Nome:</label>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeSprint" name="nomeSprint" placeholder="Ex.: Desenvolvimento" required>
+            <label for="checkApagaSprint">Apagar sprint?</label>
+            <input type="checkbox" id="checkApagaSprint" name="checkApagaSprint">
+          </fieldset>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- ------------------- FINAL SEÇÃO DE SPRINTS ------------------- --}}
+
 
 <!-- Modal Cadastro tarefas -->
 <div class="modal fade" id="cadastrotarefasmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
@@ -468,11 +556,13 @@
     </div>
 
     <div class="row d-flex" style="width: 100%; justify-content: flex-end">
-      <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
-        data-target="#statusmodal">
+      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal" data-target="#sprintsmodal">
+        Gerenciar sprints
+      </button>
+      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal" data-target="#statusmodal">
         Gerenciar status
       </button>
-      <button class="btn align-self-center" style="width: 13ch; height: 4ch;" data-toggle="modal"
+      <button class="btn align-self-center m-2" style="width: 13ch; height: 4ch;" data-toggle="modal"
         data-target="#cadastrotarefasmodal">
         Criar tarefa
       </button>
@@ -499,4 +589,4 @@
 <script src="/js/filtraTarefas.js"></script>
 <script src="/js/abreProjeto.js"></script>
 <script src="/js/ordenaGrid.js"></script>
-<script src="/js/gerenciastatus.js"></script>
+<script src="/js/gerenciaStatuseSprints.js"></script>
