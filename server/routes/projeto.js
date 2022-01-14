@@ -45,6 +45,9 @@ router.get('/listaProjetos', autenticado, async (req, res) => {
   });
 });
 
+
+//* Cria um novo projeto
+
 router.post('/listaProjetos', autenticado, async (req, res) => {
 
   // Verifica se o campo nome foi preenchido. Caso não, redireciona o usuário para a rota pedindo para informar o campo
@@ -70,7 +73,7 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
 
     }).catch(function (erro) {
 
-      req.flash("error_msg", "Houve um erro ao criar tag!" + JSON.stringify(erro));
+      req.flash("error_msg", "Houve um erro ao criar o projeto!" + JSON.stringify(erro));
       res.redirect('/');
 
     });
@@ -324,7 +327,60 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
 });
 
 
+//* Rota para cadastro de status
+
+router.post('/projetoTarefas/:idProjeto/cadastroStatus', autenticado, async (req, res) => {
+  if (!req.body.nomeStatusCadastro || typeof req.body.nomeStatusCadastro == undefined || req.body.nomeStatusCadastro == null) {
+    req.flash("error_msg", "Preencha o nome antes de salvar o status!");
+    res.redirect("/projetos/listaProjeots");
+  } else {
+    await Status.create({
+      nome: req.body.nomeStatusCadastro,
+      idProjeto: req.params.idProjeto
+    }).then(result => {
+      req.flash("success_msg", "Status criado com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+});
+
+
+//* Rota para edição de status
+
+router.post('/projetoTarefas/:idProjeto/editaStatus/:idStatus', autenticado, async (req, res) => {
+  console.log(req.body.checkApagaStatus)
+  if (req.body.checkApagaStatus == "on") {
+    Status.destroy({
+      where: {
+        idStatus: req.params.idStatus
+      }
+    }).then(result => {
+      req.flash("success_msg", "Status excluído com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    })
+  }
+
+  if (!req.body.nomeStatus || typeof req.body.nomeStatus == undefined || req.body.nomeStatus == null) {
+    req.flash("error_msg", "Preencha o nome antes de alterar o status!");
+    res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
+  } else {
+    await Status.update(
+      { nome: req.body.nomeStatus },
+      { where: { idStatus: req.params.idStatus } }
+    ).then(result => {
+      req.flash("success_msg", "Status alterado com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+});
+
+
 //* Rota para cadastro de tarefas
+
 router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req, res) => {
   var erros = [];
 

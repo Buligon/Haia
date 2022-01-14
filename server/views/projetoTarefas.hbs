@@ -52,6 +52,83 @@
   </div>
 </div>
 
+<!-- Modal gerenciar status -->
+<div class="modal fade" id="statusmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Tags</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        {{#each Status}}
+        <div class="tag d-flex" onclick="editaStatus({{idStatus}}, {{../idProjeto}})">
+          <div class="mx-auto" id="status{{idStatus}}" data-toggle="modal"
+              data-target="#editastatusmodal">
+            {{nome}}
+          </div>
+        </div>
+        {{else}}
+        {{/each}}
+        <button class="tag" onclick="editaStatus({{idStatus}})" data-toggle="modal" data-target="#cadastrostatusmodal">Adicionar status</button>
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Cadastro status -->
+<div class="modal fade" id="cadastrostatusmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Cadastro de status</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <form autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroStatus" method="POST">
+          <fieldset>
+            <label for="nomeStatusCadastro">Nome:</label>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeStatusCadastro" name="nomeStatusCadastro" placeholder="Ex.: Análise" required>
+          </fieldset>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal edita status -->
+<div class="modal fade" id="editastatusmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Edição de status</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <form id="formEdicaoStatus" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaStatus/" method="POST">
+          <fieldset>
+            <label for="nomeStatus">Nome:</label>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeStatus" name="nomeStatus" placeholder="Ex.: Impedida" required>
+            <label for="checkApagaStatus">Apagar status?</label>
+            <input type="checkbox" id="checkApagaStatus" name="checkApagaStatus">
+          </fieldset>
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Modal Cadastro tarefas -->
 <div class="modal fade" id="cadastrotarefasmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
   aria-hidden="true">
@@ -120,14 +197,16 @@
                 </div>
                 <div class="col d-flex justify-content-center align-middle align-items-center">
 
-                  <button type="button" class="btn btn-primary filtrar" data-toggle="modal" data-target="#cad_tagmodal" id="btn_tags">
+                  <button type="button" class="btn btn-primary filtrar" data-toggle="modal" data-target="#cad_tagmodal"
+                    id="btn_tags">
                     Tags
                   </button>
 
                 </div>
 
               </div>
-              <div id="row_detalhamento" class="row col d-flex justify-content-center align-middle align-items-center mx-auto">
+              <div id="row_detalhamento"
+                class="row col d-flex justify-content-center align-middle align-items-center mx-auto">
                 <label for="cad_Detalhamento">Detalhamento:</label>
                 <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="h-100 empHigh detalhamento"
                   required></textarea>
@@ -389,12 +468,14 @@
     </div>
 
     <div class="row d-flex" style="width: 100%; justify-content: flex-end">
-      <div class="field">
-        <button class="btn align-self-center" style="width: 13ch; height: 4ch;" data-toggle="modal"
-          data-target="#cadastrotarefasmodal">
-          Criar tarefa
-        </button>
-      </div>
+      <button type="button" class="btn btn-primary align-self-center filtrar" data-toggle="modal"
+        data-target="#statusmodal">
+        Gerenciar status
+      </button>
+      <button class="btn align-self-center" style="width: 13ch; height: 4ch;" data-toggle="modal"
+        data-target="#cadastrotarefasmodal">
+        Criar tarefa
+      </button>
     </div>
 
   </div>
@@ -418,3 +499,4 @@
 <script src="/js/filtraTarefas.js"></script>
 <script src="/js/abreProjeto.js"></script>
 <script src="/js/ordenaGrid.js"></script>
+<script src="/js/gerenciastatus.js"></script>
