@@ -540,7 +540,7 @@
         </thead>
         <tbody>
           {{#each Tarefa}}
-          <tr {{!-- style="background-color: #DFA81B;" --}} onclick="abreTarefa({{idTarefas}})">
+          <tr {{!-- style="background-color: #DFA81B;" --}} onclick="abreTarefa({{../idProjeto}},{{idTarefas}})">
             <td class="codigo">{{idTarefas}}</td>
             <td>{{assunto}}</td>
             <td>{{prioridade}}</td>

@@ -19,7 +19,8 @@
                     <i class="material-icons-outlined text-center">assignment</i>
                     <span>Tarefas</span>
                 </a>
-            {{!-- <li>
+                {{!--
+            <li>
                 <a href="/emconstrucao" class="d-flex align-content-center">
                     <i class="material-icons-outlined text-center">chat_bubble_outline</i>
                     <span>Mensagens</span>
@@ -151,20 +152,25 @@
                 </table>
             </div>
             <div class="col-7 mx-auto">
-                {{#each Tarefa}}
                 <form autocomplete="off" action="{{idTarefas}}" method="POST">
                     <fieldset>
                         <textarea class="row novaresposta p-2 h-78 w-100 m-0" name="novaResposta"
                             id="novaResposta"></textarea>
+                        <label for="idStatus" class="label">Status:</label>
+                        <select class="dropdown" name="idStatus" id="idStatus">
+                            <optgroup>
+                                {{#each Status}}
+                                <option value="{{idStatus}}">{{nome}}</option>
+                                {{else}}
+                                {{/each}}
+                            </optgroup>
+                        </select>
                         <div class="row mx-auto p-2 justify-content-end">
                             <button class="btn">Cancelar</button>
                             <button class="btn" type="submit" style="margin-left: 5%;">Postar resposta</button>
                         </div>
                     </fieldset>
                 </form>
-                {{else}}
-
-                {{/each}}
             </div>
             {{#each erros}}
             <div class="alert alert-danger">{{texto}}</div>

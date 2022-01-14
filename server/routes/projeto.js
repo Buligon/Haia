@@ -16,6 +16,7 @@ const Status = require('../models/Status');
 const Sprints = require('../models/Sprints');
 const ProjetoAcessos = require('../models/ProjetoAcessos');
 
+
 //* Lista todos os projetos
 
 router.get('/listaProjetos', autenticado, async (req, res) => {
@@ -569,15 +570,13 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 
 //* Visualiza uma tarefa em específico
 
-router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
+router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
   var tarefaRespostas;
   /*
   ? Query utilizada para buscar o nome do usuário e os outros campos das respostas na tarefa
   ? O model TarefasRespostas é ligado ao model ProjetoColaboradores e Usuario por um Left Outer Join
   */
   await TarefasRespostas.findAll({
-
-
     include: [{
       model: ProjetoColaboradores,
       include: [{
@@ -589,9 +588,7 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
       attributes: []
     }],
     where: {
-
       idTarefa: req.params.codTarefa
-
     },
     attributes: [
       'resposta',
@@ -599,9 +596,9 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
       // Busca o nome do usuário com base no relacionamento das tabelas e "apelida" ele de nomeUsuario
       [sequelize.col('ProjetoColaboradores.Usuarios.nomeUsuario'), 'nomeUsuario'],
       'statusAnterior',
-      'statusNovo'
+      'statusNovo',
+      [sequelize.col('ProjetoColaboradores.idProjeto'), 'idProjeto']
     ]
-
   }).then(TarefasRespostas => {
 
     // Joga o resultado na variável que será informada ao rendenizar o tarefas.hbs
@@ -624,15 +621,27 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
     where: {
       idTarefas: req.params.codTarefa
     }
-
+    
   }).then((Tarefa) => {
-
-    res.render('tarefas', {
-      layout: 'tarefasLayout.hbs',
-      style: 'styles.css',
-      Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
-      TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
-      idProjeto: Tarefa.idProjeto
+    Status.findAll({
+      where: {
+        idProjeto: req.params.idProjeto,
+        cancelado: null
+      }
+    }).then((status) => {
+      res.render('tarefas', {
+        layout: 'tarefasLayout.hbs',
+        style: 'styles.css',
+        Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
+        TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
+        idProjeto: Tarefa.idProjeto,
+        Status: status.map(status => status.toJSON())
+      });
+    }).catch((err) => {
+  
+      req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
+      res.redirect("/");
+  
     });
 
   }).catch((err) => {
@@ -647,19 +656,7 @@ router.get('/tarefa/:codTarefa', autenticado, async (req, res) => {
 
 //* Rota utilizada para postar resposta na tarefa 
 
-router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
-  var idProjeto;
-
-  await Tarefa.findAll({
-    where: {
-      idTarefas: req.params.codTarefa
-    },
-    plain: true
-  }).then(result => {
-    idProjeto = result.idProjeto
-  }).catch(err => {
-    console.log(err)
-  })
+router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   function informaErro(textoErro) {
     req.flash("error_msg", textoErro);
@@ -700,7 +697,7 @@ router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
     where: {
       idUsuario: req.user.idUsuarios,
       cancelado: null,
-      idProjeto: idProjeto
+      idProjeto: req.params.idProjeto
     },
     attributes: [
       'idProjetoColaborador'
@@ -715,24 +712,34 @@ router.post('/tarefa/:codTarefa', autenticado, async (req, res) => {
 
   });
 
+  if (statusAnterior.statusNovo != req.body.idStatus) {
+    await Tarefa.update({
+      idStatus: req.body.idStatus,
+      dataAlteracao: Sequelize.fn('now')
+     },{ 
+      where: { idTarefas: req.params.codTarefa } 
+    })
+  }
+
   // Cria o registro da resposta no banco de dados
   TarefasRespostas.create({
 
     idTarefa: req.params.codTarefa,
     idColaborador: idColaborador.idProjetoColaborador,
     statusAnterior: statusAnterior.statusNovo,
-    statusNovo: 2,
-    resposta: req.body.novaResposta
+    statusNovo: req.body.idStatus,
+    resposta: req.body.novaResposta,
+    ultimaResposta: Sequelize.fn('now')
 
   }).then(function () {
 
     req.flash("succes_msg", "Resposta publicada com sucesso!");
-    res.redirect("/projetos/tarefa/" + req.params.codTarefa);
+    res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
 
   }).catch(function (erro) {
 
     req.flash("error_msg", "Houve um erro ao postar resposta!");
-    res.redirect('/projetos/tarefa/' + req.params.codTarefa);
+    res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
 
   });
 

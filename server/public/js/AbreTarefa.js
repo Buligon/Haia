@@ -1,4 +1,4 @@
-function abreTarefa(id) {
-  let url = "/projetos/tarefa/" + id;
+function abreTarefa(idProjeto,idTarefa) {
+  let url = "/projetos/tarefa/" + idProjeto + "/" + idTarefa;
   document.location.href=url;
 }

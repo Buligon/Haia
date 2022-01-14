@@ -85,3 +85,20 @@
   display: inline-block;
   margin-left: 2%;
 }
+
+/* --------------------------------------------------------- */
+
+.dropdown {
+  height: 3ch;
+  width: 15ch;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-radius: 5px;
+  background-color: #bb86fc;
+  font-family: Roboto, sans-serif;
+  font-weight: bold;
+}
+
+.dropdown:hover, .data:hover {
+  cursor: pointer;
+}
