@@ -152,33 +152,56 @@
                 </table>
             </div>
             <div class="col-7 mx-auto">
-                <form autocomplete="off" action="{{idTarefas}}" method="POST">
-                    <fieldset>
-                        <textarea class="row novaresposta p-2 h-78 w-100 m-0" name="novaResposta"
+                <form class="h-100" autocomplete="off" action="{{idTarefas}}" method="POST">
+                    <fieldset class="h-100">
+
+                        <textarea style="height: 85%;" class="row novaresposta p-2 w-100 m-0" name="novaResposta"
                             id="novaResposta"></textarea>
-                        <label for="idStatus" class="label">Status:</label>
-                        <select class="dropdown" name="idStatus" id="idStatus">
-                            <optgroup>
-                                {{#each Status}}
-                                <option value="{{idStatus}}">{{nome}}</option>
-                                {{else}}
-                                {{/each}}
-                            </optgroup>
-                        </select>
-                        <div class="row mx-auto p-2 justify-content-end">
-                            <button class="btn">Cancelar</button>
-                            <button class="btn" type="submit" style="margin-left: 5%;">Postar resposta</button>
+
+                        <div class="row d-flex align-bottom">
+                            <div style="width: 60%;">
+
+                                <label for="idStatus" class="label">Status:</label>
+                                <select style="" class="dropdown m-2" name="idStatus" id="idStatus">
+                                    <optgroup>
+                                        {{#each Status}}
+                                        <option value="{{idStatus}}">{{nome}}</option>
+                                        {{else}}
+                                        {{/each}}
+                                    </optgroup>
+                                </select>
+
+                                <label for="idSprint" class="label">Sprint:</label>
+                                <select class="dropdown m-2" name="idSprint" id="idSprint">
+                                    <optgroup>
+                                        <option value="">Sem sprint</option>
+                                        {{#each Sprint}}
+                                        <option value="{{idSprints}}">{{nome}}</option>
+                                        {{else}}
+                                        {{/each}}
+                                    </optgroup>
+                                </select>
+
+                            </div>
+
+                            <div class="d-flex justify-content-end" style="width: 40%;">
+
+                                <button class="btn m-2">Cancelar</button>
+                                <button class="btn m-2" type="submit">Postar resposta</button>
+
+                            </div>
                         </div>
                     </fieldset>
                 </form>
             </div>
-            {{#each erros}}
-            <div class="alert alert-danger">{{texto}}</div>
-            {{else}}
-            {{/each}}
         </div>
+        {{#each erros}}
+        <div class="alert alert-danger">{{texto}}</div>
+        {{else}}
+        {{/each}}
     </div>
-    <div class="col"></div>
+</div>
+<div class="col"></div>
 </div>
 
 <!-- Javascript -->

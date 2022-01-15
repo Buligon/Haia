@@ -571,7 +571,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 //* Visualiza uma tarefa em específico
 
 router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
-  var tarefaRespostas;
+  var tarefaRespostas, sprintsProjeto;
   /*
   ? Query utilizada para buscar o nome do usuário e os outros campos das respostas na tarefa
   ? O model TarefasRespostas é ligado ao model ProjetoColaboradores e Usuario por um Left Outer Join
@@ -615,13 +615,28 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
   *  console.log(tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON())) 
   */
 
+  //? Busca todas as sprints não canceladas do projeto
+  await Sprints.findAll({
+    where: {
+      idProjeto: req.params.idProjeto,
+      cancelada: null
+    }
+  }).then((sprints) => {
+    sprintsProjeto = sprints;
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve ao carregar tarefa!" + JSON.stringify(err));
+    res.redirect("/");
+
+  });
+
   // todo: otimizar busca, não utilizando findall
   await Tarefa.findAll({
 
     where: {
       idTarefas: req.params.codTarefa
     }
-    
+
   }).then((Tarefa) => {
     Status.findAll({
       where: {
@@ -635,13 +650,14 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
         Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
         TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
         idProjeto: Tarefa.idProjeto,
-        Status: status.map(status => status.toJSON())
+        Status: status.map(status => status.toJSON()),
+        Sprint: sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON())
       });
     }).catch((err) => {
-  
+
       req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
       res.redirect("/");
-  
+
     });
 
   }).catch((err) => {
@@ -660,7 +676,7 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   function informaErro(textoErro) {
     req.flash("error_msg", textoErro);
-    res.redirect("/projetos/tarefa/" + req.params.codTarefa);
+    res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
   }
 
   // Valida se o campo resposta foi enviado vazio
@@ -670,7 +686,7 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   // ----- INÍCIO DA GRAVAÇÃO DA RESPOSTA NO BANCO DE DADOS -----
 
-  var statusAnterior, idColaborador;
+  var statusAnterior, idColaborador, sprintAnterior;
 
   //? Busca o status atual da tarefa com base na última resposta
   await TarefasRespostas.findAll({
@@ -712,13 +728,56 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   });
 
+  //? Busca a atual sprint da tarefa
+  await Tarefa.findAll({
+    where: {
+      idTarefas: req.params.codTarefa
+    },
+    attributes: [
+      'idSprint'
+    ],
+    plain: true
+  }).then(result => {
+    sprintAnterior = result.idSprint;
+  }).catch(err => {
+    req.flash("error_msg", "Houve um erro ao postar resposta!" + JSON.stringify(err));
+    res.redirect("/");
+  })
+
+  // Se os dois campos não forem "igual" a null
+  if (!(req.body.idSprint == "" && sprintAnterior == null)) {
+    
+    // Se o usuário mudou a sprint, atualiza isso na tabela
+    if (sprintAnterior != req.body.idSprint) {
+
+      // Se tirou a sprint, define igual a null
+      if (req.body.idSprint == "") {
+        await Tarefa.update({
+          idSprint: null,
+          dataAlteracao: Sequelize.fn('now')
+        }, {
+          where: { idTarefas: req.params.codTarefa }
+        });
+      } else {
+        await Tarefa.update({
+          idSprint: req.body.idSprint,
+          dataAlteracao: Sequelize.fn('now')
+        }, {
+          where: { idTarefas: req.params.codTarefa }
+        });
+      }
+      
+    }
+  }
+
+  // Se o usuário mudou o status, atualiza isso na tabela
   if (statusAnterior.statusNovo != req.body.idStatus) {
     await Tarefa.update({
       idStatus: req.body.idStatus,
       dataAlteracao: Sequelize.fn('now')
-     },{ 
-      where: { idTarefas: req.params.codTarefa } 
-    })
+    }, {
+      where: { idTarefas: req.params.codTarefa }
+    });
   }
 
   // Cria o registro da resposta no banco de dados
