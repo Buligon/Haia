@@ -15,9 +15,10 @@ const Tags = require('../models/Tags');
 const Status = require('../models/Status');
 const Sprints = require('../models/Sprints');
 const ProjetoAcessos = require('../models/ProjetoAcessos');
-const { create } = require("domain");
 const TarefasTags = require("../models/TarefasTags.js");
 
+
+/* --- ------------------------- INICIO LISTAPROJETOS ------------------------- --- */
 
 //* Lista todos os projetos
 
@@ -83,6 +84,10 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
   }
 });
 
+/* --- ------------------------- FINAL LISTAPROJETOS ------------------------- --- */
+
+
+/* --- ------------------------- INICIO LISTATAREFAS ------------------------- --- */
 
 //* Lista todas as tarefas de um projeto
 
@@ -202,7 +207,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   // Adiciona um subselect caso o usuário selecione uma ou mais tags
   if (!(!req.body.tagsSelecionadas || typeof req.body.tagsSelecionadas == undefined || req.body.tagsSelecionadas == null)) {
-    where.push(['idtarefas IN ( SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idtag = tags.idTags where tt.cancelado IS NULL AND tags.cancelada IS NULL AND tags.idProjeto = ' + req.params.codProjeto + ')'])
+    where.push(['idTarefas in (SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idTag = tags.idTags WHERE tags.cancelada is null AND tags.idProjeto = ' + req.params.codProjeto + ' AND tags.idTags IN ('+ req.body.tagsSelecionadas +'))'])
   }
 
   // Função adicionada para formatar data no padrão 'YYYY-MM-DD'
@@ -618,6 +623,10 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
   }
 });
 
+/* --- -------------------------- FINAL LISTATAREFAS -------------------------- --- */
+
+
+/* --- ---------------------------- INICIO TAREFA ---------------------------- --- */
 
 //* Visualiza uma tarefa em específico
 
@@ -881,5 +890,7 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
   // ----- FINAL DA GRAVAÇÃO DA RESPOSTA NO BANCO DE DADOS -----
 
 });
+
+/* --- ---------------------------- FINAL TAREFA ---------------------------- --- */
 
 module.exports = router;
