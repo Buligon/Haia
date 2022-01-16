@@ -1,4 +1,4 @@
-{{!-- ------------------- INÍCIO SEÇÃO DE TAGS ------------------- --}}
+{{!-- ------------------- INÍCIO SEÇÃO DE TAGS FILTRO ------------------- --}}
 
 <!-- Modal tags Filtro -->
 <div class="modal fade" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
@@ -16,6 +16,37 @@
           </div>
         </div>
 
+        {{else}}
+        {{/each}}
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- ------------------- FINAL SEÇÃO DE TAGS FILTRO ------------------- --}}
+
+
+{{!-- ------------------- INÍCIO SEÇÃO DE TAGS GERENCIAR ------------------- --}}
+
+<!-- Modal gerenciar tags -->
+<div class="modal fade" id="gerenciatagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Gerenciar Tags</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        {{#each Tags}}
+        <div class="tag d-flex" style="background-color: {{cor}};" id="{{idTags}}"
+          onclick="editaTag({{idTags}}, {{../idProjeto}}, '{{cor}}', {{prioridade}})">
+          <div class="mx-auto" id="tag{{idTags}}" data-toggle="modal" data-target="#editatagmodal">
+            {{descricao}}
+          </div>
+        </div>
         {{else}}
         {{/each}}
         <button class="tag" data-toggle="modal" data-target="#cadastrotagmodal">Adicionar tag</button>
@@ -58,7 +89,43 @@
   </div>
 </div>
 
-{{!-- ------------------- FINAL SEÇÃO DE TAGS ------------------- --}}
+<!-- Modal edita tag -->
+<div class="modal fade" id="editatagmodal" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header d-flex justify-content-center">
+        <h5 class="modal-title" id="ModalLongTitle">Edição de tag</h5>
+      </div>
+      <div class="modal-body d-flex justify-content-center">
+        <form id="formEdicaoTag" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaTag/"
+          method="POST">
+          <fieldset>
+            <label for="nomeTagEdicao">Nome:</label>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeTagEdicao" name="nomeTagEdicao" placeholder="Ex.: Impedida" required>
+
+            <label for="corTagEdicao">Cor:</label>
+            <input style="width: 100%;" type="color" id="corTagEdicao" name="corTagEdicao">
+            
+            <label for="prioridadeTagEdicao">Prioridade:</label>
+            <input type="number" id="prioridadeTagEdicao" name="prioridadeTagEdicao" min="0">
+
+            <label for="checkApagaTag">Apagar tag?</label>
+            <input type="checkbox" id="checkApagaTag" name="checkApagaTag">
+          </fieldset>
+
+          <div class="modal-footer d-flex justify-content-center">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{!-- ------------------- FINAL SEÇÃO DE TAGS GERENCIAR ------------------- --}}
 
 
 {{!-- ------------------- INÍCIO SEÇÃO DE STATUS ------------------- --}}
@@ -573,6 +640,10 @@
 
     <div class="row d-flex" style="width: 100%; justify-content: flex-end">
       <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal"
+        data-target="#gerenciatagmodal">
+        Gerenciar tags
+      </button>
+      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal"
         data-target="#sprintsmodal">
         Gerenciar sprints
       </button>
@@ -607,7 +678,7 @@
 <script src="/js/filtraTarefas.js"></script>
 <script src="/js/abreProjeto.js"></script>
 <script src="/js/ordenaGrid.js"></script>
-<script src="/js/gerenciaStatuseSprints.js"></script>
+<script src="/js/gerenciaRegistros.js"></script>
 <script src="/js/alteraCoresGrid.js"></script>
 
 <script>

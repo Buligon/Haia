@@ -207,7 +207,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   // Adiciona um subselect caso o usuário selecione uma ou mais tags
   if (!(!req.body.tagsSelecionadas || typeof req.body.tagsSelecionadas == undefined || req.body.tagsSelecionadas == null)) {
-    where.push(['idTarefas in (SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idTag = tags.idTags WHERE tags.cancelada is null AND tags.idProjeto = ' + req.params.codProjeto + ' AND tags.idTags IN ('+ req.body.tagsSelecionadas +'))'])
+    where.push(['idTarefas in (SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idTag = tags.idTags WHERE tags.cancelada is null AND tags.idProjeto = ' + req.params.codProjeto + ' AND tags.idTags IN (' + req.body.tagsSelecionadas + '))'])
   }
 
   // Função adicionada para formatar data no padrão 'YYYY-MM-DD'
@@ -348,6 +348,51 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
       res.redirect('/projetos/tarefa/' + req.params.idProjeto + "/" + req.params.codTarefa);
 
     });;
+
+  }
+});
+
+
+//* Rota para edição de tags
+
+router.post('/projetoTarefas/:idProjeto/editaTag/:idTag', autenticado, async (req, res) => {
+  if (req.body.checkApagaTag == "on") {
+    Tags.update(
+      { cancelada: 1 },
+      {
+        where: {
+          idProjeto: req.params.idProjeto,
+          idTags: req.params.idTag
+        }
+      }
+    )
+  }
+
+  if (!req.body.nomeTagEdicao || typeof req.body.nomeTagEdicao == undefined || req.body.nomeTagEdicao == null) {
+    req.flash("error_msg", "Preencha o nome antes de alterar a tag!");
+    res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
+  } else {
+    var prioridade = 0;
+
+    if (!(!req.body.prioridadeTagEdicao || typeof req.body.prioridadeTagEdicao == undefined || req.body.prioridadeTagEdicao == null)) {
+      prioridade = req.body.prioridadeTagEdicao;
+    }
+
+    await Tags.update({
+        descricao: req.body.nomeTagEdicao,
+        cor: req.body.corTagEdicao,
+        prioridade: prioridade
+      },
+      { where: {
+        idProjeto: req.params.idProjeto,
+        idTags: req.params.idTag
+        }
+    }).then(result => {
+      req.flash("success_msg", "Status alterado com sucesso");
+      res.redirect("/projetos/listaProjetos/");
+    }).catch(err => {
+      console.log(err)
+    });
 
   }
 });
@@ -720,7 +765,7 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
 
   await TarefasTags.findAll({
-   include: [{
+    include: [{
       model: Tags,
       where: {
         idprojeto: req.params.idProjeto,
@@ -738,7 +783,7 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
   }).then(result => {
     tagsTarefa = result;
   }).catch(err => {
-   console.log(err)
+    console.log(err)
   })
   console.log(sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON()))
   console.log(tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON()))
