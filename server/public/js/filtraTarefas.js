@@ -4,6 +4,10 @@ var tagselecionadas_cadTarefa = [];
 // Função chamada ao clicar em uma tag
 function selecionatag(idtag, idModal) {
 
+  /*
+  * idModal == 0: tags utilizadas para filtrar grid
+  * idModal == 1: tags utilizadas para criar tarefa
+  */
   if (idModal == 0) {
     var html = document.getElementById(idtag).innerHTML;
 
@@ -52,7 +56,7 @@ function selecionatag(idtag, idModal) {
       // Ordena o vetor e retira o último elemento, o qual está em branco devido o delete
       tagselecionadas_cadTarefa.sort(function (a, b) { return a - b })
       tagselecionadas_cadTarefa.pop()
-
+      console.log(tagselecionadas_cadTarefa)
     } else {
 
       document.getElementById(idtag+"cad").innerHTML = html + '<div><span class="material-icons">check</span> </div>';
@@ -60,7 +64,7 @@ function selecionatag(idtag, idModal) {
       // Joga o id no vetor e ordena
       tagselecionadas_cadTarefa.push(idtag);
       tagselecionadas_cadTarefa.sort(function (a, b) { return a - b })
-
+      console.log(tagselecionadas_cadTarefa)
     }
   }
 
@@ -103,4 +107,10 @@ function filtraTarefas() {
 
   document.getElementById('filtros').submit();
 
+}
+
+function criaTarefa() {
+  document.getElementById("tagsSelecionadas_cadTarefa").setAttribute('value', tagselecionadas_cadTarefa.toString());
+
+ document.getElementById('formCriaTarefa').submit();
 }

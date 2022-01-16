@@ -1,3 +1,5 @@
+{{!-- ------------------- INÍCIO SEÇÃO DE TAGS ------------------- --}}
+
 <!-- Modal tags Filtro -->
 <div class="modal fade" id="tagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -41,6 +43,10 @@
               placeholder="Ex.: Impedida" required>
             <label for="cor">Cor (opcional):</label>
             <input class="dp06" style="width: 100%;" type="color" value="#bb86fc" id="cor" name="cor">
+
+            <label for="tagprioridade">Prioridade:</label>
+            <input type="number" id="tagprioridade" name="tagprioridade" min="0">
+
           </fieldset>
           <div class="modal-footer d-flex justify-content-center">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -51,6 +57,8 @@
     </div>
   </div>
 </div>
+
+{{!-- ------------------- FINAL SEÇÃO DE TAGS ------------------- --}}
 
 
 {{!-- ------------------- INÍCIO SEÇÃO DE STATUS ------------------- --}}
@@ -66,14 +74,14 @@
       <div class="modal-body d-flex justify-content-center">
         {{#each Status}}
         <div class="tag d-flex" onclick="editaStatus({{idStatus}}, {{../idProjeto}})">
-          <div class="mx-auto" id="status{{idStatus}}" data-toggle="modal"
-              data-target="#editastatusmodal">
+          <div class="mx-auto" id="status{{idStatus}}" data-toggle="modal" data-target="#editastatusmodal">
             {{nome}}
           </div>
         </div>
         {{else}}
         {{/each}}
-        <button class="tag" onclick="editaStatus({{idStatus}})" data-toggle="modal" data-target="#cadastrostatusmodal">Adicionar status</button>
+        <button class="tag" onclick="editaStatus({{idStatus}})" data-toggle="modal"
+          data-target="#cadastrostatusmodal">Adicionar status</button>
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
@@ -94,7 +102,8 @@
         <form autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroStatus" method="POST">
           <fieldset>
             <label for="nomeStatusCadastro">Nome:</label>
-            <input class="dp06" style="width: 100%;" type="text" id="nomeStatusCadastro" name="nomeStatusCadastro" placeholder="Ex.: Análise" required>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeStatusCadastro" name="nomeStatusCadastro"
+              placeholder="Ex.: Análise" required>
           </fieldset>
           <div class="modal-footer d-flex justify-content-center">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -115,10 +124,12 @@
         <h5 class="modal-title" id="ModalLongTitle">Edição de status</h5>
       </div>
       <div class="modal-body d-flex justify-content-center">
-        <form id="formEdicaoStatus" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaStatus/" method="POST">
+        <form id="formEdicaoStatus" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaStatus/"
+          method="POST">
           <fieldset>
             <label for="nomeStatus">Nome:</label>
-            <input class="dp06" style="width: 100%;" type="text" id="nomeStatus" name="nomeStatus" placeholder="Ex.: Impedida" required>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeStatus" name="nomeStatus"
+              placeholder="Ex.: Impedida" required>
             <label for="checkApagaStatus">Apagar status?</label>
             <input type="checkbox" id="checkApagaStatus" name="checkApagaStatus">
           </fieldset>
@@ -148,14 +159,14 @@
       <div class="modal-body d-flex justify-content-center">
         {{#each Sprints}}
         <div class="tag d-flex" onclick="editaSprint({{idSprints}}, {{../idProjeto}})">
-          <div class="mx-auto" id="sprint{{idSprints}}" data-toggle="modal"
-              data-target="#editaSprintsmodal">
+          <div class="mx-auto" id="sprint{{idSprints}}" data-toggle="modal" data-target="#editaSprintsmodal">
             {{nome}}
           </div>
         </div>
         {{else}}
         {{/each}}
-        <button class="tag" onclick="editaSprint({{idSprints}})" data-toggle="modal" data-target="#cadastroSprintsmodal">Adicionar sprint</button>
+        <button class="tag" onclick="editaSprint({{idSprints}})" data-toggle="modal"
+          data-target="#cadastroSprintsmodal">Adicionar sprint</button>
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
@@ -176,7 +187,8 @@
         <form autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroSprint" method="POST">
           <fieldset>
             <label for="nomeSprintCadastro">Nome:</label>
-            <input class="dp06" style="width: 100%;" type="text" id="nomeSprintCadastro" name="nomeSprintCadastro" placeholder="Ex.: Desenvolvimento" required>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeSprintCadastro" name="nomeSprintCadastro"
+              placeholder="Ex.: Desenvolvimento" required>
           </fieldset>
           <div class="modal-footer d-flex justify-content-center">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -197,10 +209,12 @@
         <h5 class="modal-title" id="ModalLongTitle">Edição de Sprint</h5>
       </div>
       <div class="modal-body d-flex justify-content-center">
-        <form id="formEdicaoSprint" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaSprint/" method="POST">
+        <form id="formEdicaoSprint" autocomplete="off" action="/projetos/projetoTarefas/{{idProjeto}}/editaSprint/"
+          method="POST">
           <fieldset>
             <label for="nomeSprint">Nome:</label>
-            <input class="dp06" style="width: 100%;" type="text" id="nomeSprint" name="nomeSprint" placeholder="Ex.: Desenvolvimento" required>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeSprint" name="nomeSprint"
+              placeholder="Ex.: Desenvolvimento" required>
             <label for="checkApagaSprint">Apagar sprint?</label>
             <input type="checkbox" id="checkApagaSprint" name="checkApagaSprint">
           </fieldset>
@@ -217,6 +231,8 @@
 {{!-- ------------------- FINAL SEÇÃO DE SPRINTS ------------------- --}}
 
 
+{{!-- ------------------- INÍCIO SEÇÃO DE TAREFAS ------------------- --}}
+
 <!-- Modal Cadastro tarefas -->
 <div class="modal fade" id="cadastrotarefasmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
   aria-hidden="true">
@@ -229,9 +245,11 @@
         </div>
 
         <div class="row empHigh h-100">
-          <form autocomplete="off" class="h-100" action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa"
-            method="POST">
-            <fieldset class="h-100">
+          <form id="formCriaTarefa" autocomplete="off" style="height: 70%;"
+            action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa" method="POST">
+            <fieldset style="height: 100%;">
+              <input id="tagsSelecionadas_cadTarefa" name="tagsSelecionadas_cadTarefa" type="text" value=""
+                style="display: none;">
 
               <div class="row">
 
@@ -293,19 +311,17 @@
                 </div>
 
               </div>
-              <div id="row_detalhamento"
-                class="row col d-flex justify-content-center align-middle align-items-center mx-auto">
+              <div id="row_detalhamento" class="row mx-auto" style="100%">
                 <label for="cad_Detalhamento">Detalhamento:</label>
                 <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="h-100 empHigh detalhamento"
                   required></textarea>
               </div>
-
-              <div class="row d-flex align-items-end justify-content-around m-2 p-1">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-primary">Criar tarefa</button>
-              </div>
             </fieldset>
           </form>
+          <div style="height: 5%;" class="row d-flex align-items-start justify-content-around m-2 p-1">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button onclick="criaTarefa()" class="btn btn-primary">Criar tarefa</button>
+          </div>
         </div>
       </div>
     </div>
@@ -540,7 +556,7 @@
         </thead>
         <tbody>
           {{#each Tarefa}}
-          <tr {{!-- style="background-color: #DFA81B;" --}} onclick="abreTarefa({{../idProjeto}},{{idTarefas}})">
+          <tr id="tarefa{{idTarefas}}" onclick="abreTarefa({{../idProjeto}},{{idTarefas}})">
             <td class="codigo">{{idTarefas}}</td>
             <td>{{assunto}}</td>
             <td>{{prioridade}}</td>
@@ -556,10 +572,12 @@
     </div>
 
     <div class="row d-flex" style="width: 100%; justify-content: flex-end">
-      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal" data-target="#sprintsmodal">
+      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal"
+        data-target="#sprintsmodal">
         Gerenciar sprints
       </button>
-      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal" data-target="#statusmodal">
+      <button type="button" class="btn btn-primary align-self-center m-2" data-toggle="modal"
+        data-target="#statusmodal">
         Gerenciar status
       </button>
       <button class="btn align-self-center m-2" style="width: 13ch; height: 4ch;" data-toggle="modal"
@@ -590,3 +608,8 @@
 <script src="/js/abreProjeto.js"></script>
 <script src="/js/ordenaGrid.js"></script>
 <script src="/js/gerenciaStatuseSprints.js"></script>
+<script src="/js/alteraCoresGrid.js"></script>
+
+<script>
+  window.onload = alteraCorGrid('{{coresTarefas}}')
+</script>

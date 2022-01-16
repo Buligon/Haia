@@ -15,6 +15,8 @@ const Tags = require('../models/Tags');
 const Status = require('../models/Status');
 const Sprints = require('../models/Sprints');
 const ProjetoAcessos = require('../models/ProjetoAcessos');
+const { create } = require("domain");
+const TarefasTags = require("../models/TarefasTags.js");
 
 
 //* Lista todos os projetos
@@ -85,8 +87,8 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
 //* Lista todas as tarefas de um projeto
 
 router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
-  var idProjeto;
 
+  // Controle de acesso, usado apenas para testes
   await ProjetoAcessos.findAndCountAll({
     where: {
       idUsuario: req.user.idUsuarios
@@ -106,14 +108,11 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
     console.log(err)
   });
 
+  // Controle de acesso, usado apenas para testes
   await ProjetoAcessos.create({
     idUsuario: req.user.idUsuarios,
     idProjeto: req.params.codProjeto
-  }).then(result => {
-    console.log(result)
-  }).catch(err => {
-    console.log(err)
-  });
+  })
 
   var tagsProjeto, statusProjeto, sprintProjeto;
 
@@ -135,7 +134,6 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   });
 
-
   //? Seleciona todas as sprints não canceladas do projeto
   await Sprints.findAll({
     where: {
@@ -151,6 +149,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   });
 
+  //? Seleciona todos os status não cancelados do projeto
   await Status.findAll({
     where: {
       idProjeto: req.params.codProjeto,
@@ -166,7 +165,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
   });
 
   // Recebe os filtros que serão usados para buscar as tarefas
-  var where = [];
+  var where = [], tarefas;
 
   // Sempre valida as tarefas pelo projeto e que não estejam canceladas
   where.push(
@@ -264,28 +263,43 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
     }
 
   ).then(tarefa => {
-
-    res.render('projetoTarefas', {
-      layout: 'projetoTarefasLayout.hbs',
-      style: 'styles.css',
-      Tarefa: tarefa.map(Tarefa => Tarefa.toJSON()),
-      idProjeto: req.params.codProjeto,
-      Tags: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON()),
-      Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
-      Sprints: sprintProjeto.map(sprintProjeto => sprintProjeto.toJSON()),
-      Filtros: filtros
-    });
-
-    /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
-    *  console.log(Tarefa => Tarefa.toJSON())
-    */
-
+    tarefas = tarefa
   }).catch((err) => {
 
     req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
     res.redirect("/")
 
   });
+  
+  var coresTarefas = [];
+
+  for (var i = 0; i < tarefas.length; i++) {
+
+    // Busca a cor da tag associada a tarefa que tenha a prioridade mais alta
+    await sequelize.query('SELECT tags.cor FROM tags INNER JOIN tarefastags tt ON tags.idTags = tt.idTag WHERE tt.idProjeto = ' + req.params.codProjeto + ' AND tt.idTarefa = ' + tarefas[i].idTarefas + ' ORDER BY tags.prioridade DESC LIMIT 1;').then(result => {
+      // Converte a cor retornada para string e salva no vetor
+      coresTarefas[i] = [[tarefas[i].idTarefas, JSON.stringify(result[0]).slice(9, 16)]]
+    })
+
+  }
+
+  console.log(coresTarefas)
+
+  res.render('projetoTarefas', {
+    layout: 'projetoTarefasLayout.hbs',
+    style: 'styles.css',
+    Tarefa: tarefas.map(Tarefa => Tarefa.toJSON()),
+    idProjeto: req.params.codProjeto,
+    Tags: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON()),
+    Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
+    Sprints: sprintProjeto.map(sprintProjeto => sprintProjeto.toJSON()),
+    Filtros: filtros,
+    coresTarefas: coresTarefas
+  });
+
+  /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
+  *  console.log(Tarefa => Tarefa.toJSON())
+  */
 
 });
 
@@ -305,12 +319,18 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
     req.flash("error_msg", "Preencha o campo descrição antes de salvar a tag!");
     res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
   } else {
+    var prioridadeTag = 0;
+
+    if (req.body.tagprioridade != "") {
+      prioridadeTag = req.body.tagprioridade;
+    }
 
     Tags.create({
 
       descricao: req.body.descricao,
       cor: req.body.cor,
-      idProjeto: req.params.idProjeto
+      idProjeto: req.params.idProjeto,
+      prioridade: prioridadeTag
 
     }).then(function () {
 
@@ -320,7 +340,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
     }).catch(function (erro) {
 
       req.flash("error_msg", "Houve um erro ao criar tag!");
-      res.redirect('/projetos/tarefa/' + req.params.codTarefa);
+      res.redirect('/projetos/tarefa/' + req.params.idProjeto + "/" + req.params.codTarefa);
 
     });;
 
@@ -441,6 +461,31 @@ router.post('/projetoTarefas/:idProjeto/editaSprint/:idSprint', autenticado, asy
 //* Rota para cadastro de tarefas
 
 router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req, res) => {
+
+  // Se o usuário selecionou tags, faz a associação
+  async function gravaTags(idTarefaCriada) {
+    // a.k.a Gravata GS
+
+    // Recebe a string e converte para um array
+    tags = req.body.tagsSelecionadas_cadTarefa.split(",")
+
+    // Para cada tag no array cria um novo registro
+    for (let i = 0; i < tags.length; i++) {
+      await TarefasTags.create({
+        idTarefa: idTarefaCriada,
+        idTag: tags[i],
+        idProjeto: req.params.idProjeto
+      });
+    }
+
+  }
+
+  // Redireciona o usuário para a tarefa criada 
+  function redireciona(idTarefaCriada) {
+    req.flash("succes_msg", "Tarefa criada com sucesso!");
+    res.redirect('/projetos/tarefa/' + req.params.idProjeto + "/" + idTarefaCriada);
+  }
+
   var erros = [];
 
   // Verifica se o campo assunto foi preenchido
@@ -514,8 +559,11 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
           req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
           res.redirect('/');
         }); */
-        req.flash("succes_msg", "Tarefa criada com sucesso!");
-        res.redirect('/projetos/tarefa/' + idTarefaCriada);
+
+        if (req.body.tagsSelecionadas_cadTarefa != "") { gravaTags(idTarefaCriada) }
+
+        redireciona(idTarefaCriada);
+
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
         res.redirect('/');
@@ -555,8 +603,11 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
           req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
           res.redirect('/');
         }); */
-        req.flash("succes_msg", "Tarefa criada com sucesso!");
-        res.redirect('/projetos/tarefa/' + idTarefaCriada);
+
+        if (req.body.tagsSelecionadas_cadTarefa != "") { gravaTags(idTarefaCriada) }
+
+        redireciona(idTarefaCriada);
+
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
         res.redirect('/');
@@ -746,7 +797,7 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   // Se os dois campos não forem "igual" a null
   if (!(req.body.idSprint == "" && sprintAnterior == null)) {
-    
+
     // Se o usuário mudou a sprint, atualiza isso na tabela
     if (sprintAnterior != req.body.idSprint) {
 
@@ -766,7 +817,7 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
           where: { idTarefas: req.params.codTarefa }
         });
       }
-      
+
     }
   }
 

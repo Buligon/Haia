@@ -16,6 +16,10 @@ const Tags = db.sequelize.define('Tags', {
   cor: {
     type: db.Sequelize.STRING
   },
+  prioridade: {
+    type: db.Sequelize.INTEGER,
+    allowNull: false
+  },
   cancelada: {
     type: db.Sequelize.TINYINT.UNSIGNED
   },
