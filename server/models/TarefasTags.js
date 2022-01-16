@@ -39,4 +39,8 @@ const TarefasTags = db.sequelize.define('TarefasTags', {
   timestamps: false
 });
 
+TarefasTags.hasOne(Tags, {
+  foreignKey: 'idTags'
+});
+
 module.exports = TarefasTags;

@@ -270,7 +270,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
     res.redirect("/")
 
   });
-  
+
   var coresTarefas = [];
 
   for (var i = 0; i < tarefas.length; i++) {
@@ -681,6 +681,8 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   });
 
+  var tarefaVisualizada, statusProjeto, tagsTarefa;
+
   // todo: otimizar busca, não utilizando findall
   await Tarefa.findAll({
 
@@ -688,36 +690,59 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
       idTarefas: req.params.codTarefa
     }
 
-  }).then((Tarefa) => {
-    Status.findAll({
-      where: {
-        idProjeto: req.params.idProjeto,
-        cancelado: null
-      }
-    }).then((status) => {
-      res.render('tarefas', {
-        layout: 'tarefasLayout.hbs',
-        style: 'styles.css',
-        Tarefa: Tarefa.map(Tarefa => Tarefa.toJSON()),
-        TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
-        idProjeto: Tarefa.idProjeto,
-        Status: status.map(status => status.toJSON()),
-        Sprint: sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON())
-      });
-    }).catch((err) => {
-
-      req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
-      res.redirect("/");
-
-    });
-
-  }).catch((err) => {
-
-    req.flash("error_msg", "Houve um erro ao carregar a tarefa!" + JSON.stringify(err));
-    res.redirect("/")
-
+  }).then(result => {
+    tarefaVisualizada = result;
+  }).catch(err => {
+    req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
+    res.redirect("/");
   })
 
+  await Status.findAll({
+    where: {
+      idProjeto: req.params.idProjeto,
+      cancelado: null
+    }
+  }).then((status) => {
+    statusProjeto = status;
+  }).catch((err) => {
+    req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
+    res.redirect("/");
+  });
+
+
+  await TarefasTags.findAll({
+   include: [{
+      model: Tags,
+      where: {
+        idprojeto: req.params.idProjeto,
+        cancelada: null
+      },
+      attributes: []
+    }],
+    where: {
+      idTarefa: req.params.codTarefa
+    },
+    attributes: [
+      [sequelize.col('Tag.descricao'), 'descricao'],
+      [sequelize.col('Tag.cor'), 'cor']
+    ]
+  }).then(result => {
+    tagsTarefa = result;
+  }).catch(err => {
+   console.log(err)
+  })
+  console.log(sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON()))
+  console.log(tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON()))
+  res.render('tarefas', {
+    layout: 'tarefasLayout.hbs',
+    style: 'styles.css',
+    Tarefa: tarefaVisualizada.map(tarefaVisualizada => tarefaVisualizada.toJSON()),
+    TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
+    idProjeto: Tarefa.idProjeto,
+    Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
+    Sprint: sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON()),
+    Tags: tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON())
+  });
 });
 
 
