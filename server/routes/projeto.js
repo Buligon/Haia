@@ -259,7 +259,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
   const whereOp = "where " + JSON.stringify(where).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' AND ');
 
   //? Seleciona todas as tarefas do projeto com base nos filtros selecionados
-  await sequelize.query( 
+  await sequelize.query(
     "SELECT u.nomeUsuario, t.* from tarefas t inner join projetocolaboradores pc ON t.idAutor = pc.idProjetoColaborador INNER JOIN usuarios u ON u.idUsuarios = pc.idUsuario " + whereOp,
     {
       logging: console.log,
@@ -378,20 +378,21 @@ router.post('/projetoTarefas/:idProjeto/editaTag/:idTag', autenticado, async (re
     }
 
     await Tags.update({
-        descricao: req.body.nomeTagEdicao,
-        cor: req.body.corTagEdicao,
-        prioridade: prioridade
-      },
-      { where: {
-        idProjeto: req.params.idProjeto,
-        idTags: req.params.idTag
+      descricao: req.body.nomeTagEdicao,
+      cor: req.body.corTagEdicao,
+      prioridade: prioridade
+    },
+      {
+        where: {
+          idProjeto: req.params.idProjeto,
+          idTags: req.params.idTag
         }
-    }).then(result => {
-      req.flash("success_msg", "Status alterado com sucesso");
-      res.redirect("/projetos/listaProjetos/");
-    }).catch(err => {
-      console.log(err)
-    });
+      }).then(result => {
+        req.flash("success_msg", "Status alterado com sucesso");
+        res.redirect("/projetos/listaProjetos/");
+      }).catch(err => {
+        console.log(err)
+      });
 
   }
 });
@@ -909,15 +910,21 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
     });
   }
 
+
+  await Tarefa.update({
+    ultimaResposta: Sequelize.fn('now')
+  }, {
+    where: { idTarefas: req.params.codTarefa }
+  });
+
   // Cria o registro da resposta no banco de dados
-  TarefasRespostas.create({
+  await TarefasRespostas.create({
 
     idTarefa: req.params.codTarefa,
     idColaborador: idColaborador.idProjetoColaborador,
     statusAnterior: statusAnterior.statusNovo,
     statusNovo: req.body.idStatus,
-    resposta: req.body.novaResposta,
-    ultimaResposta: Sequelize.fn('now')
+    resposta: req.body.novaResposta
 
   }).then(function () {
 

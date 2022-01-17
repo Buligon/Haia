@@ -19,6 +19,10 @@ const Tarefa = db.sequelize.define('Tarefas', {
     type: db.Sequelize.DATE,
     defaultValue: db.Sequelize.fn('now')
   },
+  dataAlteracao: {
+    type: db.Sequelize.DATE,
+    defaultValue: db.Sequelize.fn('now')
+  },
   prioridade: {
     type: db.Sequelize.INTEGER.UNSIGNED
   },
@@ -33,7 +37,8 @@ const Tarefa = db.sequelize.define('Tarefas', {
     }
   },
   ultimaResposta: {
-    type: db.Sequelize.TIME
+    type: db.Sequelize.DATE,
+    defaultValue: db.Sequelize.fn('now')
   },
   idProjeto: {
     type: db.Sequelize.INTEGER.UNSIGNED,
