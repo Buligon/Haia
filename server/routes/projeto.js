@@ -174,18 +174,18 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   // Sempre valida as tarefas pelo projeto e que não estejam canceladas
   where.push(
-    ['idProjeto = ' + req.params.codProjeto],
-    ['cancelada is null']
+    ['t.idProjeto = ' + req.params.codProjeto],
+    ['t.cancelada is null']
   );
 
   // Se status preenchido, adiciona ao where
   if (req.body.status != 0 && req.body.status != undefined) {
-    where.push(['idStatus = ' + req.body.status]);
+    where.push(['t.idStatus = ' + req.body.status]);
   }
 
   // Se sprint selecionada, adiciona ao where
   if (req.body.sprints != 0 && req.body.sprints != undefined) {
-    where.push(['idSprint = ' + req.body.sprints]);
+    where.push(['t.idSprint = ' + req.body.sprints]);
   }
 
   // Se campo pesquisa contém alguma informação, valida qual opção foi escolhida
@@ -194,20 +194,20 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
     switch (req.body.pesquisaOpcao) {
       case '1':
-        where.push(["idTarefas LIKE '%" + req.body.pesquisa + "%'"]);
+        where.push(["t.idTarefas LIKE '%" + req.body.pesquisa + "%'"]);
         break;
       case '2':
-        where.push(["assunto LIKE '%" + req.body.pesquisa + "%'"]);
+        where.push(["t.assunto LIKE '%" + req.body.pesquisa + "%'"]);
         break;
       case '3':
-        where.push(["autorRazaoSocial LIKE '%" + req.body.pesquisa + "%'"]);
+        where.push(["t.autorRazaoSocial LIKE '%" + req.body.pesquisa + "%'"]);
         break;
     }
   }
 
   // Adiciona um subselect caso o usuário selecione uma ou mais tags
   if (!(!req.body.tagsSelecionadas || typeof req.body.tagsSelecionadas == undefined || req.body.tagsSelecionadas == null)) {
-    where.push(['idTarefas in (SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idTag = tags.idTags WHERE tags.cancelada is null AND tags.idProjeto = ' + req.params.codProjeto + ' AND tags.idTags IN (' + req.body.tagsSelecionadas + '))'])
+    where.push(['t.idTarefas in (SELECT idTarefa FROM tarefastags tt JOIN tags ON tt.idTag = tags.idTags WHERE tags.cancelada is null AND tags.idProjeto = ' + req.params.codProjeto + ' AND tags.idTags IN (' + req.body.tagsSelecionadas + '))'])
   }
 
   // Função adicionada para formatar data no padrão 'YYYY-MM-DD'
@@ -238,19 +238,19 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
       // ambos preenchidos
 
       dataFinal = new Date(req.body.dataFinal)
-      where.push(["dataCriacao between '" + formataData(dataInicial, 1) + "' and '" + formataData(dataFinal, 0) + "'"])
+      where.push(["t.dataCriacao between '" + formataData(dataInicial, 1) + "' and '" + formataData(dataFinal, 0) + "'"])
 
     } else {
 
       // apenas data inicial
-      where.push(["dataCriacao > '" + formataData(dataInicial, 1) + "'"])
+      where.push(["t.dataCriacao > '" + formataData(dataInicial, 1) + "'"])
 
     }
   } else if (!(!req.body.dataFinal || typeof req.body.dataFinal == undefined || req.body.dataFinal == null)) {
 
     // apenas data final
     dataFinal = new Date(req.body.dataFinal)
-    where.push(["dataCriacao < '" + formataData(dataFinal, 0) + "'"])
+    where.push(["t.dataCriacao < '" + formataData(dataFinal, 0) + "'"])
 
   }
 
@@ -259,9 +259,8 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
   const whereOp = "where " + JSON.stringify(where).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' AND ');
 
   //? Seleciona todas as tarefas do projeto com base nos filtros selecionados
-  await sequelize.query(
-
-    "select * from tarefas " + whereOp,
+  await sequelize.query( 
+    "SELECT u.nomeUsuario, t.* from tarefas t inner join projetocolaboradores pc ON t.idAutor = pc.idProjetoColaborador INNER JOIN usuarios u ON u.idUsuarios = pc.idUsuario " + whereOp,
     {
       logging: console.log,
       model: Tarefa
