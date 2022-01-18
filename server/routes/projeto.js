@@ -548,6 +548,8 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
     erros.push({ texto: "Preencha o detalhamento!" });
   }
 
+
+
   // Caso hajam erros, transforma o json em uma string amigável ao usuário e retorna o mesmo para listaprojetos
   if (erros.length > 0) {
     stringerros = JSON.stringify(erros).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' ').replace(/{texto:/g, '').replace(/}/g, '');
@@ -578,7 +580,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 
     // Valida se foi escolhida sprint para então montar o insert
     if (req.body.cad_sprint == "sem sprint") {
-      Tarefa.create({
+      await Tarefa.create({
 
         assunto: req.body.cad_assunto,
         dataCraicao: Sequelize.fn('now'),
@@ -588,40 +590,41 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
         idProjeto: req.params.idProjeto,
         idStatus: req.body.cad_idstatus
 
-      }).then(function (result) {
+      }).then(result => {
+        console.log(result.idTarefas)
         idTarefaCriada = result.idTarefas
-
-        TarefasRespostas.create({
-
-          idTarefa: idTarefaCriada,
-          idColaborador: idColaborador.idProjetoColaborador,
-          statusAnterior: req.body.cad_idstatus,
-          statusNovo: req.body.cad_idstatus,
-          resposta: req.body.cad_Detalhamento,
-          dataResposta: Sequelize.fn('now')
-
-        })
-        //* Código abaixo comentado pois não irá cair na condição, entretanto pode ser utilizado para testes
-        /* .then(function () {
-          req.flash("succes_msg", "Tarefa criada com sucesso!");
-          res.redirect('/');
-        }).catch(function (erro) {
-          req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
-          res.redirect('/');
-        }); */
-
-        if (req.body.tagsSelecionadas_cadTarefa != "") { gravaTags(idTarefaCriada) }
-
-        redireciona(idTarefaCriada);
 
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
         res.redirect('/');
       });
 
+      TarefasRespostas.create({
+
+        idTarefa: idTarefaCriada,
+        idColaborador: idColaborador.idProjetoColaborador,
+        statusAnterior: req.body.cad_idstatus,
+        statusNovo: req.body.cad_idstatus,
+        resposta: req.body.cad_Detalhamento,
+        dataResposta: Sequelize.fn('now')
+
+      }).then(function () {
+
+        if (req.body.tagsSelecionadas_cadTarefa != "") { gravaTags(idTarefaCriada) }
+        redireciona(idTarefaCriada);
+
+      }).catch(function (erro) {
+        req.flash("error_msg", "Ocorreu um erro ao criar tarefa!" + JSON.stringify(erro));
+        res.redirect('/');
+      });
+
+
+
+
+
     } else {
 
-      Tarefa.create({
+      await Tarefa.create({
 
         assunto: req.body.cad_assunto,
         dataCraicao: Sequelize.fn('now'),
@@ -634,32 +637,27 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 
       }).then(function (result) {
         idTarefaCriada = result.idTarefas
+      }).catch(function (err) {
+        req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
+        res.redirect('/');
+      });
 
-        TarefasRespostas.create({
+      TarefasRespostas.create({
 
-          idTarefa: idTarefaCriada,
-          idColaborador: idColaborador.idProjetoColaborador,
-          statusAnterior: req.body.cad_idstatus,
-          statusNovo: req.body.cad_idstatus,
-          resposta: req.body.cad_Detalhamento,
-          dataResposta: Sequelize.fn('now')
+        idTarefa: idTarefaCriada,
+        idColaborador: idColaborador.idProjetoColaborador,
+        statusAnterior: req.body.cad_idstatus,
+        statusNovo: req.body.cad_idstatus,
+        resposta: req.body.cad_Detalhamento,
+        dataResposta: Sequelize.fn('now')
 
-        })
-        //* Código abaixo comentado pois não irá cair na condição, entretanto pode ser utilizado para testes
-        /* .then(function () {
-          req.flash("succes_msg", "Tarefa criada com sucesso!");
-          res.redirect('/');
-        }).catch(function (erro) {
-          req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
-          res.redirect('/');
-        }); */
+      }).then(function () {
 
         if (req.body.tagsSelecionadas_cadTarefa != "") { gravaTags(idTarefaCriada) }
 
         redireciona(idTarefaCriada);
-
-      }).catch(function (err) {
-        req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
+      }).catch(function (erro) {
+        req.flash("error_msg", "Houveasfefa!" + JSON.stringify(erro));
         res.redirect('/');
       });
 
@@ -1011,7 +1009,7 @@ router.post('/tarefa/:idProjeto/:codTarefa/atualizaTags', autenticado, async (re
     })
   }
 
-  res.redirect("/projetos/tarefa/"+ req.params.idProjeto +"/" + req.params.codTarefa);
+  res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
 
 })
 /* --- ---------------------------- FINAL TAREFA ---------------------------- --- */
