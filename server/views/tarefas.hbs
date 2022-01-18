@@ -1,4 +1,38 @@
 <div class="wrapper d-flex align-items-stretch">
+    <div class="modal" id="gerenciatagmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-center">
+                    <h5 class="modal-title" id="ModalLongTitle">Gerenciar Tags</h5>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                    {{#each tagsProjeto}}
+                    <div style="background-color: {{cor}};" class="tag d-flex" id="tag{{idTags}}"
+                        onclick="selecionatag({{idTags}})">
+                        <div class="mx-auto">
+                            {{descricao}}
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="align-middle"> Sem tags </div>
+                    {{/each}}
+
+                    <form id="tags" action="/projetos/tarefa/{{idProjeto}}/{{#each Tarefa}}{{idTarefas}}{{else}}{{/each}}/atualizaTags" method="post">
+                        <fieldset>
+                            <input style="display: none;" type="text" name="tagsSelecionadas" id="tagsSelecionadas" value="{{#each Tags}}{{{idTags}}} {{else}}{{/each}}">
+                        </fieldset>
+                    </form>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" onclick="editaTags()">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <nav id="sidebar" class="active">
         <ul class="list-unstyled components mb-5">
             <li class="active" id="btnToggleSidebar">
@@ -102,7 +136,8 @@
                     {{/if}}
 
                 </div>
-                <div class="col d-flex justify-content-center">
+                <div id="tagsTarefa" class="col d-flex justify-content-center" data-toggle="modal"
+                    data-target="#gerenciatagmodal">
                     <div class="campofixo field">Tags: </div>
                     <div class="dadostarefa field" style="width: 50%;" id="cabecalhotags">
                         {{#each ../Tags}}
@@ -223,3 +258,4 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/abreProjeto.js"></script>
+<script src="/js/gerenciatagstarefa.js"></script>

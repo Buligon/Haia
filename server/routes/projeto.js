@@ -735,7 +735,7 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   });
 
-  var tarefaVisualizada, statusProjeto, tagsTarefa;
+  var tarefaVisualizada, statusProjeto, tagsTarefa, tagsProjeto;
 
   // todo: otimizar busca, não utilizando findall
   await Tarefa.findAll({
@@ -778,24 +778,36 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
     },
     attributes: [
       [sequelize.col('Tag.descricao'), 'descricao'],
-      [sequelize.col('Tag.cor'), 'cor']
+      [sequelize.col('Tag.cor'), 'cor'],
+      [sequelize.col('Tag.idTags'), 'idTags']
     ]
   }).then(result => {
     tagsTarefa = result;
   }).catch(err => {
     console.log(err)
   })
-  console.log(sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON()))
-  console.log(tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON()))
+
+  await Tags.findAll({
+    where: {
+      cancelada: null,
+      idprojeto: req.params.idProjeto
+    }
+  }).then(result => {
+    tagsProjeto = result;
+  }).catch(err => {
+    console.log(err);
+  });
+
   res.render('tarefas', {
     layout: 'tarefasLayout.hbs',
     style: 'styles.css',
     Tarefa: tarefaVisualizada.map(tarefaVisualizada => tarefaVisualizada.toJSON()),
     TarefaRespostas: tarefaRespostas.map(tarefaRespostas => tarefaRespostas.toJSON()),
-    idProjeto: Tarefa.idProjeto,
+    idProjeto: req.params.idProjeto,
     Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
     Sprint: sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON()),
-    Tags: tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON())
+    Tags: tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON()),
+    tagsProjeto: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON())
   });
 });
 
@@ -942,6 +954,66 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
 });
 
+router.post('/tarefa/:idProjeto/:codTarefa/atualizaTags', autenticado, async (req, res) => {
+  var tagsAnteriores = [], novasTags = req.body.tagsSelecionadas.split(",").map(Number);
+
+  await TarefasTags.findAll({
+    include: [{
+      model: Tags,
+      where: {
+        idprojeto: req.params.idProjeto,
+        cancelada: null
+      },
+      attributes: []
+    }],
+    where: {
+      idTarefa: req.params.codTarefa
+    },
+    attributes: [
+      [sequelize.col('Tag.idTags'), 'idTags']
+    ]
+  }).then(result => {
+    var temp = result.map(tagsProjeto => tagsProjeto.toJSON());
+
+    for (let i = 0; i < temp.length; i++) {
+      tagsAnteriores[i] = temp[i].idTags
+    }
+
+  }).catch(err => {
+    console.log(err)
+  })
+
+  // Para entender mais: https://pt.stackoverflow.com/questions/311567/como-fazer-para-comparar-dois-vetores-em-java-script
+  const tagsAdicionadas = novasTags.filter(valor => -1 === tagsAnteriores.indexOf(valor))
+  const tagsremovidas = tagsAnteriores.filter(valor => -1 === novasTags.indexOf(valor))
+
+  for (let i = 0; i < tagsAdicionadas.length; i++) {
+    await TarefasTags.create({
+      idTarefa: req.params.codTarefa,
+      idProjeto: req.params.idProjeto,
+      idTag: tagsAdicionadas[i]
+    }).then(res => {
+      console.log(res)
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  for (let i = 0; i < tagsremovidas.length; i++) {
+    await TarefasTags.destroy({
+      where: {
+        idTarefa: req.params.codTarefa,
+        idProjeto: req.params.idProjeto,
+        idTag: tagsremovidas[i]
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  }
+
+  res.redirect("/projetos/tarefa/"+ req.params.idProjeto +"/" + req.params.codTarefa);
+
+})
 /* --- ---------------------------- FINAL TAREFA ---------------------------- --- */
 
 module.exports = router;

@@ -40,7 +40,8 @@ const TarefasTags = db.sequelize.define('TarefasTags', {
 });
 
 TarefasTags.hasOne(Tags, {
-  foreignKey: 'idTags'
+  foreignKey: 'idTags',
+  sourceKey: 'idTag',
 });
 
 module.exports = TarefasTags;
