@@ -74,13 +74,13 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
       });
 
       req.flash("succes_msg", "Projeto criado com sucesso!");
-      res.redirect("/projetos/listaProjetos");
+      res.redirect("/projetos/redireciona/" + result.idProjetos);
 
     }).catch(function (erro) {
 
       req.flash("error_msg", "Houve um erro ao criar o projeto!" + JSON.stringify(erro));
-      res.redirect('/');
-
+      res.redirect("/listaProjetos");
+      
     });
   }
 });
