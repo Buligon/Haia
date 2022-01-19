@@ -41,6 +41,7 @@ const TarefasTempo = db.sequelize.define('TarefasTempo', {
     type: db.Sequelize.DATE
   }
 },{
+  freezeTableName: true,
   timestamps: false
 });
 

@@ -16,6 +16,7 @@ const Status = require('../models/Status');
 const Sprints = require('../models/Sprints');
 const ProjetoAcessos = require('../models/ProjetoAcessos');
 const TarefasTags = require("../models/TarefasTags.js");
+const TarefasTempo = require("../models/TarefasTempo.js");
 
 
 /* --- ------------------------- INICIO LISTAPROJETOS ------------------------- --- */
@@ -599,7 +600,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
         res.redirect('/');
       });
 
-      TarefasRespostas.create({
+      await TarefasRespostas.create({
 
         idTarefa: idTarefaCriada,
         idColaborador: idColaborador.idProjetoColaborador,
@@ -642,7 +643,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
         res.redirect('/');
       });
 
-      TarefasRespostas.create({
+      await TarefasRespostas.create({
 
         idTarefa: idTarefaCriada,
         idColaborador: idColaborador.idProjetoColaborador,
@@ -733,7 +734,7 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
   });
 
-  var tarefaVisualizada, statusProjeto, tagsTarefa, tagsProjeto;
+  var tarefaVisualizada, statusProjeto, tagsTarefa, tagsProjeto, contagemtempo;
 
   // todo: otimizar busca, não utilizando findall
   await Tarefa.findAll({
@@ -796,6 +797,16 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
     console.log(err);
   });
 
+  await TarefasTempo.findAll({
+    where: {
+      idTarefa: req.params.codTarefa
+    }
+  }).then(result => {
+    contagemtempo = result
+  }).catch(err => {
+    console.log(err);
+  })
+
   res.render('tarefas', {
     layout: 'tarefasLayout.hbs',
     style: 'styles.css',
@@ -805,7 +816,8 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
     Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
     Sprint: sprintsProjeto.map(sprintsProjeto => sprintsProjeto.toJSON()),
     Tags: tagsTarefa.map(tagsTarefa => tagsTarefa.toJSON()),
-    tagsProjeto: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON())
+    tagsProjeto: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON()),
+    contagemtempo: contagemtempo.map(contagemtempo => contagemtempo.toJSON()),
   });
 });
 
@@ -952,9 +964,13 @@ router.post('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
 
 });
 
+
+//* Rota utilizada para gerenciar tags na tarefa
+
 router.post('/tarefa/:idProjeto/:codTarefa/atualizaTags', autenticado, async (req, res) => {
   var tagsAnteriores = [], novasTags = req.body.tagsSelecionadas.split(",").map(Number);
 
+  //? Busca todas as tags não canceladas do projeto
   await TarefasTags.findAll({
     include: [{
       model: Tags,
@@ -985,6 +1001,7 @@ router.post('/tarefa/:idProjeto/:codTarefa/atualizaTags', autenticado, async (re
   const tagsAdicionadas = novasTags.filter(valor => -1 === tagsAnteriores.indexOf(valor))
   const tagsremovidas = tagsAnteriores.filter(valor => -1 === novasTags.indexOf(valor))
 
+  // Cria registros para todas as tags que foram adicionadas
   for (let i = 0; i < tagsAdicionadas.length; i++) {
     await TarefasTags.create({
       idTarefa: req.params.codTarefa,
@@ -997,6 +1014,7 @@ router.post('/tarefa/:idProjeto/:codTarefa/atualizaTags', autenticado, async (re
     })
   }
 
+  // Deleta as tags que foram removidas
   for (let i = 0; i < tagsremovidas.length; i++) {
     await TarefasTags.destroy({
       where: {
@@ -1009,9 +1027,78 @@ router.post('/tarefa/:idProjeto/:codTarefa/atualizaTags', autenticado, async (re
     })
   }
 
+
   res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
 
 })
+
+
+//* Rota para controle de tempo por tarefa
+
+router.post('/tarefa/:idProjeto/:codTarefa/contaTempo', autenticado, async (req, res) => {
+  var idProjetoColaborador, flag = 1;
+
+  await ProjetoColaboradores.findAll({
+    where: {
+      idUsuario: req.user.idUsuarios,
+      idProjeto: req.params.idProjeto
+    },
+    plain: true
+  }).then(result => {
+    idProjetoColaborador = result.idProjetoColaborador
+  }).catch(err => {
+    console.log(err)
+    req.flash("error_msg", "Houve um erro ao iniciar contagem de tempo!");
+    res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
+  });
+
+  await TarefasTempo.findAll({
+    where: {
+      idTarefa: req.params.codTarefa,
+      idColaborador: idProjetoColaborador,
+      dataFinal: null
+    }
+  }).then(result => {
+    flag = result;
+  }).catch(err =>{
+    console.log(err)
+  })
+
+  if (flag.length == 0) {
+    await TarefasTempo.create({
+      idTarefa: req.params.codTarefa,
+      idColaborador: idProjetoColaborador,
+      idStatus: req.body.tempo_status,
+      dataInicio: Sequelize.fn('now')
+    }).then(result => {
+      res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
+    }).catch(err => {
+      console.log(err)
+      req.flash("error_msg", "Houve um erro ao iniciar contagem de tempo!");
+      res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
+    });
+  } else {
+    await TarefasTempo.update(
+      { dataFinal: Sequelize.fn('now') },
+      {
+        where: {
+          idTarefa: req.params.codTarefa,
+          idColaborador: idProjetoColaborador,
+          dataFinal: null
+        }
+      }
+    ).then(result => {
+      res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
+    }).catch(err => {
+      console.log(err)
+      req.flash("error_msg", "Houve um erro ao finalizar contagem de tempo!");
+      res.redirect("/projetos/tarefa/" + req.params.idProjeto + "/" + req.params.codTarefa);
+    });
+  }
+
+})
+
 /* --- ---------------------------- FINAL TAREFA ---------------------------- --- */
+
 
 module.exports = router;

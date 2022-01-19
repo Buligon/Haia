@@ -44,7 +44,6 @@
 }
 
 /*----------------------------------------------------------------*/
-
 .mostrarespostas {
   border-radius: 5px;
   overflow-y: scroll;
@@ -69,7 +68,6 @@
 
 .rodape .contagemtempo {
   border-radius: 5px;
-  overflow-y: scroll;
   background-color: #ffffff10;
   font-size: 13px;
 }
