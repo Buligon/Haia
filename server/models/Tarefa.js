@@ -73,5 +73,12 @@ Tarefa.hasOne(ProjetoColaboradores, {
 Tarefa.hasOne(Projeto, {
   foreignKey: 'idProjetos'
 });
-
+Tarefa.hasOne(Status, {
+  foreignKey: 'idStatus',
+  sourceKey: 'idStatus'
+});
+Tarefa.hasOne(Sprints, {
+  foreignKey: 'idSprints',
+  sourceKey: 'idSprint'
+});
 module.exports = Tarefa;

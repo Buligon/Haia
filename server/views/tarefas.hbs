@@ -111,7 +111,7 @@
                 </div>
                 <div class="col-3">
                     <div class="campofixo field">Autor: </div>
-                    <div class="dadostarefa field align-middle" id="cabecalhoautor">{{idAutor}}</div>
+                    <div class="dadostarefa field align-middle" id="cabecalhoautor">{{nomeUsuario}}</div>
                 </div>
                 <div class="col">
                     <div class="campofixo field">Data de criação: </div>
@@ -126,12 +126,12 @@
                 </div>
                 <div class="col-2">
                     <div class="campofixo field">Status: </div>
-                    <div class="dadostarefa field align-middle" id="cabecalhostatus">{{idStatus}}</div>
+                    <div class="dadostarefa field align-middle" id="cabecalhostatus">{{idStatus}} - {{nomeStatus}}</div>
                 </div>
                 <div class="col-4 d-flex justify-content-center">
                     <div class="campofixo field">Sprint: </div>
                     {{#if idSprint}}
-                    <div class="dadostarefa field align-middle" id="cabecalhosprint">{{idSprint}}</div>
+                    <div class="dadostarefa field align-middle" id="cabecalhosprint">{{idSprint}} - {{nomeSprint}}</div>
                     {{else}}
                     <div class="dadostarefa field align-middle" id="cabecalhosprint">
                         <p>Sem sprint</p>

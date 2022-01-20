@@ -80,7 +80,7 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
 
       req.flash("error_msg", "Houve um erro ao criar o projeto!" + JSON.stringify(erro));
       res.redirect("/listaProjetos");
-      
+
     });
   }
 });
@@ -210,7 +210,7 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
         where.push(["t.assunto LIKE '%" + req.body.pesquisa + "%'"]);
         break;
       case '3':
-        where.push(["t.autorRazaoSocial LIKE '%" + req.body.pesquisa + "%'"]);
+        where.push(["u.nomeUsuario LIKE '%" + req.body.pesquisa + "%'"]);
         break;
     }
   }
@@ -297,8 +297,6 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
   }
 
-  console.log(coresTarefas)
-
   res.render('projetoTarefas', {
     layout: 'projetoTarefasLayout.hbs',
     style: 'styles.css',
@@ -349,12 +347,12 @@ router.post('/projetoTarefas/:idProjeto/cadastroTag', autenticado, async (req, r
     }).then(function () {
 
       req.flash("succes_msg", "Tag criada com sucesso!");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
 
     }).catch(function (erro) {
 
       req.flash("error_msg", "Houve um erro ao criar tag!");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
 
     });;
 
@@ -379,7 +377,7 @@ router.post('/projetoTarefas/:idProjeto/editaTag/:idTag', autenticado, async (re
 
   if (!req.body.nomeTagEdicao || typeof req.body.nomeTagEdicao == undefined || req.body.nomeTagEdicao == null) {
     req.flash("error_msg", "Preencha o nome antes de alterar a tag!");
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   } else {
     var prioridade = 0;
 
@@ -399,7 +397,7 @@ router.post('/projetoTarefas/:idProjeto/editaTag/:idTag', autenticado, async (re
         }
       }).then(result => {
         req.flash("success_msg", "Status alterado com sucesso");
-        res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+        res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
       }).catch(err => {
         console.log(err)
       });
@@ -413,14 +411,14 @@ router.post('/projetoTarefas/:idProjeto/editaTag/:idTag', autenticado, async (re
 router.post('/projetoTarefas/:idProjeto/cadastroStatus', autenticado, async (req, res) => {
   if (!req.body.nomeStatusCadastro || typeof req.body.nomeStatusCadastro == undefined || req.body.nomeStatusCadastro == null) {
     req.flash("error_msg", "Preencha o nome antes de salvar o status!");
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   } else {
     await Status.create({
       nome: req.body.nomeStatusCadastro,
       idProjeto: req.params.idProjeto
     }).then(result => {
       req.flash("success_msg", "Status criado com sucesso");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
     }).catch(err => {
       console.log(err)
     })
@@ -439,20 +437,20 @@ router.post('/projetoTarefas/:idProjeto/editaStatus/:idStatus', autenticado, asy
       }
     }).then(result => {
       req.flash("success_msg", "Status excluído com sucesso");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
     })
   }
 
   if (!req.body.nomeStatus || typeof req.body.nomeStatus == undefined || req.body.nomeStatus == null) {
     req.flash("error_msg", "Preencha o nome antes de alterar o status!");
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   } else {
     await Status.update(
       { nome: req.body.nomeStatus },
       { where: { idStatus: req.params.idStatus } }
     ).then(result => {
       req.flash("success_msg", "Status alterado com sucesso");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
     }).catch(err => {
       console.log(err)
     })
@@ -465,7 +463,7 @@ router.post('/projetoTarefas/:idProjeto/editaStatus/:idStatus', autenticado, asy
 router.post('/projetoTarefas/:idProjeto/cadastroSprint', autenticado, async (req, res) => {
   if (!req.body.nomeSprintCadastro || typeof req.body.nomeSprintCadastro == undefined || req.body.nomeSprintCadastro == null) {
     req.flash("error_msg", "Preencha o nome antes de salvar a sprint!");
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   } else {
     await Sprints.create({
       nome: req.body.nomeSprintCadastro,
@@ -473,7 +471,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroSprint', autenticado, async (req
       dataCriacao: Sequelize.fn('now')
     }).then(result => {
       req.flash("success_msg", "Sprint criada com sucesso");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
     }).catch(err => {
       console.log(err)
     })
@@ -494,13 +492,13 @@ router.post('/projetoTarefas/:idProjeto/editaSprint/:idSprint', autenticado, asy
       { where: { idSprints: req.params.idSprint } }
     ).then(result => {
       req.flash("success_msg", "Sprint excluída com sucesso");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
     })
   }
 
   if (!req.body.nomeSprint || typeof req.body.nomeSprint == undefined || req.body.nomeSprint == null) {
     req.flash("error_msg", "Preencha o nome antes de alterar a sprint!");
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   } else {
     await Sprints.update(
       {
@@ -510,7 +508,7 @@ router.post('/projetoTarefas/:idProjeto/editaSprint/:idSprint', autenticado, asy
       { where: { idSprints: req.params.idSprint } }
     ).then(result => {
       req.flash("success_msg", "Sprint alterada com sucesso");
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
     }).catch(err => {
       console.log(err)
     })
@@ -564,7 +562,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
   if (erros.length > 0) {
     stringerros = JSON.stringify(erros).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' ').replace(/{texto:/g, '').replace(/}/g, '');
     req.flash("error_msg", stringerros);
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   } else {
     var idColaborador, idTarefaCriada;
 
@@ -584,7 +582,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
     }).catch((err) => {
 
       req.flash("error_msg", "Houve um erro ao postar resposta!" + JSON.stringify(err));
-      res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
 
     });
 
@@ -606,7 +604,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
-        res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+        res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
       });
 
       await TarefasRespostas.create({
@@ -625,7 +623,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
 
       }).catch(function (erro) {
         req.flash("error_msg", "Ocorreu um erro ao criar tarefa!" + JSON.stringify(erro));
-        res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+        res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
       });
 
 
@@ -649,7 +647,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
         idTarefaCriada = result.idTarefas
       }).catch(function (err) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(err));
-        res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+        res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
       });
 
       await TarefasRespostas.create({
@@ -668,7 +666,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
         redireciona(idTarefaCriada);
       }).catch(function (erro) {
         req.flash("error_msg", "Houve um erro ao criar tarefa!" + JSON.stringify(erro));
-        res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+        res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
       });
 
     }
@@ -720,7 +718,7 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
   }).catch((err) => {
 
     req.flash("error_msg", "Houve um erro ao carregar a tarefa!" + JSON.stringify(err));
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
 
   });
 
@@ -739,24 +737,62 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
   }).catch((err) => {
 
     req.flash("error_msg", "Houve ao carregar tarefa!" + JSON.stringify(err));
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
 
   });
 
   var tarefaVisualizada, statusProjeto, tagsTarefa, tagsProjeto, contagemtempo;
 
   // todo: otimizar busca, não utilizando findall
+  //? Busca informações do cabeçalho da tarefa 
   await Tarefa.findAll({
-
+    include: [{
+      model: ProjetoColaboradores,
+      where: {
+        idprojeto: req.params.idProjeto,
+      },
+      include: [{
+        model: Usuario,
+        attributes: []
+      }],
+      attributes: []
+    },
+    {
+      model: Status,
+      where: {
+        idprojeto: req.params.idProjeto,
+      },
+      attributes: []
+    },
+    {
+      model: Sprints,
+      where: {
+        idprojeto: req.params.idProjeto,
+      },
+      attributes: [],   
+      required:false
+    }],
     where: {
       idTarefas: req.params.codTarefa
-    }
-
+    },
+    attributes: [
+      [sequelize.col('idTarefas'), 'idTarefas'],
+      [sequelize.col('assunto'), 'assunto'],
+      [sequelize.col('Tarefas.dataCriacao'), 'dataCriacao'],
+      [sequelize.col('prioridade'), 'prioridade'],
+      [sequelize.col('idAutor'), 'idAutor'],
+      [sequelize.col('Tarefas.idStatus'), 'idStatus'],
+      [sequelize.col('Tarefas.idSprint'), 'idSprint'],
+      [sequelize.col('ProjetoColaboradore.Usuarios.nomeUsuario'), 'nomeUsuario'],
+      [sequelize.col('Status.nome'), 'nomeStatus'],
+      [sequelize.col('Sprint.nome'), 'nomeSprint']
+    ]
   }).then(result => {
     tarefaVisualizada = result;
   }).catch(err => {
+    console.log(err)
     req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   })
 
   await Status.findAll({
@@ -768,7 +804,7 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
     statusProjeto = status;
   }).catch((err) => {
     req.flash("error_msg", "Houve um erro carregar tarefa!" + JSON.stringify(err));
-    res.redirect("/projetos/redireciona/"+ req.params.idProjeto+"/");
+    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
   });
 
 
@@ -1069,7 +1105,7 @@ router.post('/tarefa/:idProjeto/:codTarefa/contaTempo', autenticado, async (req,
     }
   }).then(result => {
     flag = result;
-  }).catch(err =>{
+  }).catch(err => {
     console.log(err)
   })
 
