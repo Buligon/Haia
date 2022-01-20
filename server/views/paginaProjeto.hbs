@@ -24,21 +24,7 @@
   </div>
 </div>
 
-<!-- Modal remove colaborador -->
-<div class="modal" id="convidaColaborador" tabindex="-2" role="dialog" aria-labelledby="ModalCenterTitle"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header d-flex justify-content-center">
-        <h5 class="modal-title" id="ModalLongTitle">Remover colaborador</h5>
-      </div>
-      <form style="display: none;" autocomplete="off" action="/projetos/projetoConfig/removeColaborador" method="POST">
-        
-      <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>
-      <button type="submit" class="btn btn-primary">Convidar</button>
-    </div>
-  </div>
-</div>
+<form style="display: none;" autocomplete="off" action="/projetos/projetoConfig/removeColaborador" method="POST"></form>
 
 <div class="wrapper d-flex">
   <nav id="sidebar" class="active">
@@ -177,7 +163,7 @@
             </div>
 
             <div class="col d-flex">
-              <button type="button" class="btn btn-primary align-self-center" onclick="removeUsuario({{idProjetoColaborador}})">
+              <button type="button" class="btn btn-primary align-self-center" onclick="removeUsuario({{idProjetoColaborador}}, {{../idProjeto}})">
                 <span class="material-icons-outlined">person_remove</span>
               </button>
             </div>

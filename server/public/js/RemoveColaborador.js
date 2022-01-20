@@ -1,5 +1,5 @@
-function removeUsuario(idProjetoColaborador) {
-  var url = "/projetoConfig/removeColaborador/" + idProjetoColaborador;
+function removeUsuario(idProjetoColaborador, idProjeto) {
+  var url = "/projetoConfig/removeColaborador/" + idProjeto + "/" + idProjetoColaborador;
 
   var form = $('<form action="' + url + '" method="post">' +
     '</form>');

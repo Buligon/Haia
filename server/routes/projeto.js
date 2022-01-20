@@ -32,7 +32,7 @@ router.get('/listaProjetos', autenticado, async (req, res) => {
   await Projeto.findAll({
     include: [{
       model: ProjetoColaboradores,
-      where: { 'idUsuario': req.user.idUsuarios }
+      where: { 'idUsuario': req.user.idUsuarios, 'cancelado': null }
     }],
     where: { cancelado: null }
   }).then((projeto) => {

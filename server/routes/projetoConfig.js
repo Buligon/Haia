@@ -54,7 +54,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
   // Valida se o email foi preenchido corretamente
   if (!req.body.emailColaborador || typeof req.body.emailColaborador == undefined || req.body.emailColaborador == null) {
     req.flash("error_msg", "Por favor, preencha o campo email!");
-    res.redirect('/projetoConfig/'+req.params.codProjeto);
+    res.redirect('/projetoConfig/' + req.params.codProjeto);
   } else {
     Convites.create({
       idProjeto: req.params.codProjeto,
@@ -74,7 +74,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
           html: "Olá, você foi convidado para o projeto " + projeto.nomeProjeto + "<br><a href='http://localhost:8012/projetoConfig/aceitaConvite/" + result.idConvites + "'>Clique aqui</a> para aceitar."
         }).then(message => {
           req.flash("success_msg", "Usuário convidado com sucesso!");
-          res.redirect('/projetoConfig/'+req.params.codProjeto);
+          res.redirect('/projetoConfig/' + req.params.codProjeto);
         }).catch(err => {
           console.log(err);
         });
@@ -83,7 +83,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
     }).catch(err => {
       console.log(err);
       req.flash("error_msg", "Houve um erro ao convidar ususário");
-      res.redirect('/projetoConfig/'+req.params.codProjeto);
+      res.redirect('/projetoConfig/' + req.params.codProjeto);
     })
   }
 
@@ -91,6 +91,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
 
 
 //* Rota utilizada para aceitar convites para projetos
+
 router.get('/aceitaConvite/:idConvites', async (req, res) => {
   var conviteEnviado, usuarioConvidado;
 
@@ -145,4 +146,45 @@ router.get('/aceitaConvite/:idConvites', async (req, res) => {
 
 });
 
+
+//* Rota utilizada para remover colaboradores
+
+router.post('/removeColaborador/:idProjeto/:idColaborador', async (req, res) => {
+  //? Identifica se o usuário é criador do projeto
+  await ProjetoColaboradores.findAll({
+    where: {
+      idUsuario: req.user.idUsuarios,
+      idProjeto: req.params.idProjeto
+    },
+    plain: true
+  }).then(result => {
+    if (result.idCargo == 2) {
+      req.flash("error_msg", "Você não tem permissão para isso! Contate o criador do projeto.");
+      res.redirect('/projetoConfig/' + req.params.idProjeto);
+    }
+  }).catch(err => {
+    console.log(err);
+    req.flash("error_msg", "Ocorreu um erro ao tentar remover colaborador");
+    res.redirect('/projetoConfig/' + req.params.idProjeto);
+  });
+
+  await ProjetoColaboradores.update({
+    cancelado: 1,
+    dataAlteracao: Sequelize.fn('now')
+  },
+  {
+    where:{
+      idProjetoColaborador: req.params.idColaborador,
+      idProjeto: req.params.idProjeto
+    }
+  }).then(result => {
+    req.flash("success_msg", "Colaborador removido com sucesso");
+    res.redirect('/projetoConfig/' + req.params.idProjeto);
+  }).catch(err => {
+    console.log(err);
+    req.flash("error_msg", "Ocorreu um erro ao tentar remover colaborador");
+    res.redirect('/projetoConfig/' + req.params.idProjeto);
+  });
+
+});
 module.exports = router;
