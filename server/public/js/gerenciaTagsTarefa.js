@@ -16,9 +16,11 @@ function listaTags(tagsSelecionadas, tagsProjeto) {
 
 }
 
-window.onload = function carregaTagsFiltradas() {
-  tagselecionadas.length = 0
+window.onload = carregaTagsFiltradas();
 
+function carregaTagsFiltradas() {
+  tagselecionadas.length = 0
+ 
   function removeDuplicadas(a) {
     return a.sort().filter(function (item, pos, ary) {
       return !pos || item != ary[pos - 1];
