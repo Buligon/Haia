@@ -54,7 +54,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
   // Valida se o email foi preenchido corretamente
   if (!req.body.emailColaborador || typeof req.body.emailColaborador == undefined || req.body.emailColaborador == null) {
     req.flash("error_msg", "Por favor, preencha o campo email!");
-    res.redirect('/projetoConfig');
+    res.redirect('/projetoConfig/'+req.params.codProjeto);
   } else {
     Convites.create({
       idProjeto: req.params.codProjeto,
@@ -74,7 +74,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
           html: "Olá, você foi convidado para o projeto " + projeto.nomeProjeto + "<br><a href='http://localhost:8012/projetoConfig/aceitaConvite/" + result.idConvites + "'>Clique aqui</a> para aceitar."
         }).then(message => {
           req.flash("success_msg", "Usuário convidado com sucesso!");
-          res.redirect('/projetoConfig');
+          res.redirect('/projetoConfig/'+req.params.codProjeto);
         }).catch(err => {
           console.log(err);
         });
@@ -83,7 +83,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
     }).catch(err => {
       console.log(err);
       req.flash("error_msg", "Houve um erro ao convidar ususário");
-      res.redirect('/');
+      res.redirect('/projetoConfig/'+req.params.codProjeto);
     })
   }
 
@@ -92,39 +92,57 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
 
 //* Rota utilizada para aceitar convites para projetos
 router.get('/aceitaConvite/:idConvites', async (req, res) => {
+  var conviteEnviado, usuarioConvidado;
+
   await Convites.findAll({
     where: {
       idConvites: req.params.idConvites
     },
     plain: true
   }).then(convite => {
-    Usuario.findAll({
-      where: {
-        email: convite.email
-      },
-      plain: true
-    }).then(usuario => {
-      ProjetoColaboradores.create({
-        idUsuario: usuario.idUsuarios,
-        idProjeto: convite.idProjeto,
-        idCargo: 2,
-        dataCriacao: Sequelize.fn('now')
-      }).then(result => {
-        req.flash('success_msg', "Agora você faz parte do projeto!")
-        res.redirect('/');
-      }).catch(err => {
-        console.log(err)
-      });
-    })
-  })
-
-  Convites.update({
-    aceito: 1
-  }, {
-    where: {
-      idConvites: req.params.idConvites
-    }
+    conviteEnviado = convite
+  }).catch(err => {
+    console.log(err)
   });
+
+  await Usuario.findAll({
+    where: {
+      email: conviteEnviado.email
+    },
+    plain: true
+  }).then(usuario => {
+    usuarioConvidado = usuario
+  }).catch(err => {
+    console.log(err)
+  });
+  if (usuarioConvidado == null) {
+    req.flash('error_msg', "Cadastre-se antes de aceitar o convite!")
+    res.redirect('/');
+  } else {
+    await ProjetoColaboradores.create({
+      idUsuario: usuarioConvidado.idUsuarios,
+      idProjeto: conviteEnviado.idProjeto,
+      idCargo: 2,
+      dataCriacao: Sequelize.fn('now')
+    }).then(result => {
+    }).catch(err => {
+      console.log(err)
+    });
+
+    await Convites.update({
+      aceito: 1
+    }, {
+      where: {
+        idConvites: req.params.idConvites
+      }
+    }).then(result => {
+      req.flash('success_msg', "Agora você faz parte do projeto!")
+      res.redirect('/');
+    }).catch(err => {
+      console.log(err)
+    });
+  }
+
 });
 
 module.exports = router;
