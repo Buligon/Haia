@@ -102,11 +102,12 @@
           method="POST">
           <fieldset>
             <label for="nomeTagEdicao">Nome:</label>
-            <input class="dp06" style="width: 100%;" type="text" id="nomeTagEdicao" name="nomeTagEdicao" placeholder="Ex.: Impedida" required>
+            <input class="dp06" style="width: 100%;" type="text" id="nomeTagEdicao" name="nomeTagEdicao"
+              placeholder="Ex.: Impedida" required>
 
             <label for="corTagEdicao">Cor:</label>
             <input style="width: 100%;" type="color" id="corTagEdicao" name="corTagEdicao">
-            
+
             <label for="prioridadeTagEdicao">Prioridade:</label>
             <input type="number" id="prioridadeTagEdicao" name="prioridadeTagEdicao" min="0">
 
@@ -439,12 +440,7 @@
           <span>Início</span>
         </a>
       </li>
-      <li>
-        <a onclick="abreProjeto({{idProjeto}})" class="d-flex align-content-center">
-          <i class="material-icons-outlined text-center">assignment</i>
-          <span>Tarefas</span>
-        </a>
-      </li>
+
       {{!-- <li>
         <a href="/emconstrucao" class="d-flex align-content-center">
           <i class="material-icons-outlined text-center">chat_bubble_outline</i>
@@ -470,15 +466,27 @@
         </a>
       </li> --}}
       <li>
-        <a href="/emconstrucao" class="d-flex align-content-center">
+        <a href="/usuarios/perfil" class="d-flex align-content-center">
           <i class="material-icons-outlined text-center">portrait</i>
           <span>Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a onclick="abreProjeto({{idProjeto}})" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">assignment</i>
+          <span>Tarefas</span>
         </a>
       </li>
       <li>
         <a href="/projetoConfig/{{idProjeto}}" class="d-flex align-content-center">
           <i class="material-icons-outlined text-center">settings</i>
           <span>Configurações</span>
+        </a>
+      </li>
+      <li>
+        <a href="/logout" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">logout</i>
+          <span>Logout</span>
         </a>
       </li>
     </ul>

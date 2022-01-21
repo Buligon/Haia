@@ -1,0 +1,138 @@
+<div class="wrapper d-flex align-items-stretch h-100">
+  <nav id="sidebar" class="active">
+    <ul class="list-unstyled components mb-5">
+      <li class="active" id="btnToggleSidebar">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+          <span class="material-icons-outlined">reorder</span>
+        </button>
+      </li>
+      <li class="active">
+        <a href="/projetos/listaprojetos">
+          <i class="material-icons-outlined">
+            home
+          </i>
+          <span>Início</span>
+        </a>
+      </li>
+      {{!-- <li class="active">
+        <a href="/src/listatarefas.html">
+          <i class="material-icons-outlined">assignment</i>
+          <span>Tarefas</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">chat_bubble_outline</i>
+          <span>Mensagens</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">dashboard</i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">calendar_today</i>
+          <span>Calendário</span>
+        </a>
+      </li>
+      <li>
+        <a href="/src/emconstrucao.html">
+          <i class="material-icons-outlined">forum</i>
+          <span>Fórum</span>
+        </a>
+      </li> --}}
+      <li>
+        <a href="/usuarios/perfil">
+          <i class="material-icons-outlined">portrait</i>
+          <span>Perfil</span>
+        </a>
+      </li>
+      <li>
+        <a href="/logout" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">logout</i>
+          <span>Logout</span>
+        </a>
+      </li>
+    </ul>
+
+  </nav>
+
+  <div class="row d-flex justify-content-center align-items-center" style="width: 100%; height: 100%;">
+    <div class="col-4">
+    </div>
+    <div id="content" class="col">
+      <h4 class="m-3">Informações do usuário</h4>
+      <div class="row">
+
+        <form class="p-5 d-flex justify-content-center align-items-center" id="editaUsuario"
+          action="/usuarios/perfil/alteradados" method="POST">
+          <fieldset>
+
+            {{#each Usuario}}
+            <div class="mx-auto campo">
+              <label for="nomeUsuario">Nome:</label>
+              <input type="text" name="nomeUsuario" id="nomeUsuario" value="{{nomeUsuario}}" required>
+            </div>
+
+            <div class="mx-auto campo">
+              <label for="email">Email:</label>
+              <input type="email" name="email" id="email" value="{{email}}" required>
+            </div>
+
+            <div class="mx-auto campo">
+              <label for="dataNascimento">Data de nascimento:</label>
+              <input type="date" name="dataNascimento" id="dataNascimento" value="{{dataNascimento}}" required>
+            </div>
+
+            <div class="mx-auto campo">
+              <label for="senhaAntiga">Senha atual:</label>
+              <input type="password" name="senhaAntiga" id="senhaAntiga" value="" required>
+            </div>
+
+            <div class="mx-auto campo">
+              <label for="senhaNova">Nova senha:</label>
+              <input type="password" name="senhaNova" id="senhaNova" value="">
+            </div>
+
+            <div class="mx-auto campo">
+              <label for="confirmacaoSenha">Confirmação de senha:</label>
+              <input type="password" name="confirmacaoSenha" id="confirmacaoSenha" value="">
+            </div>
+
+            {{else}}
+            {{/each}}
+
+          </fieldset>
+        </form>
+      </div>
+      <div class="row d-flex justify-content-center align-items-center">
+        <button type="button" class="btn btn-secondary m-4">Cancelar</button>
+        <button type="button" class="btn btn-primary m-4" onclick="$('#editaUsuario').submit()">Salvar</button>
+      </div>
+    </div>
+    <div class="col-4"></div>
+  </div>
+
+  <div class="row" id="alerta">{{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+    {{else}}
+    {{/each}}
+  </div>
+
+  <!-- Javascript -->
+  <script src="/js/jquery-3.6.0.min.js"></script>
+  <script src="/js/popper.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>

@@ -42,12 +42,7 @@
           <span>Início</span>
         </a>
       </li>
-      <li class="active">
-        <a onclick="abreProjeto({{idProjeto}})">
-          <i class="material-icons-outlined">assignment</i>
-          <span>Tarefas</span>
-        </a>
-      </li>
+
       {{!-- <li>
         <a href="/emconstrucao">
           <i class="material-icons-outlined">chat_bubble_outline</i>
@@ -67,15 +62,27 @@
         </a>
       </li> --}}
       <li>
-        <a href="/emconstrucao">
+        <a href="/usuarios/perfil">
           <i class="material-icons-outlined">portrait</i>
           <span>Perfil</span>
+        </a>
+      </li>
+      <li class="active">
+        <a onclick="abreProjeto({{idProjeto}})">
+          <i class="material-icons-outlined">assignment</i>
+          <span>Tarefas</span>
         </a>
       </li>
       <li>
         <a href="/projetos/projetoConfig">
           <i class="material-icons-outlined">settings</i>
           <span>Configurações</span>
+        </a>
+      </li>
+      <li>
+        <a href="/logout" class="d-flex align-content-center">
+          <i class="material-icons-outlined text-center">logout</i>
+          <span>Logout</span>
         </a>
       </li>
     </ul>
@@ -163,7 +170,8 @@
             </div>
 
             <div class="col d-flex">
-              <button type="button" class="btn btn-primary align-self-center" onclick="removeUsuario({{idProjetoColaborador}}, {{../idProjeto}})">
+              <button type="button" class="btn btn-primary align-self-center"
+                onclick="removeUsuario({{idProjetoColaborador}}, {{../idProjeto}})">
                 <span class="material-icons-outlined">person_remove</span>
               </button>
             </div>
