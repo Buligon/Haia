@@ -5,6 +5,22 @@
   overflow-y: scroll;
 }
 
+.campofixo {
+  white-space: nowrap;
+  font-weight: bold;
+}
+
+.field {
+  display: inline-block;
+  margin-left: 2%;
+  color: #ffffff75;
+}
+
+.dadostarefa {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .cabecalhoUsuarios {
   border-bottom: 1px;
   border-bottom-style: solid;
@@ -16,6 +32,17 @@
   border-bottom: 1px;
   border-bottom-style: solid;
   border-color: #FFFFFF80;
+}
+
+.cadastrodescricao {
+  border-radius: 5px;
+  overflow-y: scroll;
+  background-color: #121212;
+  border: none;
+}
+
+.cadastrodescricao:focus {
+  outline: none;
 }
 
 /* The switch - the box around the slider */
@@ -58,15 +85,15 @@
   transition: .4s;
 }
 
-input:checked + .slider {
+input:checked+.slider {
   background-color: #bb86fc;
 }
 
-input:focus + .slider {
+input:focus+.slider {
   box-shadow: 0 0 1px #bb86fc;
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
@@ -92,9 +119,9 @@ input:checked + .slider:before {
 }
 
 #bannerProjeto {
-  width: 500px;  
+  width: 500px;
   height: 150px;
-  object-fit: contain; 
+  object-fit: contain;
   overflow: hidden;
 }
 

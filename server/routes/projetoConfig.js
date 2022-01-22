@@ -14,8 +14,10 @@ const Convites = require('../models/Convites');
 //* Rota utilizada para gestão do projeto
 
 router.get('/:codProjeto', autenticado, async (req, res) => {
+  var colaboradoresProjeto, criadorProjeto;
 
-  ProjetoColaboradores.findAll({
+  //? Busca todos os colaboradores não cancelados do projeto
+  await ProjetoColaboradores.findAll({
     include: [{
       model: Usuario,
       attributes: []
@@ -30,13 +32,7 @@ router.get('/:codProjeto', autenticado, async (req, res) => {
       [sequelize.col('Usuarios.nomeUsuario'), 'nomeUsuario']
     ]
   }).then(projetoColaboradores => {
-
-    res.render('paginaProjeto', {
-      layout: 'paginaProjetoLayout.hbs',
-      style: 'styles.css',
-      idProjeto: req.params.codProjeto,
-      Colaboradores: projetoColaboradores.map(projetoColaboradores => projetoColaboradores.toJSON())
-    });
+    colaboradoresProjeto = projetoColaboradores;
   }).catch(err => {
 
     req.flash("error_msg", "Houve um erro carregar as informações do projeto!" + JSON.stringify(err));
@@ -44,6 +40,145 @@ router.get('/:codProjeto', autenticado, async (req, res) => {
 
   });
 
+  //? Busca as informações de cadastro do projeto
+  await Projeto.findAll({
+    where: {
+      idProjetos: req.params.codProjeto
+    }
+  }).then(info => {
+    projetoInfo = info;
+  }).catch(err => {
+
+    req.flash("error_msg", "Houve um erro carregar as informações do projeto!" + JSON.stringify(err));
+    res.redirect("/projetos/listaProjetos");
+
+  });
+
+  //? Seleciona os dados do criador do projeto
+  await ProjetoColaboradores.findAll({
+    include: [{
+      model: Usuario,
+      attributes: []
+    }],
+    where: {
+      idProjeto: req.params.codProjeto,
+      cancelado: null,
+      idCargo: 1
+    },
+    attributes: [
+      'idProjetoColaborador',
+      'idCargo',
+      'dataCriacao',
+      [sequelize.col('Usuarios.nomeUsuario'), 'nomeUsuario']
+    ]
+  }).then(projetoColaboradores => {
+    criadorProjeto = projetoColaboradores;
+  }).catch(err => {
+
+    req.flash("error_msg", "Houve um erro carregar as informações do projeto!" + JSON.stringify(err));
+    res.redirect("/projetos/listaProjetos");
+
+  });
+
+  res.render('paginaProjeto', {
+    layout: 'paginaProjetoLayout.hbs',
+    style: 'styles.css',
+    idProjeto: req.params.codProjeto,
+    Colaboradores: colaboradoresProjeto.map(colaboradoresProjeto => colaboradoresProjeto.toJSON()),
+    Criador: criadorProjeto.map(criadorProjeto => criadorProjeto.toJSON()),
+    InfoProjeto: projetoInfo.map(projetoInfo => projetoInfo.toJSON())
+  });
+
+});
+
+
+//* Rota utilizada para editar informações de projetos
+
+router.post('/:codProjeto/editaInfo', autenticado, async (req, res) => {
+
+  if (!req.body.nomeProjeto || typeof req.body.nomeProjeto == undefined || req.body.nomeProjeto == null) {
+    req.flash("error_msg", "Preencha o campo nome!");
+    res.redirect("/projetoConfig/" + req.params.codProjeto);
+  } else {
+    // Valida se a descrição foi alterada
+    if (!req.body.cadastrodescricao || typeof req.body.cadastrodescricao == undefined || req.body.cadastrodescricao == null) {
+
+      Projeto.update({
+        nomeProjeto: req.body.nomeProjeto,
+        descricao: null
+      }, {
+        where: {
+          idProjetos: req.params.codProjeto
+        }
+      }).then(result => {
+        req.flash("success_msg", "Dados alterados com sucesso!");
+        res.redirect("/projetoConfig/" + req.params.codProjeto);
+      }).catch(err => {
+        console.log(err);
+        req.flash("error_msg", "Houve um erro ao alterar dados do projeto!");
+        res.redirect("/projetoConfig/" + req.params.codProjeto);
+      })
+
+    } else {
+
+      Projeto.update({
+        nomeProjeto: req.body.nomeProjeto,
+        descricao: req.body.cadastrodescricao
+      }, {
+        where: {
+          idProjetos: req.params.codProjeto
+        }
+      }).then(result => {
+        req.flash("success_msg", "Dados alterados com sucesso!");
+        res.redirect("/projetoConfig/" + req.params.codProjeto);
+      }).catch(err => {
+        console.log(err);
+        req.flash("error_msg", "Houve um erro ao alterar dados do projeto!");
+        res.redirect("/projetoConfig/" + req.params.codProjeto);
+      });
+
+    }
+  }
+});
+
+
+//* Rota utilizada para excluir projeto
+
+router.post('/:codProjeto/exclui', autenticado, async (req, res) => {
+
+  //? Identifica se o usuário é criador do projeto
+  await ProjetoColaboradores.findAll({
+    where: {
+      idUsuario: req.user.idUsuarios,
+      idProjeto: req.params.codProjeto
+    },
+    plain: true
+  }).then(result => {
+    if (result.idCargo == 2) {
+      req.flash("error_msg", "Você não tem permissão para isso! Contate o criador do projeto.");
+      res.redirect('/projetoConfig/' + req.params.codProjeto);
+    }
+  }).catch(err => {
+    console.log(err);
+    req.flash("error_msg", "Ocorreu um erro ao excluir projeto");
+    res.redirect('/projetoConfig/' + req.params.codProjeto);
+  });
+
+  await Projeto.update({
+    cancelado: 1
+  },
+  {
+    where: {
+      idProjetos: req.params.codProjeto
+    }
+  }).then(result => {
+    req.flash("success_msg", "Projeto excluído com sucesso!");
+    res.redirect('/projetos/listaProjetos');
+  }).catch(err => {
+    console.log(err)
+    req.flash("error_msg", "Ocorreu um erro ao tentar excluír o projeto!");
+    res.redirect('/projetoConfig/' + req.params.codProjeto);
+  });
 
 });
 
@@ -172,19 +307,20 @@ router.post('/removeColaborador/:idProjeto/:idColaborador', async (req, res) => 
     cancelado: 1,
     dataAlteracao: Sequelize.fn('now')
   },
-  {
-    where:{
-      idProjetoColaborador: req.params.idColaborador,
-      idProjeto: req.params.idProjeto
-    }
-  }).then(result => {
-    req.flash("success_msg", "Colaborador removido com sucesso");
-    res.redirect('/projetoConfig/' + req.params.idProjeto);
-  }).catch(err => {
-    console.log(err);
-    req.flash("error_msg", "Ocorreu um erro ao tentar remover colaborador");
-    res.redirect('/projetoConfig/' + req.params.idProjeto);
-  });
+    {
+      where: {
+        idProjetoColaborador: req.params.idColaborador,
+        idProjeto: req.params.idProjeto
+      }
+    }).then(result => {
+      req.flash("success_msg", "Colaborador removido com sucesso");
+      res.redirect('/projetoConfig/' + req.params.idProjeto);
+    }).catch(err => {
+      console.log(err);
+      req.flash("error_msg", "Ocorreu um erro ao tentar remover colaborador");
+      res.redirect('/projetoConfig/' + req.params.idProjeto);
+    });
 
 });
+
 module.exports = router;
