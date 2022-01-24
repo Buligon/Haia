@@ -74,13 +74,14 @@ router.post('/cadUsuario', (req, res) => {
         res.redirect("cadUsuario")
 
       } else {
+        var senhaSemHash = req.body.pwd
 
         // Caso os os dados enviados atendam os requisitos, recebe os dados do formulário
         const novoUsuario = new Usuario({
           nomeUsuario: req.body.nome,
           dataNascimento: req.body.datanasc,
           email: req.body.email,
-          senha: req.body.pwd
+          senha: req.body.pwd,
         });
 
         bcrypt.genSalt(10, (erro, salt) => {
@@ -104,7 +105,7 @@ router.post('/cadUsuario', (req, res) => {
 
               }).then(function (result) {
 
-                req.flash("succes_msg", "Conta criada com sucesso!");
+
 
                 transporter.sendMail({
                   from: "Haia <haia.software.noreply@gmail.com>",
@@ -118,7 +119,8 @@ router.post('/cadUsuario', (req, res) => {
                   console.log(err);
                 });
 
-                res.redirect('/projetos/listaProjetos')
+                req.flash("succes_msg", "Conta criada com sucesso!");
+                res.redirect('/login/' + novoUsuario.email + '/' + senhaSemHash)
 
               }).catch(function (erro) {
 
@@ -318,7 +320,7 @@ router.post('/perfil/alteradados', autenticado, async (req, res) => {
             console.log(erro)
             req.flash("error_msg", "Houve um erro ao alterar dados do usuário!");
             res.redirect("/usuarios/perfil");
-          } else {  
+          } else {
             await Usuario.update(
               {
                 nomeUsuario: alteraUsuario.nomeUsuario,

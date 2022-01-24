@@ -7,16 +7,27 @@ const passport = require("passport");
 const { autenticado } = require("../helpers/validaAutenticacao.js");
 
 
-// Tela de login do sistema
+//* Tela de login do sistema
 
 router.get('/', (req, res) => {
+
   res.render('login', {
     style: 'styles.css'
   });
+
 });
 
+router.get('/login/:email/:senha', (req, res) => {
 
-// Rota para envio do formulário da tela de login
+  res.render('login', {
+    style: 'styles.css',
+    email: req.params.email,
+    senha: req.params.senha
+  });
+
+});
+
+//* Rota para envio do formulário da tela de login
 
 router.post('/', (req, res, next) => {
 

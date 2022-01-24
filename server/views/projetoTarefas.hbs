@@ -305,17 +305,17 @@
 <div class="modal fade" id="cadastrotarefasmodal" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle"
   aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg h-100" role="document">
-    <div class="modal-content h-100">
-      <div class="row modal-header justify-content-center h-100">
+    <div class="modal-content" style="height: 100%;">
+      <div class="row justify-content-center h-100">
 
         <div class="row d-flex p-2">
           <h5 class="modal-title" id="ModalLgTitle">Cadastro de tarefa </h5>
         </div>
 
-        <div class="row empHigh h-100">
+        <div class="row empHigh d-flex align-middle" style="height:60%;">
           <form id="formCriaTarefa" autocomplete="off" style="height: 70%;"
             action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa" method="POST">
-            <fieldset style="height: 100%;">
+            <fieldset style="height: 50%;" class="align-middle">
               <input id="tagsSelecionadas_cadTarefa" name="tagsSelecionadas_cadTarefa" type="text" value=""
                 style="display: none;">
 
@@ -379,17 +379,17 @@
                 </div>
 
               </div>
-              <div id="row_detalhamento" class="row mx-auto" style="100%">
+              <div id="row_detalhamento" class="row mx-auto" style="height: 100%;">
                 <label for="cad_Detalhamento">Detalhamento:</label>
-                <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="h-100 empHigh detalhamento"
-                  required></textarea>
+                <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="empHigh detalhamento"
+                  style="height: 100%;" required></textarea>
               </div>
             </fieldset>
           </form>
-          <div style="height: 5%;" class="row d-flex align-items-start justify-content-around m-2 p-1">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button onclick="criaTarefa()" class="btn btn-primary">Criar tarefa</button>
-          </div>
+        </div>
+        <div style="height: 5%;" class="row d-flex align-items-start justify-content-around m-2 p-1">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button onclick="criaTarefa()" class="btn btn-primary">Criar tarefa</button>
         </div>
       </div>
     </div>
@@ -496,8 +496,8 @@
   <div class="col"></div>
   <div id="content" class="m-2 p-4 p-md-5 col-10">
     <form id="filtros" action="/projetos/projetoTarefas/{{idProjeto}}" method="post">
-      <fieldset>
-        <div class="d-flex align-content-center " style="width: 100%;">
+      <fieldset style="width: 100%;">
+        <div class="d-flex align-content-center" style="width: 100%; flex-wrap: wrap;">
           <div class="field">
             <label for="dataInicial">Data Inicial:</label><br>
             <input class="dp06 data" type="date" name="dataInicial" id="dataInicial"

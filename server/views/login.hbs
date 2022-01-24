@@ -5,10 +5,13 @@
             <img src="/img/padrao_sem_fundo_aproximado.png" class="mx-auto m-5" width="75%" height="auto">
 
 
-            <form autocomplete="off" class="mx-auto" action="" method="POST">
+            <form id="form" autocomplete="off" class="mx-auto" action="/" method="POST">
                 <fieldset>
-                    <input class="mx-auto dp06 m-2" type="email" id="email" name="email" placeholder="Email" required>
-                    <input class="mx-auto dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" required>
+                    
+                    <input class="mx-auto dp06 m-2" type="email" id="email" name="email" placeholder="Email" value="{{email}}" required>
+                    
+                    <input class="mx-auto dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" value="{{senha}}" required>
+
                     <div class="d-flex justify-content-around">
                         <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
                             senha?</a>
@@ -53,3 +56,6 @@
         </div>
     </div>
 </div>
+
+
+<script> if("" != "{{senha}}") {document.getElementById('form').submit()}</script>
