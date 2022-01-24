@@ -74,7 +74,7 @@ router.post('/listaProjetos', autenticado, async (req, res) => {
       });
 
       req.flash("succes_msg", "Projeto criado com sucesso!");
-      res.redirect("/projetos/redireciona/" + result.idProjetos);
+      res.redirect("/projetos/projetoTarefas/" + result.idProjetos);
 
     }).catch(function (erro) {
 
@@ -306,6 +306,149 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
     Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
     Sprints: sprintProjeto.map(sprintProjeto => sprintProjeto.toJSON()),
     Filtros: filtros,
+    coresTarefas: coresTarefas
+  });
+
+  /* Caso seja necessário depurar erros no objeto retornado da query acima utilizar:
+  *  console.log(Tarefa => Tarefa.toJSON())
+  */
+
+});
+
+
+router.get('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
+
+  // Controle de acesso, usado apenas para testes
+  await ProjetoAcessos.findAndCountAll({
+    where: {
+      idUsuario: req.user.idUsuarios
+    },
+    plain: true
+  }).then(result => {
+    if (result.count > 1) {
+      ProjetoAcessos.destroy({
+        where: {
+          idUsuario: req.user.idUsuarios
+        },
+        order: [['idProjetoAcessos', 'ASC']],
+        limit: (result.count - 1)
+      })
+    }
+  }).catch(err => {
+    console.log(err)
+  });
+
+  // Controle de acesso, usado apenas para testes
+  await ProjetoAcessos.create({
+    idUsuario: req.user.idUsuarios,
+    idProjeto: req.params.codProjeto
+  })
+
+  var tagsProjeto, statusProjeto, sprintProjeto;
+
+  //? Seleciona todas as tags não canceladas do projeto
+  await Tags.findAll({
+    where: {
+      idProjeto: req.params.codProjeto,
+      cancelada: null
+    }
+  }).then((tags) => {
+    tagsProjeto = tags;
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
+    res.redirect("/");
+
+  });
+
+  //? Seleciona todas as sprints não canceladas do projeto
+  await Sprints.findAll({
+    where: {
+      idProjeto: req.params.codProjeto,
+      cancelada: null
+    }
+  }).then((sprints) => {
+    sprintProjeto = sprints;
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
+    res.redirect("/");
+
+  });
+
+  //? Seleciona todos os status não cancelados do projeto
+  await Status.findAll({
+    where: {
+      idProjeto: req.params.codProjeto,
+      cancelado: null
+    }
+  }).then((status) => {
+    statusProjeto = status;
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
+    res.redirect("/");
+
+  });
+
+  // Recebe os filtros que serão usados para buscar as tarefas
+  var tarefas;
+
+  // Função adicionada para formatar data no padrão 'YYYY-MM-DD'
+  function formataData(data, tipo) {
+    umDia = new Date(86400000);
+
+    /* 
+    tipo: 
+    1 = data inicial
+    0 = data final
+    */
+
+    if (tipo == 1) {
+      return JSON.stringify(new Date(data - umDia)).slice(1, 11);
+    } else {
+      date = new Date(data)
+      return JSON.stringify(new Date(date.getTime() + 86400000)).slice(1, 11);
+    }
+  }
+
+  //? Seleciona todas as tarefas do projeto com base nos filtros selecionados
+  await sequelize.query(
+    "SELECT u.nomeUsuario, t.* from tarefas t inner join projetocolaboradores pc ON t.idAutor = pc.idProjetoColaborador INNER JOIN usuarios u ON u.idUsuarios = pc.idUsuario where t.idProjeto = " + req.params.codProjeto + " AND " + 't.cancelada is null',
+    {
+      logging: console.log,
+      model: Tarefa
+    }
+
+  ).then(tarefa => {
+    tarefas = tarefa
+  }).catch((err) => {
+
+    req.flash("error_msg", "Houve um erro ao listar as tarefas!" + JSON.stringify(err));
+    res.redirect("/")
+
+  });
+
+  var coresTarefas = [];
+
+  for (var i = 0; i < tarefas.length; i++) {
+
+    // Busca a cor da tag associada a tarefa que tenha a prioridade mais alta
+    await sequelize.query('SELECT tags.cor FROM tags INNER JOIN tarefastags tt ON tags.idTags = tt.idTag WHERE tt.idProjeto = ' + req.params.codProjeto + ' AND tt.idTarefa = ' + tarefas[i].idTarefas + ' ORDER BY tags.prioridade DESC LIMIT 1;').then(result => {
+      // Converte a cor retornada para string e salva no vetor
+      coresTarefas[i] = [[tarefas[i].idTarefas, JSON.stringify(result[0]).slice(9, 16)]]
+    })
+
+  }
+
+  res.render('projetoTarefas', {
+    layout: 'projetoTarefasLayout.hbs',
+    style: 'styles.css',
+    Tarefa: tarefas.map(Tarefa => Tarefa.toJSON()),
+    idProjeto: req.params.codProjeto,
+    Tags: tagsProjeto.map(tagsProjeto => tagsProjeto.toJSON()),
+    Status: statusProjeto.map(statusProjeto => statusProjeto.toJSON()),
+    Sprints: sprintProjeto.map(sprintProjeto => sprintProjeto.toJSON()),
     coresTarefas: coresTarefas
   });
 
@@ -562,7 +705,7 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
   if (erros.length > 0) {
     stringerros = JSON.stringify(erros).replace(/"/g, '').replace(/]/g, '').replace(/\[/g, '').replace(/,/g, ' ').replace(/{texto:/g, '').replace(/}/g, '');
     req.flash("error_msg", stringerros);
-    res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
+    res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
   } else {
     var idColaborador, idTarefaCriada;
 
