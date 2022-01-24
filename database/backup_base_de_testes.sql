@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `cargos` (
   CONSTRAINT `usuarioAlterou_c` FOREIGN KEY (`usuarioAlterou`) REFERENCES `projetocolaboradores` (`idProjetoColaborador`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.cargos: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.cargos: ~0 rows (aproximadamente)
 /*!40000 ALTER TABLE `cargos` DISABLE KEYS */;
 INSERT INTO `cargos` (`idCargos`, `nome`, `descricao`, `cancelado`, `dataAlteracao`, `usuarioAlterou`) VALUES
 	(1, 'cargo 1', 'teste 1', NULL, NULL, NULL),
@@ -83,9 +83,9 @@ CREATE TABLE IF NOT EXISTS `convites` (
   PRIMARY KEY (`idConvites`),
   KEY `idProjeto_Conv_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Conv` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.convites: ~6 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.convites: ~12 rows (aproximadamente)
 /*!40000 ALTER TABLE `convites` DISABLE KEYS */;
 INSERT INTO `convites` (`idConvites`, `idProjeto`, `email`, `aceito`) VALUES
 	(1, 1, 'lukasbuligonantunes@gmail.com', NULL),
@@ -93,7 +93,14 @@ INSERT INTO `convites` (`idConvites`, `idProjeto`, `email`, `aceito`) VALUES
 	(3, 1, 'lukasbuligonantunes@gmail.com', 1),
 	(4, 22, 'lukasbuligonantunes@gmail.com', 1),
 	(5, 1, 'twetwdajsbdhs@asjbd.com', NULL),
-	(6, 1, 'fjbaf@sdknf.com', NULL);
+	(6, 1, 'fjbaf@sdknf.com', NULL),
+	(7, 32, 'lukasbuligonantunes@gmail.com', 1),
+	(8, 27, 'lukasbuligonantunes@gmail.com', 1),
+	(9, 10, 'lukasbuligonantunes@gmail.com', 1),
+	(10, 10, 'lukasbuligonantunes@gmail.com', 1),
+	(11, 1, 'fasf@flknha.sfkna', NULL),
+	(12, 33, 'lukasbuligonantunes@gmail.com', 1),
+	(13, 1, 'lukasbuligonantunes@gmail.com', NULL);
 /*!40000 ALTER TABLE `convites` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.mensagens
@@ -186,13 +193,19 @@ CREATE TABLE IF NOT EXISTS `projetoacessos` (
   KEY `idProjeto_Acesso_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Acesso` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`),
   CONSTRAINT `idUsuario_Acesso` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=237 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=803 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.projetoacessos: ~2 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.projetoacessos: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `projetoacessos` DISABLE KEYS */;
 INSERT INTO `projetoacessos` (`idProjetoAcessos`, `idUsuario`, `idProjeto`, `dataAcesso`) VALUES
-	(235, 42, 1, '2022-01-15 21:41:10'),
-	(236, 42, 1, '2022-01-15 21:45:39');
+	(680, 49, 33, '2022-01-20 19:07:37'),
+	(681, 49, 33, '2022-01-20 19:08:33'),
+	(687, 42, 1, '2022-01-21 02:43:14'),
+	(688, 42, 1, '2022-01-21 02:46:34'),
+	(726, 50, 34, '2022-01-21 19:49:21'),
+	(727, 50, 34, '2022-01-21 19:49:30'),
+	(801, 48, 37, '2022-01-22 20:43:35'),
+	(802, 48, 37, '2022-01-22 20:43:58');
 /*!40000 ALTER TABLE `projetoacessos` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.projetocolaboradores
@@ -211,13 +224,13 @@ CREATE TABLE IF NOT EXISTS `projetocolaboradores` (
   CONSTRAINT `codigoUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuarios`),
   CONSTRAINT `idCargo` FOREIGN KEY (`idCargo`) REFERENCES `cargos` (`idCargos`),
   CONSTRAINT `idProjeto` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.projetocolaboradores: ~25 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.projetocolaboradores: ~41 rows (aproximadamente)
 /*!40000 ALTER TABLE `projetocolaboradores` DISABLE KEYS */;
 INSERT INTO `projetocolaboradores` (`idProjetoColaborador`, `idUsuario`, `idProjeto`, `cancelado`, `idCargo`, `dataCriacao`, `dataAlteracao`) VALUES
 	(4, 42, 1, NULL, 1, '2021-12-27 20:15:47', '2021-12-27 20:15:47'),
-	(5, 41, 1, NULL, 1, '2022-01-07 00:09:24', '2022-01-07 00:09:24'),
+	(5, 41, 1, 1, 1, '2022-01-07 00:09:24', '2022-01-20 19:04:13'),
 	(6, 42, 10, NULL, 1, '2022-01-11 22:07:25', '2022-01-12 01:07:25'),
 	(7, 42, 11, NULL, 1, '2022-01-11 22:08:07', '2022-01-12 01:08:07'),
 	(8, 42, 12, NULL, 1, '2022-01-11 22:09:04', '2022-01-12 01:09:04'),
@@ -240,7 +253,27 @@ INSERT INTO `projetocolaboradores` (`idProjetoColaborador`, `idUsuario`, `idProj
 	(31, 48, 22, NULL, 2, '2022-01-12 23:11:32', '2022-01-13 02:11:32'),
 	(32, 48, 22, NULL, 2, '2022-01-12 23:11:37', '2022-01-13 02:11:37'),
 	(33, 48, 22, NULL, 2, '2022-01-12 23:11:49', '2022-01-13 02:11:49'),
-	(34, 42, 27, NULL, 1, '2022-01-14 14:38:54', '2022-01-14 17:38:54');
+	(34, 42, 27, NULL, 1, '2022-01-14 14:38:54', '2022-01-14 17:38:54'),
+	(35, 42, 28, NULL, 1, '2022-01-19 18:54:34', '2022-01-19 21:54:34'),
+	(36, 42, 29, NULL, 1, '2022-01-19 18:56:01', '2022-01-19 21:56:01'),
+	(37, 42, 30, NULL, 1, '2022-01-19 18:56:42', '2022-01-19 21:56:42'),
+	(38, 42, 31, NULL, 1, '2022-01-19 18:58:14', '2022-01-19 21:58:14'),
+	(39, 42, 32, NULL, 1, '2022-01-19 20:25:26', '2022-01-19 23:25:26'),
+	(40, 49, 10, NULL, 2, '2022-01-20 15:29:36', '2022-01-20 18:29:36'),
+	(41, 42, 33, NULL, 1, '2022-01-20 16:04:42', '2022-01-20 19:04:42'),
+	(42, 49, 10, NULL, 2, '2022-01-20 16:05:15', '2022-01-20 19:05:15'),
+	(43, 49, 10, NULL, 2, '2022-01-20 16:06:10', '2022-01-20 19:06:10'),
+	(44, 49, 10, NULL, 2, '2022-01-20 16:06:20', '2022-01-20 19:06:20'),
+	(45, 49, 10, NULL, 2, '2022-01-20 16:06:43', '2022-01-20 19:06:43'),
+	(46, 49, 10, NULL, 2, '2022-01-20 16:06:51', '2022-01-20 19:06:51'),
+	(47, 49, 10, NULL, 2, '2022-01-20 16:07:15', '2022-01-20 19:07:15'),
+	(48, 49, 33, 1, 2, '2022-01-20 16:07:32', '2022-01-20 19:07:41'),
+	(49, 49, 10, NULL, 2, '2022-01-20 16:08:18', '2022-01-20 19:08:18'),
+	(50, 49, 10, NULL, 2, '2022-01-20 22:31:42', '2022-01-21 01:31:42'),
+	(51, 50, 34, NULL, 1, '2022-01-21 16:47:13', '2022-01-21 19:47:13'),
+	(52, 48, 35, NULL, 1, '2022-01-22 14:54:34', '2022-01-22 17:54:34'),
+	(53, 48, 36, NULL, 1, '2022-01-22 16:47:04', '2022-01-22 19:47:04'),
+	(54, 48, 37, NULL, 1, '2022-01-22 17:31:12', '2022-01-22 20:31:12');
 /*!40000 ALTER TABLE `projetocolaboradores` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.projetos
@@ -253,9 +286,9 @@ CREATE TABLE IF NOT EXISTS `projetos` (
   `banner` longblob,
   PRIMARY KEY (`idProjetos`),
   UNIQUE KEY `idProjetos_UNIQUE` (`idProjetos`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.projetos: ~27 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.projetos: ~32 rows (aproximadamente)
 /*!40000 ALTER TABLE `projetos` DISABLE KEYS */;
 INSERT INTO `projetos` (`idProjetos`, `nomeProjeto`, `codigoCriador`, `descricao`, `Cancelado`, `banner`) VALUES
 	(1, 'Teste', '1', 'Isso é um teste de projeto', NULL, NULL),
@@ -279,12 +312,22 @@ INSERT INTO `projetos` (`idProjetos`, `nomeProjeto`, `codigoCriador`, `descricao
 	(19, 'teste', '42', 'teste', NULL, NULL),
 	(20, 'test', '42', 'teste', NULL, NULL),
 	(21, 'teste', '42', 'teste', NULL, NULL),
-	(22, 'rwarw', '42', 'rwarw', NULL, NULL),
+	(22, 'teste3 414', '42', 'trt3453', NULL, NULL),
 	(23, 'teste', '42', 'teste', NULL, _binary 0x31666437663065302D373234392D343638652D613636662D6237303933666632613161332E6A666966),
 	(24, 'test', '42', 'teste', NULL, NULL),
 	(25, 'etste', '45', 'tsets', NULL, NULL),
 	(26, 'twat', '45', 'ast', NULL, NULL),
-	(27, 'Teste completo', '42', 'TEste completo', NULL, NULL);
+	(27, 'Teste completo', '42', 'TEste completo', NULL, NULL),
+	(28, 'teste', '42', 'teste', NULL, NULL),
+	(29, 'teste', '42', 'teste', NULL, NULL),
+	(30, 'etstes', '42', 'tetset', NULL, NULL),
+	(31, 'teste', '42', 'tsteste', NULL, NULL),
+	(32, 'teste', '42', 'teste', NULL, NULL),
+	(33, 'testse exclusção', '42', 'rsfet', NULL, NULL),
+	(34, 'teste', '50', 'etsett', NULL, NULL),
+	(35, 'tecveasrfefsefe', '48', 'teste3 tedasdknlsafjhkabkfshbv ahjgkfjhbj', 1, NULL),
+	(36, 'teste32', '48', 'tset34', 1, NULL),
+	(37, 'teste', '48', 'setests', NULL, NULL);
 /*!40000 ALTER TABLE `projetos` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.reacoes
@@ -316,16 +359,18 @@ CREATE TABLE IF NOT EXISTS `sprints` (
   PRIMARY KEY (`idSprints`),
   KEY `idProjeto_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Sp` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.sprints: ~5 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.sprints: ~4 rows (aproximadamente)
 /*!40000 ALTER TABLE `sprints` DISABLE KEYS */;
 INSERT INTO `sprints` (`idSprints`, `nome`, `dataCriacao`, `cancelada`, `dataAlteracao`, `idProjeto`) VALUES
 	(1, 'teste', '2022-01-05 20:22:31', NULL, NULL, 1),
 	(2, 'Desenvolvimento', '2022-01-05 20:23:00', NULL, '2022-01-14 17:24:56', 1),
 	(3, 'testefsefse', '2022-01-14 14:19:47', 1, '2022-01-14 17:24:09', 1),
 	(4, 'Sprint T', '2022-01-14 17:37:48', 1, '2022-01-14 17:38:04', 1),
-	(5, 'Teste', '2022-01-14 17:39:14', NULL, NULL, 27);
+	(5, 'Teste', '2022-01-14 17:39:14', NULL, NULL, 27),
+	(6, 'hm', '2022-01-16 00:53:18', NULL, NULL, 1),
+	(7, 'Teste', '2022-01-19 23:27:53', NULL, NULL, 32);
 /*!40000 ALTER TABLE `sprints` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.status
@@ -337,16 +382,19 @@ CREATE TABLE IF NOT EXISTS `status` (
   PRIMARY KEY (`idStatus`),
   KEY `idProjeto_Sta_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Sta` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.status: ~5 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.status: ~8 rows (aproximadamente)
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
 INSERT INTO `status` (`idStatus`, `nome`, `cancelado`, `idProjeto`) VALUES
 	(1, 'Análise de viabilidade                    ', NULL, 1),
 	(2, 'Teste', NULL, 1),
 	(3, 'teste', NULL, 1),
 	(6, 'Teste', NULL, 1),
-	(7, 'Status 1', NULL, 27);
+	(7, 'Status 1', NULL, 27),
+	(8, 'Desenvolvimento', NULL, 32),
+	(9, 'teste', NULL, 22),
+	(10, 'ydrydr', NULL, 34);
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.tags
@@ -354,29 +402,38 @@ CREATE TABLE IF NOT EXISTS `tags` (
   `idTags` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(45) NOT NULL,
   `cor` char(7) DEFAULT NULL,
+  `prioridade` int NOT NULL,
   `cancelada` tinyint DEFAULT NULL,
   `idProjeto` int NOT NULL,
   PRIMARY KEY (`idTags`),
   KEY `idProjeto_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_ta` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.tags: ~13 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.tags: ~17 rows (aproximadamente)
 /*!40000 ALTER TABLE `tags` DISABLE KEYS */;
-INSERT INTO `tags` (`idTags`, `descricao`, `cor`, `cancelada`, `idProjeto`) VALUES
-	(1, 'teste 1', '#F2DC6B', 1, 1),
-	(2, 'teste 2', '#0477BF', NULL, 1),
-	(3, 'teste 3', '#bb86fc', 1, 1),
-	(4, 'teste 4', '#6e90af', 1, 1),
-	(5, 'teste 5', '#42b368', 1, 1),
-	(6, 'teste 6', '#382550', NULL, 1),
-	(7, 'teste 8', '#6e479e', NULL, 1),
-	(8, 'teste tag', '#5da7b6', NULL, 1),
-	(9, 'setest', '#bb86fc', NULL, 1),
-	(10, 'teste', '#bb86fc', NULL, 25),
-	(11, 'testete', '#bb86fc', NULL, 25),
-	(12, 'testdt', '#bb86fc', NULL, 25),
-	(13, 'tewste', '#bb86fc', NULL, 26);
+INSERT INTO `tags` (`idTags`, `descricao`, `cor`, `prioridade`, `cancelada`, `idProjeto`) VALUES
+	(1, 'teste 1', '#F2DC6B', 0, 1, 1),
+	(2, 'Teste geral', '#ff0000', 2, 1, 1),
+	(3, 'teste 3', '#bb86fc', 0, 1, 1),
+	(4, 'teste 4', '#6e90af', 0, 1, 1),
+	(5, 'teste 5', '#42b368', 1, 1, 1),
+	(6, 'teste 6', '#382550', 3, NULL, 1),
+	(7, 'teste 8', '#6e479e', 2, NULL, 1),
+	(8, 'teste tag', '#5da7b6', 0, NULL, 1),
+	(9, 'setest', '#bb86fc', 0, NULL, 1),
+	(10, 'teste', '#bb86fc', 0, NULL, 25),
+	(11, 'testete', '#bb86fc', 0, NULL, 25),
+	(12, 'testdt', '#bb86fc', 0, NULL, 25),
+	(13, 'tewste', '#bb86fc', 0, NULL, 26),
+	(14, 'p1', '#fc8ded', 1, NULL, 1),
+	(15, '1', '#d8097e', 4, 1, 1),
+	(16, '2', '#8c579c', 4, 1, 1),
+	(17, '3', '#24468e', 4, 1, 1),
+	(18, 'teste tag', '#bb86fc', 1, NULL, 1),
+	(19, 'teste', '#bb86fc', 1424, NULL, 1),
+	(20, 'aaaaaa', '#bb86fc', 142, NULL, 1),
+	(21, 'Impedida', '#ff1a1a', 5, NULL, 32);
 /*!40000 ALTER TABLE `tags` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.tarefas
@@ -401,9 +458,9 @@ CREATE TABLE IF NOT EXISTS `tarefas` (
   CONSTRAINT `idProjeto_t` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`),
   CONSTRAINT `idSprint` FOREIGN KEY (`idSprint`) REFERENCES `sprints` (`idSprints`),
   CONSTRAINT `idStatus` FOREIGN KEY (`idStatus`) REFERENCES `status` (`idStatus`)
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.tarefas: ~46 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.tarefas: ~68 rows (aproximadamente)
 /*!40000 ALTER TABLE `tarefas` DISABLE KEYS */;
 INSERT INTO `tarefas` (`idTarefas`, `assunto`, `prioridade`, `cancelada`, `ultimaResposta`, `idAutor`, `idProjeto`, `idStatus`, `idSprint`, `dataCriacao`, `dataAlteracao`) VALUES
 	(9, 'teste', 'Alta', NULL, '2022-01-10 23:09:33', 4, 1, 1, NULL, '2022-01-10 20:09:33', '2022-01-10 23:09:33'),
@@ -448,10 +505,34 @@ INSERT INTO `tarefas` (`idTarefas`, `assunto`, `prioridade`, `cancelada`, `ultim
 	(50, 'dawdawd', 'Alta', NULL, '2022-01-15 17:18:20', 4, 1, 1, NULL, '2022-01-15 14:18:20', '2022-01-15 17:18:20'),
 	(51, 'dwewe', 'Alta', NULL, '2022-01-15 17:28:02', 4, 1, 1, NULL, '2022-01-15 14:28:02', '2022-01-15 17:28:02'),
 	(52, 'dfwdawd', 'Alta', NULL, '2022-01-15 17:29:39', 4, 1, 1, NULL, '2022-01-15 14:29:39', '2022-01-15 17:29:39'),
-	(53, 'tewtrwet', 'Alta', NULL, '2022-01-15 17:31:21', 4, 1, 1, NULL, '2022-01-15 14:31:21', '2022-01-15 17:31:21'),
+	(53, 'tewtrwet', 'Alta', NULL, '2022-01-18 13:21:12', 4, 1, 1, NULL, '2022-01-15 14:31:21', '2022-01-18 13:21:12'),
 	(54, 'awefewt', 'Alta', NULL, '2022-01-15 17:35:48', 4, 1, 1, NULL, '2022-01-15 14:35:48', '2022-01-15 17:35:48'),
 	(55, 'tefset', 'Alta', NULL, '2022-01-15 17:35:59', 4, 1, 1, NULL, '2022-01-15 14:35:59', '2022-01-15 17:35:59'),
-	(56, 'ewtewet', 'Alta', NULL, '2022-01-15 21:45:49', 4, 1, 1, NULL, '2022-01-15 18:45:49', '2022-01-15 21:45:49');
+	(56, 'ewtewet', 'Alta', NULL, '2022-01-15 21:45:49', 4, 1, 1, NULL, '2022-01-15 18:45:49', '2022-01-15 21:45:49'),
+	(57, 'tertet', 'Alta', NULL, '2022-01-15 21:56:45', 4, 1, 1, NULL, '2022-01-15 18:56:45', '2022-01-15 21:56:45'),
+	(58, 'twetwte', 'Alta', 1, '2022-01-15 21:58:39', 4, 1, 1, NULL, '2022-01-15 18:58:39', '2022-01-15 21:57:40'),
+	(59, 'festetse', 'Alta', 1, '2022-01-15 22:52:20', 4, 1, 1, NULL, '2022-01-15 19:52:20', '2022-01-15 21:57:41'),
+	(60, 'testet', 'Alta', 1, '2022-01-16 00:33:39', 4, 1, 1, NULL, '2022-01-15 21:33:39', '2022-01-15 21:57:45'),
+	(61, 'teste', 'Alta', 1, '2022-01-16 00:52:04', 4, 1, 1, 6, '2022-01-15 21:52:04', '2022-01-15 21:56:56'),
+	(62, 'teste', 'Alta', 1, '2022-01-16 00:52:15', 4, 1, 1, 6, '2022-01-15 21:52:15', '2022-01-15 21:57:15'),
+	(63, 'teste', 'Alta', 1, '2022-01-16 00:52:24', 4, 1, 1, 6, '2022-01-15 21:52:24', '2022-01-15 21:57:17'),
+	(64, 'Teste tags', 'Alta', NULL, '2022-01-20 18:11:27', 4, 1, 1, NULL, '2022-01-15 23:48:52', '2022-01-20 18:11:27'),
+	(65, 'teste', 'Alta', NULL, '2022-01-18 20:09:19', 4, 1, 1, NULL, '2022-01-18 17:09:19', '2022-01-18 20:09:19'),
+	(66, 'teste', 'Alta', NULL, '2022-01-18 20:31:15', 4, 1, 1, NULL, '2022-01-18 17:31:15', '2022-01-18 20:31:15'),
+	(67, 'teste', 'Alta', NULL, '2022-01-18 20:31:43', 4, 1, 1, NULL, '2022-01-18 17:31:43', '2022-01-18 20:31:43'),
+	(68, 'teste', 'Alta', NULL, '2022-01-18 20:32:30', 4, 1, 1, NULL, '2022-01-18 17:32:30', '2022-01-18 20:32:30'),
+	(69, 'teste', 'Alta', NULL, '2022-01-18 20:33:28', 4, 1, 1, NULL, '2022-01-18 17:33:28', '2022-01-18 20:33:28'),
+	(70, 'yrdyr', 'Alta', NULL, '2022-01-18 20:34:13', 4, 1, 1, NULL, '2022-01-18 17:34:13', '2022-01-18 20:34:13'),
+	(71, 'test', 'Alta', NULL, '2022-01-18 20:35:20', 4, 1, 1, NULL, '2022-01-18 17:35:20', '2022-01-18 20:35:20'),
+	(72, 'test', 'Alta', NULL, '2022-01-18 20:35:55', 4, 1, 1, NULL, '2022-01-18 17:35:55', '2022-01-18 20:35:55'),
+	(73, 'teste', 'Alta', NULL, '2022-01-18 20:37:11', 4, 1, 1, NULL, '2022-01-18 17:37:11', '2022-01-18 20:37:11'),
+	(74, 'teste', 'Alta', NULL, '2022-01-18 20:37:33', 4, 1, 1, NULL, '2022-01-18 17:37:33', '2022-01-18 20:37:33'),
+	(75, 'teste', 'Alta', NULL, '2022-01-18 20:39:27', 4, 1, 1, NULL, '2022-01-18 17:39:27', '2022-01-18 20:39:27'),
+	(76, 'tsete', 'Alta', NULL, '2022-01-18 20:41:07', 4, 1, 1, NULL, '2022-01-18 17:41:07', '2022-01-18 20:41:07'),
+	(77, 'teste', 'Alta', NULL, '2022-01-19 19:07:51', 4, 1, 1, NULL, '2022-01-18 17:41:13', '2022-01-19 19:07:51'),
+	(78, 'Tarefa teste', 'Normal', NULL, '2022-01-19 23:39:10', 39, 32, 8, NULL, '2022-01-19 20:30:42', '2022-01-19 23:39:10'),
+	(79, 'tsete', 'Alta', NULL, '2022-01-21 17:47:47', 29, 22, 9, NULL, '2022-01-21 14:47:47', '2022-01-21 17:47:47'),
+	(80, 'yrdyr', 'Alta', NULL, '2022-01-21 19:49:35', 51, 34, 10, NULL, '2022-01-21 16:49:35', '2022-01-21 19:49:35');
 /*!40000 ALTER TABLE `tarefas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.tarefasrespostas
@@ -468,9 +549,9 @@ CREATE TABLE IF NOT EXISTS `tarefasrespostas` (
   KEY `idColaborador_idx` (`idColaborador`),
   CONSTRAINT `idColaborador_tt` FOREIGN KEY (`idColaborador`) REFERENCES `projetocolaboradores` (`idProjetoColaborador`),
   CONSTRAINT `idTarefa_tt` FOREIGN KEY (`idTarefa`) REFERENCES `tarefas` (`idTarefas`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.tarefasrespostas: ~67 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.tarefasrespostas: ~106 rows (aproximadamente)
 /*!40000 ALTER TABLE `tarefasrespostas` DISABLE KEYS */;
 INSERT INTO `tarefasrespostas` (`idTarefasResposta`, `idTarefa`, `idColaborador`, `statusAnterior`, `statusNovo`, `resposta`, `dataResposta`) VALUES
 	(0000000001, 26, 4, 1, 1, 'estest', '2022-01-10 23:28:52'),
@@ -539,7 +620,58 @@ INSERT INTO `tarefasrespostas` (`idTarefasResposta`, `idTarefa`, `idColaborador`
 	(0000000064, 53, 4, 1, 1, 'tewtwet', '2022-01-15 17:31:21'),
 	(0000000065, 54, 4, 1, 1, 'estset', '2022-01-15 17:35:48'),
 	(0000000066, 55, 4, 1, 1, 'estetse', '2022-01-15 17:35:59'),
-	(0000000067, 56, 4, 1, 1, 'ewtwett', '2022-01-15 21:45:49');
+	(0000000067, 56, 4, 1, 1, 'ewtwett', '2022-01-15 21:45:49'),
+	(0000000068, 57, 4, 1, 1, 'retert', '2022-01-15 21:56:45'),
+	(0000000069, 58, 4, 1, 1, 'ewtwetewt', '2022-01-15 21:58:39'),
+	(0000000070, 59, 4, 1, 1, 'tesfrestest', '2022-01-15 22:52:20'),
+	(0000000071, 60, 4, 1, 1, 'etet', '2022-01-16 00:33:39'),
+	(0000000072, 60, 4, 1, 1, 'testete', '2022-01-16 00:47:01'),
+	(0000000073, 61, 4, 1, 1, 'etste', '2022-01-16 00:52:04'),
+	(0000000074, 62, 4, 1, 1, 'testete', '2022-01-16 00:52:15'),
+	(0000000075, 63, 4, 1, 1, 'teste', '2022-01-16 00:52:24'),
+	(0000000076, 61, 4, 1, 1, '.', '2022-01-16 00:53:27'),
+	(0000000077, 62, 4, 1, 1, '.', '2022-01-16 00:53:36'),
+	(0000000078, 63, 4, 1, 1, '.', '2022-01-16 00:53:43'),
+	(0000000079, 64, 4, 1, 1, 'teste', '2022-01-16 02:48:52'),
+	(0000000080, 64, 4, 1, 1, 'te', '2022-01-17 21:42:44'),
+	(0000000081, 64, 4, 1, 1, '.', '2022-01-17 21:46:30'),
+	(0000000082, 64, 4, 1, 1, 'wadw', '2022-01-17 21:47:20'),
+	(0000000083, 64, 4, 1, 1, 'rwadwd', '2022-01-17 21:49:51'),
+	(0000000084, 64, 4, 1, 1, 'grdydry', '2022-01-17 21:50:35'),
+	(0000000085, 53, 4, 1, 1, 'dbhjasdbajsdb', '2022-01-18 13:21:12'),
+	(0000000086, 64, 4, 1, 1, '', '2022-01-18 17:41:54'),
+	(0000000087, 65, 4, 1, 1, 'teste', '2022-01-18 20:09:19'),
+	(0000000088, 75, 4, 1, 1, 'teste', '2022-01-18 20:39:27'),
+	(0000000089, 76, 4, 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id metus nibh. Pellentesque porttitor, urna id sagittis feugiat, nunc lorem vestibulum metus, sit amet viverra nulla ex sed ipsum. Aliquam placerat gravida sem, in hendrerit dolor scelerisque cursus. Nam ornare arcu vel pretium facilisis. In hac habitasse platea dictumst. Vivamus ac arcu vitae arcu aliquam mattis. Phasellus ullamcorper ex orci, id maximus urna rhoncus vitae. Suspendisse ullamcorper dui ut ligula rutrum, et sagittis nisi consequat. Integer venenatis libero nec est viverra tristique. Curabitur lobortis, massa eget pharetra ullamcorper, urna metus molestie mauris, nec porttitor enim urna aliquam risus. Integer laoreet nisi non velit blandit, et pharetra urna ullamcorper. Suspendisse porta lectus sit amet ligula pharetra, in ornare magna mattis. Curabitur venenatis mauris eget enim scelerisque aliquet. Ut quis tempor leo, sed malesuada dolor.\r\n\r\nDonec finibus cursus luctus. Nam a sodales erat, eu porta nulla. Sed elit magna, v', '2022-01-18 20:41:07'),
+	(0000000090, 77, 4, 1, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc id metus nibh. Pellentesque porttitor, urna id sagittis feugiat, nunc lorem vestibulum metus, sit amet viverra nulla ex sed ipsum. Aliquam placerat gravida sem, in hendrerit dolor scelerisque cursus. Nam ornare arcu vel pretium facilisis. In hac habitasse platea dictumst. Vivamus ac arcu vitae arcu aliquam mattis. Phasellus ullamcorper ex orci, id maximus urna rhoncus vitae. Suspendisse ullamcorper dui ut ligula rutrum, et sagittis nisi consequat. Integer venenatis libero nec est viverra tristique. Curabitur lobortis, massa eget pharetra ullamcorper, urna metus molestie mauris, nec porttitor enim urna aliquam risus. Integer laoreet nisi non velit blandit, et pharetra urna ullamcorper. Suspendisse porta lectus sit amet ligula pharetra, in ornare magna mattis. Curabitur venenatis mauris eget enim scelerisque aliquet. Ut quis tempor leo, sed malesuada dolor.\r\n\r\nDonec finibus cursus luctus. Nam a sodales erat, eu porta nulla. Sed elit magna, v', '2022-01-18 20:41:13'),
+	(0000000091, 77, 4, 1, 1, 'testestte', '2022-01-18 22:45:15'),
+	(0000000092, 77, 4, 1, 3, 'teste', '2022-01-18 22:46:15'),
+	(0000000093, 77, 4, 1, 3, 'teste', '2022-01-18 22:46:15'),
+	(0000000094, 77, 4, 3, 1, '', '2022-01-18 22:47:07'),
+	(0000000095, 77, 4, 1, 1, 'teste', '2022-01-19 19:07:37'),
+	(0000000096, 77, 4, 1, 1, '', '2022-01-19 19:07:44'),
+	(0000000097, 77, 4, 1, 1, 'teste', '2022-01-19 19:07:51'),
+	(0000000098, 64, 4, 1, 3, 'yrdyr', '2022-01-19 23:23:34'),
+	(0000000099, 78, 39, 8, 8, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est elit, fringilla nec tincidunt et, bibendum id tortor. Quisque viverra dapibus commodo. Etiam lobortis lorem sed nunc commodo, nec maximus leo faucibus. Quisque placerat est odio, nec hendrerit orci vulputate non. Phasellus a odio eget est rutrum auctor ac id ante. Nullam euismod arcu ultricies mauris porttitor, ut ultrices lacus tristique. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras quis massa efficitur nisl consectetur convallis. Pellentesque vestibulum placerat felis, vel posuere eros consectetur ut.', '2022-01-19 23:30:43'),
+	(0000000100, 78, 39, 8, 8, 'TEste', '2022-01-19 23:38:34'),
+	(0000000101, 78, 39, 8, 8, 'te', '2022-01-19 23:38:48'),
+	(0000000102, 78, 39, 8, 8, 'test', '2022-01-19 23:38:49'),
+	(0000000103, 78, 39, 8, 8, 'test', '2022-01-19 23:38:51'),
+	(0000000104, 78, 39, 8, 8, 't', '2022-01-19 23:38:55'),
+	(0000000105, 78, 39, 8, 8, 't', '2022-01-19 23:38:56'),
+	(0000000106, 78, 39, 8, 8, 't', '2022-01-19 23:38:58'),
+	(0000000107, 78, 39, 8, 8, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas est elit, fringilla nec tincidunt et, bibendum id tortor. Quisque viverra dapibus commodo. Etiam lobortis lorem sed nunc commodo, nec maximus leo faucibus. Quisque placerat est odio, nec hendrerit orci vulputate non. Phasellus a odio eget est rutrum auctor ac id ante. Nullam euismod arcu ultricies mauris porttitor, ut ultrices lacus tristique. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Cras quis massa efficitur nisl consectetur convallis. Pellentesque vestibulum placerat felis, vel posuere eros consectetur ut.', '2022-01-19 23:39:10'),
+	(0000000108, 64, 4, 3, 1, 'teste', '2022-01-20 17:20:26'),
+	(0000000109, 64, 4, 1, 2, 'testet', '2022-01-20 17:33:57'),
+	(0000000110, 64, 4, 2, 1, 'testeste', '2022-01-20 17:34:01'),
+	(0000000111, 64, 4, 1, 1, 'teste', '2022-01-20 17:35:23'),
+	(0000000112, 64, 4, 1, 1, 'ç', '2022-01-20 17:35:30'),
+	(0000000113, 64, 4, 1, 3, 'gc', '2022-01-20 17:35:36'),
+	(0000000114, 64, 4, 3, 1, '', '2022-01-20 18:11:24'),
+	(0000000115, 64, 4, 1, 1, '', '2022-01-20 18:11:26'),
+	(0000000116, 64, 4, 1, 1, '', '2022-01-20 18:11:27'),
+	(0000000117, 79, 29, 9, 9, 'test', '2022-01-21 17:47:47'),
+	(0000000118, 80, 51, 10, 10, 'dryy', '2022-01-21 19:49:35');
 /*!40000 ALTER TABLE `tarefasrespostas` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.tarefastags
@@ -555,10 +687,18 @@ CREATE TABLE IF NOT EXISTS `tarefastags` (
   CONSTRAINT `idProjeto_tta` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`),
   CONSTRAINT `idTag_ta` FOREIGN KEY (`idTag`) REFERENCES `tags` (`idTags`),
   CONSTRAINT `idTarefa_ta` FOREIGN KEY (`idTarefa`) REFERENCES `tarefas` (`idTarefas`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.tarefastags: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.tarefastags: ~7 rows (aproximadamente)
 /*!40000 ALTER TABLE `tarefastags` DISABLE KEYS */;
+INSERT INTO `tarefastags` (`idTarefasTags`, `idTarefa`, `idTag`, `idProjeto`) VALUES
+	(1, 64, 6, 1),
+	(7, 64, 7, 1),
+	(11, 78, 21, 32),
+	(13, 64, 19, 1),
+	(14, 64, 20, 1),
+	(15, 64, 9, 1),
+	(16, 64, 18, 1);
 /*!40000 ALTER TABLE `tarefastags` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.tarefastempo
@@ -576,10 +716,38 @@ CREATE TABLE IF NOT EXISTS `tarefastempo` (
   CONSTRAINT `idColaborador` FOREIGN KEY (`idColaborador`) REFERENCES `projetocolaboradores` (`idProjetoColaborador`),
   CONSTRAINT `idStatus_t` FOREIGN KEY (`idStatus`) REFERENCES `status` (`idStatus`),
   CONSTRAINT `idTarefa_t` FOREIGN KEY (`idTarefa`) REFERENCES `tarefas` (`idTarefas`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.tarefastempo: ~0 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.tarefastempo: ~26 rows (aproximadamente)
 /*!40000 ALTER TABLE `tarefastempo` DISABLE KEYS */;
+INSERT INTO `tarefastempo` (`idTarefasTempo`, `idTarefa`, `idColaborador`, `idStatus`, `dataInicio`, `dataFinal`) VALUES
+	(1, 12, 4, 1, '2022-01-18 21:48:12', '2022-01-18 22:01:49'),
+	(2, 12, 4, 1, '2022-01-18 21:48:32', '2022-01-18 22:01:49'),
+	(3, 12, 4, 1, '2022-01-18 22:01:41', '2022-01-18 22:01:49'),
+	(4, 12, 4, 1, '2022-01-18 22:02:26', '2022-01-18 22:02:30'),
+	(5, 77, 4, 1, '2022-01-18 22:45:03', '2022-01-18 22:45:17'),
+	(6, 77, 4, 3, '2022-01-18 22:46:16', '2022-01-18 22:46:18'),
+	(7, 12, 4, 1, '2022-01-18 22:48:13', '2022-01-18 22:48:15'),
+	(8, 12, 4, 1, '2022-01-18 22:51:37', '2022-01-18 22:51:38'),
+	(9, 12, 4, 1, '2022-01-18 22:51:40', '2022-01-18 22:51:41'),
+	(10, 12, 4, 1, '2022-01-18 23:05:42', '2022-01-18 23:05:44'),
+	(11, 12, 4, 1, '2022-01-18 23:05:46', '2022-01-18 23:05:48'),
+	(12, 12, 4, 1, '2022-01-18 23:05:50', '2022-01-18 23:05:52'),
+	(13, 38, 4, 1, '2022-01-19 14:25:59', '2022-01-19 14:27:03'),
+	(14, 38, 4, 1, '2022-01-19 14:27:05', '2022-01-19 14:27:09'),
+	(15, 38, 4, 1, '2022-01-19 14:27:11', '2022-01-19 14:27:21'),
+	(16, 38, 4, 1, '2022-01-19 14:27:26', '2022-01-19 14:27:28'),
+	(17, 38, 4, 1, '2022-01-19 14:27:30', '2022-01-19 14:27:33'),
+	(18, 38, 4, 1, '2022-01-19 14:27:36', '2022-01-19 14:27:42'),
+	(19, 38, 4, 1, '2022-01-19 14:27:55', '2022-01-19 14:28:06'),
+	(20, 77, 4, 1, '2022-01-19 19:07:43', '2022-01-19 19:07:53'),
+	(21, 64, 4, 1, '2022-01-19 19:14:03', '2022-01-19 19:15:40'),
+	(22, 64, 4, 1, '2022-01-19 19:15:43', '2022-01-19 19:15:45'),
+	(23, 64, 4, 1, '2022-01-19 19:30:46', '2022-01-19 19:30:49'),
+	(24, 64, 4, 1, '2022-01-19 19:31:05', '2022-01-19 19:31:07'),
+	(25, 64, 4, 1, '2022-01-19 23:23:28', '2022-01-19 23:23:39'),
+	(26, 78, 39, 8, '2022-01-19 23:39:45', '2022-01-19 23:39:47'),
+	(27, 78, 39, 8, '2022-01-19 23:39:47', '2022-01-19 23:39:48');
 /*!40000 ALTER TABLE `tarefastempo` ENABLE KEYS */;
 
 -- Copiando estrutura para tabela mydb.topicos
@@ -611,9 +779,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `dataCriacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `dataAlteracao` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`idUsuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
 
--- Copiando dados para a tabela mydb.usuarios: ~12 rows (aproximadamente)
+-- Copiando dados para a tabela mydb.usuarios: ~11 rows (aproximadamente)
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
 INSERT INTO `usuarios` (`idUsuarios`, `nomeUsuario`, `dataNascimento`, `email`, `senha`, `cancelado`, `dataCriacao`, `dataAlteracao`) VALUES
 	(37, 'fadfasdfsa', '2004-02-12', 'teste@dsagd.vom', '12345', NULL, '2021-12-19 15:06:15', '2021-12-19 18:06:15'),
@@ -621,13 +789,15 @@ INSERT INTO `usuarios` (`idUsuarios`, `nomeUsuario`, `dataNascimento`, `email`, 
 	(39, 'teste', '2004-02-12', 'hasvfdh@gmai.cw', '$2a$10$dZbc3Jb0yk4p7CJ31L0ZR.sdkWVimzGni88VGlx2vfOSmBC3yuDgG', NULL, '2021-12-19 16:11:52', '2021-12-19 19:11:52'),
 	(40, 'ajdbshf', '2004-02-12', 'sdjfbafs@xn--gmai-3oa.com', '$2a$10$0hFLYczbNZXQclZKsV5cme4Yx6.oCoenA7mWChpfKZPfOGkaLdRxS', NULL, '2021-12-19 16:12:48', '2021-12-19 19:12:48'),
 	(41, 'sjadf', '2004-02-12', 'asbdfh@v.com', '$2a$10$ScTgqHCnkMYkXH/bctWVMe8mjg6qsiwvJCKYq3Sf/eC813QiS8Ssa', NULL, '2021-12-19 16:14:14', '2021-12-19 19:14:14'),
-	(42, 'teste', '2004-02-12', 'a@a', '$2a$10$bC10xfOTqLcb3Q6IjBLVo.diParhK/Q2/99fSmdxb8KwkBx7BQ7AS', NULL, '2021-12-19 17:00:22', '2021-12-19 20:00:22'),
+	(42, 'Lucas Teste', '2004-11-13', 'b@b', '11111', NULL, '2021-12-19 17:00:22', '2022-01-21 02:53:47'),
 	(43, 'teste', '2004-02-12', 'teste@gmailcads.com', '$2a$10$W/s3V6BTjefaQIfpM1d.h.C.5syQkcwvQbNQ2vd.TSls86JSA9q9e', NULL, '2022-01-11 23:10:40', '2022-01-12 02:10:40'),
 	(44, 'teste', '2004-02-12', 'khavsd@gmai.com', '$2a$10$/EJLh4m6CthypYygaE6rG.owvAxHuHmnEGYdoQRUAPEOtZVdpiEQG', NULL, '2022-01-11 23:11:34', '2022-01-12 02:11:34'),
 	(45, 'etste', '2004-02-12', 'asdbvkbfafb@fmail.com', '$2a$10$wc3bMoOWDO4IsPoYjfW5..u.C6SmTEROcx3PbGCkHcKd.fW8Txyam', NULL, '2022-01-11 23:11:59', '2022-01-12 02:11:59'),
 	(46, 'Conta teste', '2004-02-12', 'lukantunes@gmail.com', '$2a$10$tBS1P3/w8WUI.wCEIdbY4ukzfbgaPCY.2ekUsyYJYi6ZFEi3v69rC', NULL, '2022-01-12 01:15:45', '2022-01-12 01:18:17'),
-	(47, 'Conta teste', '2004-02-12', 'lukasbuligonantunes@gmai.com', '$2a$10$0knL/m9DwDK3g9Zg9x9gpe4Lj3e.kK9/8wuwwP3KZ3aejkeYo0K8G', NULL, '2022-01-12 01:18:39', '2022-01-12 04:18:39'),
-	(48, 'Teste de conta', '2004-02-12', 'lukasbuligonantunes@gmail.com', '$2a$10$FYE9k1Ikvahpigq8JUbb7ukG71hkIa7fZr00IA.0dl602dvAIDVLC', NULL, '2022-01-12 01:19:31', '2022-01-12 04:19:31');
+	(47, 'Conta teste', '2004-02-12', 'dads@gnas.com', '$2a$10$0knL/m9DwDK3g9Zg9x9gpe4Lj3e.kK9/8wuwwP3KZ3aejkeYo0K8G', NULL, '2022-01-12 01:18:39', '2022-01-19 20:47:46'),
+	(48, 'Teste com senha', '2004-02-12', 'a@a', '$2a$10$fDVErhNfeU7iSsCQJHuLfelvvoWSUGzlmHivbKQyhUX5yyx6Iry9C', NULL, '2022-01-12 01:19:31', '2022-01-21 19:12:36'),
+	(49, 'teste', '2004-02-12', 'lukasbuligntunes@gmail.com', 'abcde', NULL, '2022-01-20 15:26:45', '2022-01-20 23:57:10'),
+	(50, 'teste fernando', '2004-02-12', 'fernando@t.teste', '$2a$10$0Hm/OzHmZQBkkWQOuLHEBuB7s78dbPjF7SoMV8viKXxubbGLsELVq', NULL, '2022-01-21 16:47:01', '2022-01-21 19:47:01');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
