@@ -79,6 +79,7 @@
   overflow-y: scroll;
   background-color: #ffffff10;
   border: none;
+  color: #ffffff85;
 }
 
 .rodape textarea.novaresposta:focus {
