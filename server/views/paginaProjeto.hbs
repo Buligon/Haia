@@ -157,19 +157,19 @@
 
       {{! -------------- COLABORADORES INÍCIO --------------}}
       <div class="tab-pane show active" id="nav-colaboradores" role="tabpanel" aria-labelledby="nav-colaboradores-tab">
-        <div class="row cabecalhoUsuarios d-flex p-3 mx-auto">
-          <div class="col-2 empHigh mx-auto d-flex">
+        <div class="row cabecalhoUsuarios d-flex p-3 mx-auto  flex-row-reverse">
+          {{!-- <div class="col-2 empHigh mx-auto d-flex">
             <p class="align-self-center m-0">Colaboradores:</p>
             <p class="align-self-center m-0" id="qtdMembros"></p>
           </div>
           <div class="col d-flex">
             <input class="dp06 mx-auto align-self-center" type="text" id="buscaUsuario" placeholder="Usuário">
             <button type="button" class="btn btn-primary align-self-center mx-auto">Filtrar</button>
-          </div>
+          </div> --}}
           <div class="col-3 d-flex">
 
-            <button type="button" class="btn btn-primary align-self-center mx-auto" data-toggle="modal"
-              data-target="#convidaColaborador">Convidar</button>
+            <button type="button" class="btn btn-primary align-self-right mx-auto" data-toggle="modal"
+              data-target="#convidaColaborador">Convidar novos colaboradores</button>
           </div>
         </div>
         <div class="row mx-auto">

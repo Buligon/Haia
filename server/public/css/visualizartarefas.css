@@ -41,6 +41,8 @@
 
 #tagsTarefa:hover {
   cursor: pointer;
+  font-size: 18px;
+  animation-duration: 3000ms;
 }
 
 /*----------------------------------------------------------------*/

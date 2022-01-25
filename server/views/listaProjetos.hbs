@@ -41,8 +41,8 @@
         </button>
       </li>
       <li class="active">
-        <a href="/projetos/listaprojetos">
-          <i class="material-icons-outlined">
+        <a href="/projetos/listaprojetos" class="d-flex align-content-center">
+          <i class="material-icons-outlined  text-center">
             home
           </i>
           <span>Início</span>
@@ -82,12 +82,10 @@
         {{else}}
 
         {{/each}}
-        <div class="col d-flex justify-content-start">
+        <div class="col">
           <div class="card">
             <div class="card-body" style="border-top-left-radius: 5px; border-top-right-radius: 5px;">
-              <button id="adicionaProjeto" type="button" class="btn btn-primary alinhaCentro"
-                style="color: transparent !important; background-color: transparent !important; border-color: transparent  !important;"
-                data-toggle="modal" data-target="#tagmodal">
+              <button id="adicionaProjeto" type="button" class="btn btn-primary alinhaCentro" style="color: transparent !important; background-color: transparent !important; border-color: transparent  !important;" data-toggle="modal" data-target="#tagmodal">
                 <span id="iconeAdicionaProjeto" class="material-icons-outlined">
                   add_circle_outline
                 </span>

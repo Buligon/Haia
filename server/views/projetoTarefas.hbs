@@ -312,8 +312,8 @@
           <h5 class="modal-title" id="ModalLgTitle">Cadastro de tarefa </h5>
         </div>
 
-        <div class="row empHigh d-flex align-middle" style="height:60%;">
-          <form id="formCriaTarefa" autocomplete="off" style="height: 70%;"
+        <div class="row empHigh d-flex align-middle" style="height:70%;">
+          <form id="formCriaTarefa" autocomplete="off"
             action="/projetos/projetoTarefas/{{idProjeto}}/cadastroTarefa" method="POST">
             <fieldset style="height: 50%;" class="align-middle">
               <input id="tagsSelecionadas_cadTarefa" name="tagsSelecionadas_cadTarefa" type="text" value=""
@@ -326,7 +326,7 @@
 
               </div>
 
-              <div class="row d-flex justify-content-around m-2 p-1">
+              <div class="row d-flex justify-content-around m-2 p-1 mx-auto" style="width: 90%;">
 
                 <div class="col mx-auto">
                   <label for="cad_Prioridade" class="label">Prioridade:</label>
@@ -353,7 +353,7 @@
 
               </div>
 
-              <div class="row d-flex justify-content-around m-2 p-1">
+              <div class="row d-flex justify-content-around m-2 p-1 mx-auto" style="width: 90%;">
 
                 <div class="col">
 
@@ -379,15 +379,15 @@
                 </div>
 
               </div>
-              <div id="row_detalhamento" class="row mx-auto" style="height: 100%;">
+
+              <div id="row_detalhamento" class="row d-flex justify-content-center mx-auto" style="width: 90%; height: 100%;">
                 <label for="cad_Detalhamento">Detalhamento:</label>
-                <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="empHigh detalhamento"
-                  style="height: 100%;" required></textarea>
+                <textarea id="cad_Detalhamento" name="cad_Detalhamento" class="empHigh detalhamento mx-auto" required></textarea>
               </div>
             </fieldset>
           </form>
         </div>
-        <div style="height: 5%;" class="row d-flex align-items-start justify-content-around m-2 p-1">
+        <div style="height: 12%;" class="row d-flex align-items-start  align-middle justify-content-around">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
           <button onclick="criaTarefa()" class="btn btn-primary">Criar tarefa</button>
         </div>
@@ -494,7 +494,7 @@
   </nav>
 
   <div class="col"></div>
-  <div id="content" class="m-2 p-4 p-md-5 col-10">
+  <div id="content" class="p-4 col-10">
     <form id="filtros" action="/projetos/projetoTarefas/{{idProjeto}}" method="post">
       <fieldset style="width: 100%;">
         <div class="d-flex align-content-center" style="width: 100%; flex-wrap: wrap;">

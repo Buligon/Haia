@@ -699,7 +699,10 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
     erros.push({ texto: "Preencha o detalhamento!" });
   }
 
-
+  // Verifica se o campo status foi preenchido
+  if (!req.body.cad_idstatus || typeof req.body.cad_idstatus == undefined || req.body.cad_idstatus == null) {
+    erros.push({ texto: "Selecione um status!" });
+  }
 
   // Caso hajam erros, transforma o json em uma string amigável ao usuário e retorna o mesmo para listaprojetos
   if (erros.length > 0) {
@@ -723,10 +726,9 @@ router.post('/projetoTarefas/:idProjeto/cadastroTarefa', autenticado, async (req
     }).then(colaboradorId => {
       idColaborador = colaboradorId;
     }).catch((err) => {
-
-      req.flash("error_msg", "Houve um erro ao postar resposta!" + JSON.stringify(err));
-      res.redirect("/projetos/redireciona/" + req.params.idProjeto + "/");
-
+      console.log(JSON.stringify(err))
+      req.flash("error_msg", "Houve um erro ao postar resposta!");
+      res.redirect("/projetos/projetoTarefas/" + req.params.idProjeto);
     });
 
     // Valida se foi escolhida sprint para então montar o insert
@@ -912,8 +914,8 @@ router.get('/tarefa/:idProjeto/:codTarefa', autenticado, async (req, res) => {
       where: {
         idprojeto: req.params.idProjeto,
       },
-      attributes: [],   
-      required:false
+      attributes: [],
+      required: false
     }],
     where: {
       idTarefas: req.params.codTarefa

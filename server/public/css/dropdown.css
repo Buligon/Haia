@@ -14,7 +14,7 @@
 }
 
 .data {
-  width: 18ch;
+  width: 17ch;
 }
 
 #search {
@@ -55,6 +55,8 @@
   float: left;
   width: 100%;
   border-radius: 5px;
+  height: 78%;
+  margin: 2%;
 }
 
 .table tr .codigo, .table th {
@@ -101,6 +103,11 @@
 
 .detalhamento:focus {
   outline: none;
+}
+
+#cad_Detalhamento {
+  margin: none;
+  height: 100%;
 }
 
 #cad_assunto {

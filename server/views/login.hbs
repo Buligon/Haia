@@ -6,16 +6,16 @@
 
 
             <form id="form" autocomplete="off" class="mx-auto" action="/" method="POST">
-                <fieldset>
+                <fieldset class="mx-auto" style="width: 90%;">
                     
                     <input class="mx-auto dp06 m-2" type="email" id="email" name="email" placeholder="Email" value="{{email}}" required>
                     
                     <input class="mx-auto dp06 m-2" type="password" id="pwd" name="pwd" placeholder="Senha" value="{{senha}}" required>
 
-                    <div class="d-flex justify-content-around">
-                        <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
-                            senha?</a>
-                        <button type="submit" class="btn">Enviar</button>
+                    <div class="d-flex flex-row-reverse">
+                        {{!-- <a style="color: #bb86fc;" data-bs-toggle="modal" data-bs-target="#Modal">Esqueceu sua
+                            senha?</a> --}}
+                        <button type="submit" class="btn m-2">Enviar</button>
                     </div>
                 </fieldset>
             </form>
