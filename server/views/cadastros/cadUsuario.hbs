@@ -52,10 +52,11 @@
     </div>
 
   </div>
-  {{#each erros}}
-  <div class="alert alert-danger">{{texto}}</div>
-  {{else}}
-  {{/each}}
+  <div class="row" id="alerta" style="z-index: 2; position: absolute; left:50%; bottom: 5%;">{{#each erros}}
+    <div class="alert alert-danger">{{texto}}</div>
+    {{else}}
+    {{/each}}
+  </div>
 
 </div>
 <script>

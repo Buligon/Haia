@@ -206,7 +206,7 @@ router.post('/convidaColaborador/:codProjeto', autenticado, async (req, res) => 
           from: "Haia <haia.software.noreply@gmail.com>",
           to: req.body.emailColaborador,
           subject: "Convite para projeto",
-          html: "Olá, você foi convidado para o projeto " + projeto.nomeProjeto + "<br><a href='http://localhost:8012/projetoConfig/aceitaConvite/" + result.idConvites + "'>Clique aqui</a> para aceitar."
+          html: "Olá, você foi convidado para o projeto " + projeto.nomeProjeto + "<br><a href='http://26.252.85.61rs:8012/projetoConfig/aceitaConvite/" + result.idConvites + "'>Clique aqui</a> para aceitar."
         }).then(message => {
           req.flash("success_msg", "Usuário convidado com sucesso!");
           res.redirect('/projetoConfig/' + req.params.codProjeto);
