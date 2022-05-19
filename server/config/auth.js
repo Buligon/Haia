@@ -1,5 +1,4 @@
 const localStrategy = require("passport-local").Strategy;
-const { sequelize } = require("../config/database.js");
 const bcrypt = require('bcryptjs');
 
 // Model de usuário

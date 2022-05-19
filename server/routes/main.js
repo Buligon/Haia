@@ -2,9 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
-const { sequelize } = require("../config/database.js");
 const passport = require("passport");
-const { autenticado } = require("../helpers/validaAutenticacao.js");
 
 
 //* Tela de login do sistema
@@ -16,6 +14,7 @@ router.get('/', (req, res) => {
   });
 
 });
+
 
 router.get('/login/:email/:senha', (req, res) => {
 

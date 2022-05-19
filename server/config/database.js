@@ -7,7 +7,7 @@ const ip = "127.0.0.1", porta = "3308";
 const sequelize = new Sequelize(banco, usuario, pwd, {
   host: ip,
   port: porta,
-  dialect: 'mysql',
+  dialect: 'mariadb',
   define: {
     timestamps: true,
     createdAt: false,

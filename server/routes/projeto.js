@@ -14,7 +14,6 @@ const Usuario = require('../models/Usuario');
 const Tags = require('../models/Tags');
 const Status = require('../models/Status');
 const Sprints = require('../models/Sprints');
-const ProjetoAcessos = require('../models/ProjetoAcessos');
 const TarefasTags = require("../models/TarefasTags.js");
 const TarefasTempo = require("../models/TarefasTempo.js");
 
@@ -102,32 +101,6 @@ router.get('/redireciona/:codProjeto/', autenticado, async (req, res) => {
 //* Lista todas as tarefas de um projeto
 
 router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
-
-  // Controle de acesso, usado apenas para testes
-  await ProjetoAcessos.findAndCountAll({
-    where: {
-      idUsuario: req.user.idUsuarios
-    },
-    plain: true
-  }).then(result => {
-    if (result.count > 1) {
-      ProjetoAcessos.destroy({
-        where: {
-          idUsuario: req.user.idUsuarios
-        },
-        order: [['idProjetoAcessos', 'ASC']],
-        limit: (result.count - 1)
-      })
-    }
-  }).catch(err => {
-    console.log(err)
-  });
-
-  // Controle de acesso, usado apenas para testes
-  await ProjetoAcessos.create({
-    idUsuario: req.user.idUsuarios,
-    idProjeto: req.params.codProjeto
-  })
 
   var tagsProjeto, statusProjeto, sprintProjeto;
 
@@ -317,32 +290,6 @@ router.post('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
 
 
 router.get('/projetoTarefas/:codProjeto/', autenticado, async (req, res) => {
-
-  // Controle de acesso, usado apenas para testes
-  await ProjetoAcessos.findAndCountAll({
-    where: {
-      idUsuario: req.user.idUsuarios
-    },
-    plain: true
-  }).then(result => {
-    if (result.count > 1) {
-      ProjetoAcessos.destroy({
-        where: {
-          idUsuario: req.user.idUsuarios
-        },
-        order: [['idProjetoAcessos', 'ASC']],
-        limit: (result.count - 1)
-      })
-    }
-  }).catch(err => {
-    console.log(err)
-  });
-
-  // Controle de acesso, usado apenas para testes
-  await ProjetoAcessos.create({
-    idUsuario: req.user.idUsuarios,
-    idProjeto: req.params.codProjeto
-  })
 
   var tagsProjeto, statusProjeto, sprintProjeto;
 

@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           8.0.27 - MySQL Community Server - GPL
+-- Versão do servidor:           10.6.7-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
--- HeidiSQL Versão:              11.2.0.6213
+-- HeidiSQL Versão:              11.3.0.6295
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -14,17 +14,17 @@
 
 
 -- Copiando estrutura do banco de dados para mydb
-CREATE DATABASE IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET utf8 */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE IF NOT EXISTS `mydb` /*!40100 DEFAULT CHARACTER SET utf8mb3 */;
 USE `mydb`;
 
 -- Copiando estrutura para tabela mydb.cargos
 CREATE TABLE IF NOT EXISTS `cargos` (
-  `idCargos` int NOT NULL AUTO_INCREMENT,
+  `idCargos` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `descricao` varchar(45) DEFAULT NULL,
-  `cancelado` tinyint DEFAULT NULL,
+  `cancelado` tinyint(4) DEFAULT NULL,
   `dataAlteracao` datetime DEFAULT NULL,
-  `usuarioAlterou` int DEFAULT NULL,
+  `usuarioAlterou` int(11) DEFAULT NULL,
   PRIMARY KEY (`idCargos`),
   KEY `usuarioAlterou_idx` (`usuarioAlterou`),
   CONSTRAINT `usuarioAlterou_c` FOREIGN KEY (`usuarioAlterou`) REFERENCES `projetocolaboradores` (`idProjetoColaborador`)
@@ -34,17 +34,17 @@ CREATE TABLE IF NOT EXISTS `cargos` (
 
 -- Copiando estrutura para tabela mydb.conversas
 CREATE TABLE IF NOT EXISTS `conversas` (
-  `idConversa` int NOT NULL,
+  `idConversa` int(11) NOT NULL,
   `idMensagemFixada` varchar(45) DEFAULT NULL,
-  `mensagemFixada` int DEFAULT NULL,
-  `grupo` int DEFAULT NULL,
+  `mensagemFixada` int(11) DEFAULT NULL,
+  `grupo` int(11) DEFAULT NULL,
   `descricao` varchar(45) DEFAULT NULL,
   `nome` varchar(45) NOT NULL,
-  `perfil` longblob,
+  `perfil` longblob DEFAULT NULL,
   `dataCriacao` datetime NOT NULL,
   `dataAlteracao` datetime DEFAULT NULL,
-  `usuarioAlterou` int DEFAULT NULL,
-  `cancelado` int DEFAULT NULL,
+  `usuarioAlterou` int(11) DEFAULT NULL,
+  `cancelado` int(11) DEFAULT NULL,
   PRIMARY KEY (`idConversa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -52,10 +52,10 @@ CREATE TABLE IF NOT EXISTS `conversas` (
 
 -- Copiando estrutura para tabela mydb.conversasfixadas
 CREATE TABLE IF NOT EXISTS `conversasfixadas` (
-  `idMensagensFixadas` int NOT NULL AUTO_INCREMENT,
-  `idUsuario` int NOT NULL,
-  `idConversa` int NOT NULL,
-  `cancelada` int DEFAULT NULL,
+  `idMensagensFixadas` int(11) NOT NULL AUTO_INCREMENT,
+  `idUsuario` int(11) NOT NULL,
+  `idConversa` int(11) NOT NULL,
+  `cancelada` int(11) DEFAULT NULL,
   PRIMARY KEY (`idMensagensFixadas`),
   KEY `idUsuario_idx` (`idUsuario`),
   KEY `idConversa_idx` (`idConversa`),
@@ -67,10 +67,10 @@ CREATE TABLE IF NOT EXISTS `conversasfixadas` (
 
 -- Copiando estrutura para tabela mydb.convites
 CREATE TABLE IF NOT EXISTS `convites` (
-  `idConvites` int NOT NULL AUTO_INCREMENT,
-  `idProjeto` int NOT NULL,
+  `idConvites` int(11) NOT NULL AUTO_INCREMENT,
+  `idProjeto` int(11) NOT NULL,
   `email` varchar(45) NOT NULL,
-  `aceito` tinyint DEFAULT NULL,
+  `aceito` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`idConvites`),
   KEY `idProjeto_Conv_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Conv` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
@@ -80,11 +80,11 @@ CREATE TABLE IF NOT EXISTS `convites` (
 
 -- Copiando estrutura para tabela mydb.mensagens
 CREATE TABLE IF NOT EXISTS `mensagens` (
-  `idMensagem` int NOT NULL,
-  `idUsuario` int NOT NULL,
-  `idConversa` int NOT NULL,
+  `idMensagem` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `idConversa` int(11) NOT NULL,
   `horarioEnvio` datetime NOT NULL,
-  `texto` text,
+  `texto` text DEFAULT NULL,
   PRIMARY KEY (`idMensagem`),
   KEY `idUsuario_idx` (`idUsuario`),
   KEY `idConversa_idx` (`idConversa`),
@@ -96,10 +96,10 @@ CREATE TABLE IF NOT EXISTS `mensagens` (
 
 -- Copiando estrutura para tabela mydb.participantes
 CREATE TABLE IF NOT EXISTS `participantes` (
-  `idParticipantes` int NOT NULL AUTO_INCREMENT,
-  `idConversa` int NOT NULL,
-  `idParticipante` int NOT NULL,
-  `cancelado` int DEFAULT NULL,
+  `idParticipantes` int(11) NOT NULL AUTO_INCREMENT,
+  `idConversa` int(11) NOT NULL,
+  `idParticipante` int(11) NOT NULL,
+  `cancelado` int(11) DEFAULT NULL,
   PRIMARY KEY (`idParticipantes`),
   KEY `idConversa_idx` (`idConversa`),
   KEY `idParticipante_idx` (`idParticipante`),
@@ -111,13 +111,13 @@ CREATE TABLE IF NOT EXISTS `participantes` (
 
 -- Copiando estrutura para tabela mydb.permissoes
 CREATE TABLE IF NOT EXISTS `permissoes` (
-  `idPermissoes` int NOT NULL AUTO_INCREMENT,
-  `idColaborador` int NOT NULL,
-  `idCargo` int DEFAULT NULL,
+  `idPermissoes` int(11) NOT NULL AUTO_INCREMENT,
+  `idColaborador` int(11) NOT NULL,
+  `idCargo` int(11) DEFAULT NULL,
   `dataAlteracao` datetime DEFAULT NULL,
-  `usuarioAlterou` int DEFAULT NULL,
+  `usuarioAlterou` int(11) DEFAULT NULL,
   PRIMARY KEY (`idPermissoes`),
-  KEY `idProjetoColaboradores_idx` (`idColaborador`) /*!80000 INVISIBLE */,
+  KEY `idProjetoColaboradores_idx` (`idColaborador`),
   KEY `idCargo_idx` (`idCargo`),
   KEY `usuarioAlterou_idx` (`usuarioAlterou`),
   CONSTRAINT `idCargo_p` FOREIGN KEY (`idCargo`) REFERENCES `cargos` (`idCargos`),
@@ -129,15 +129,15 @@ CREATE TABLE IF NOT EXISTS `permissoes` (
 
 -- Copiando estrutura para tabela mydb.posts
 CREATE TABLE IF NOT EXISTS `posts` (
-  `idPosts` int NOT NULL AUTO_INCREMENT,
-  `idTopico` int NOT NULL,
-  `idAutor` int NOT NULL,
-  `idProjeto` int NOT NULL,
+  `idPosts` int(11) NOT NULL AUTO_INCREMENT,
+  `idTopico` int(11) NOT NULL,
+  `idAutor` int(11) NOT NULL,
+  `idProjeto` int(11) NOT NULL,
   `descricao` varchar(45) NOT NULL,
   `conteudo` text NOT NULL,
   `dataHora` datetime NOT NULL,
-  `cancelado` tinyint DEFAULT NULL,
-  `resposta` int DEFAULT NULL,
+  `cancelado` tinyint(4) DEFAULT NULL,
+  `resposta` int(11) DEFAULT NULL,
   PRIMARY KEY (`idPosts`),
   KEY `idAutor_idx` (`idAutor`),
   KEY `idProjeto_idx` (`idProjeto`),
@@ -149,30 +149,15 @@ CREATE TABLE IF NOT EXISTS `posts` (
 
 -- Exportação de dados foi desmarcado.
 
--- Copiando estrutura para tabela mydb.projetoacessos
-CREATE TABLE IF NOT EXISTS `projetoacessos` (
-  `idProjetoAcessos` int NOT NULL AUTO_INCREMENT,
-  `idUsuario` int NOT NULL,
-  `idProjeto` int NOT NULL,
-  `dataAcesso` datetime NOT NULL,
-  PRIMARY KEY (`idProjetoAcessos`),
-  KEY `idUsuario_Acesso_idx` (`idUsuario`),
-  KEY `idProjeto_Acesso_idx` (`idProjeto`),
-  CONSTRAINT `idProjeto_Acesso` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`),
-  CONSTRAINT `idUsuario_Acesso` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuarios`)
-) ENGINE=InnoDB AUTO_INCREMENT=803 DEFAULT CHARSET=utf8mb3;
-
--- Exportação de dados foi desmarcado.
-
 -- Copiando estrutura para tabela mydb.projetocolaboradores
 CREATE TABLE IF NOT EXISTS `projetocolaboradores` (
-  `idProjetoColaborador` int NOT NULL AUTO_INCREMENT,
-  `idUsuario` int NOT NULL,
-  `idProjeto` int NOT NULL,
-  `cancelado` int DEFAULT NULL,
-  `idCargo` int NOT NULL,
-  `dataCriacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `dataAlteracao` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `idProjetoColaborador` int(11) NOT NULL AUTO_INCREMENT,
+  `idUsuario` int(11) NOT NULL,
+  `idProjeto` int(11) NOT NULL,
+  `cancelado` int(11) DEFAULT NULL,
+  `idCargo` int(11) NOT NULL,
+  `dataCriacao` timestamp NULL DEFAULT current_timestamp(),
+  `dataAlteracao` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`idProjetoColaborador`),
   KEY `codigoUsuario_idx` (`idUsuario`),
   KEY `idProjeto_idx` (`idProjeto`),
@@ -186,12 +171,12 @@ CREATE TABLE IF NOT EXISTS `projetocolaboradores` (
 
 -- Copiando estrutura para tabela mydb.projetos
 CREATE TABLE IF NOT EXISTS `projetos` (
-  `idProjetos` int NOT NULL AUTO_INCREMENT,
+  `idProjetos` int(11) NOT NULL AUTO_INCREMENT,
   `nomeProjeto` varchar(45) NOT NULL,
   `codigoCriador` varchar(45) NOT NULL,
   `descricao` varchar(300) DEFAULT NULL,
-  `Cancelado` int DEFAULT NULL,
-  `banner` longblob,
+  `Cancelado` int(11) DEFAULT NULL,
+  `banner` longblob DEFAULT NULL,
   PRIMARY KEY (`idProjetos`),
   UNIQUE KEY `idProjetos_UNIQUE` (`idProjetos`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb3;
@@ -200,11 +185,11 @@ CREATE TABLE IF NOT EXISTS `projetos` (
 
 -- Copiando estrutura para tabela mydb.reacoes
 CREATE TABLE IF NOT EXISTS `reacoes` (
-  `idReacoes` int NOT NULL AUTO_INCREMENT,
-  `idMensagem` int NOT NULL,
-  `idUsuario` int NOT NULL,
-  `reacao` int DEFAULT NULL,
-  `cancelado` int DEFAULT NULL,
+  `idReacoes` int(11) NOT NULL AUTO_INCREMENT,
+  `idMensagem` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `reacao` int(11) DEFAULT NULL,
+  `cancelado` int(11) DEFAULT NULL,
   PRIMARY KEY (`idReacoes`),
   KEY `idMensagem_idx` (`idMensagem`),
   KEY `idUsuario_idx` (`idUsuario`),
@@ -216,12 +201,12 @@ CREATE TABLE IF NOT EXISTS `reacoes` (
 
 -- Copiando estrutura para tabela mydb.sprints
 CREATE TABLE IF NOT EXISTS `sprints` (
-  `idSprints` int NOT NULL AUTO_INCREMENT,
+  `idSprints` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `dataCriacao` datetime NOT NULL,
-  `cancelada` tinyint DEFAULT NULL,
+  `cancelada` tinyint(4) DEFAULT NULL,
   `dataAlteracao` datetime DEFAULT NULL,
-  `idProjeto` int NOT NULL,
+  `idProjeto` int(11) NOT NULL,
   PRIMARY KEY (`idSprints`),
   KEY `idProjeto_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Sp` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
@@ -231,10 +216,10 @@ CREATE TABLE IF NOT EXISTS `sprints` (
 
 -- Copiando estrutura para tabela mydb.status
 CREATE TABLE IF NOT EXISTS `status` (
-  `idStatus` int NOT NULL AUTO_INCREMENT,
+  `idStatus` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
-  `cancelado` tinyint DEFAULT NULL,
-  `idProjeto` int NOT NULL,
+  `cancelado` tinyint(4) DEFAULT NULL,
+  `idProjeto` int(11) NOT NULL,
   PRIMARY KEY (`idStatus`),
   KEY `idProjeto_Sta_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_Sta` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
@@ -244,12 +229,12 @@ CREATE TABLE IF NOT EXISTS `status` (
 
 -- Copiando estrutura para tabela mydb.tags
 CREATE TABLE IF NOT EXISTS `tags` (
-  `idTags` int NOT NULL AUTO_INCREMENT,
+  `idTags` int(11) NOT NULL AUTO_INCREMENT,
   `descricao` varchar(45) NOT NULL,
   `cor` char(7) DEFAULT NULL,
-  `prioridade` int NOT NULL,
-  `cancelada` tinyint DEFAULT NULL,
-  `idProjeto` int NOT NULL,
+  `prioridade` int(11) NOT NULL,
+  `cancelada` tinyint(4) DEFAULT NULL,
+  `idProjeto` int(11) NOT NULL,
   PRIMARY KEY (`idTags`),
   KEY `idProjeto_idx` (`idProjeto`),
   CONSTRAINT `idProjeto_ta` FOREIGN KEY (`idProjeto`) REFERENCES `projetos` (`idProjetos`)
@@ -259,17 +244,17 @@ CREATE TABLE IF NOT EXISTS `tags` (
 
 -- Copiando estrutura para tabela mydb.tarefas
 CREATE TABLE IF NOT EXISTS `tarefas` (
-  `idTarefas` int NOT NULL AUTO_INCREMENT,
+  `idTarefas` int(11) NOT NULL AUTO_INCREMENT,
   `assunto` varchar(45) NOT NULL,
   `prioridade` varchar(6) NOT NULL DEFAULT '',
-  `cancelada` tinyint DEFAULT NULL,
+  `cancelada` tinyint(4) DEFAULT NULL,
   `ultimaResposta` datetime DEFAULT NULL,
-  `idAutor` int NOT NULL,
-  `idProjeto` int NOT NULL,
-  `idStatus` int NOT NULL,
-  `idSprint` int DEFAULT NULL,
-  `dataCriacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `dataAlteracao` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `idAutor` int(11) NOT NULL,
+  `idProjeto` int(11) NOT NULL,
+  `idStatus` int(11) NOT NULL,
+  `idSprint` int(11) DEFAULT NULL,
+  `dataCriacao` timestamp NULL DEFAULT current_timestamp(),
+  `dataAlteracao` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`idTarefas`),
   KEY `idAutor_idx` (`idAutor`),
   KEY `idProjeto_idx` (`idProjeto`),
@@ -286,11 +271,11 @@ CREATE TABLE IF NOT EXISTS `tarefas` (
 -- Copiando estrutura para tabela mydb.tarefasrespostas
 CREATE TABLE IF NOT EXISTS `tarefasrespostas` (
   `idTarefasResposta` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT,
-  `idTarefa` int NOT NULL,
-  `idColaborador` int NOT NULL,
-  `statusAnterior` int NOT NULL,
-  `statusNovo` int NOT NULL,
-  `resposta` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `idTarefa` int(11) NOT NULL,
+  `idColaborador` int(11) NOT NULL,
+  `statusAnterior` int(11) NOT NULL,
+  `statusNovo` int(11) NOT NULL,
+  `resposta` text NOT NULL,
   `dataResposta` datetime NOT NULL,
   PRIMARY KEY (`idTarefasResposta`),
   KEY `idTarefa_idx` (`idTarefa`),
@@ -303,10 +288,10 @@ CREATE TABLE IF NOT EXISTS `tarefasrespostas` (
 
 -- Copiando estrutura para tabela mydb.tarefastags
 CREATE TABLE IF NOT EXISTS `tarefastags` (
-  `idTarefasTags` int NOT NULL AUTO_INCREMENT,
-  `idTarefa` int NOT NULL,
-  `idTag` int NOT NULL,
-  `idProjeto` int NOT NULL,
+  `idTarefasTags` int(11) NOT NULL AUTO_INCREMENT,
+  `idTarefa` int(11) NOT NULL,
+  `idTag` int(11) NOT NULL,
+  `idProjeto` int(11) NOT NULL,
   PRIMARY KEY (`idTarefasTags`),
   KEY `idTarefa_idx` (`idTarefa`),
   KEY `idTag_ta_idx` (`idTag`),
@@ -320,10 +305,10 @@ CREATE TABLE IF NOT EXISTS `tarefastags` (
 
 -- Copiando estrutura para tabela mydb.tarefastempo
 CREATE TABLE IF NOT EXISTS `tarefastempo` (
-  `idTarefasTempo` int NOT NULL AUTO_INCREMENT,
-  `idTarefa` int NOT NULL,
-  `idColaborador` int NOT NULL,
-  `idStatus` int NOT NULL,
+  `idTarefasTempo` int(11) NOT NULL AUTO_INCREMENT,
+  `idTarefa` int(11) NOT NULL,
+  `idColaborador` int(11) NOT NULL,
+  `idStatus` int(11) NOT NULL,
   `dataInicio` datetime NOT NULL,
   `dataFinal` datetime DEFAULT NULL,
   PRIMARY KEY (`idTarefasTempo`),
@@ -339,13 +324,13 @@ CREATE TABLE IF NOT EXISTS `tarefastempo` (
 
 -- Copiando estrutura para tabela mydb.topicos
 CREATE TABLE IF NOT EXISTS `topicos` (
-  `idTopicos` int NOT NULL AUTO_INCREMENT,
+  `idTopicos` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `descricao` varchar(70) DEFAULT NULL,
-  `cancelado` tinyint DEFAULT NULL,
-  `idCriador` int NOT NULL,
-  `dataCriacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `dataAlteracao` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cancelado` tinyint(4) DEFAULT NULL,
+  `idCriador` int(11) NOT NULL,
+  `dataCriacao` timestamp NULL DEFAULT current_timestamp(),
+  `dataAlteracao` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`idTopicos`),
   KEY `idCriador_idx` (`idCriador`),
   CONSTRAINT `idCriador` FOREIGN KEY (`idCriador`) REFERENCES `projetocolaboradores` (`idProjetoColaborador`)
@@ -355,14 +340,14 @@ CREATE TABLE IF NOT EXISTS `topicos` (
 
 -- Copiando estrutura para tabela mydb.usuarios
 CREATE TABLE IF NOT EXISTS `usuarios` (
-  `idUsuarios` int NOT NULL AUTO_INCREMENT,
+  `idUsuarios` int(11) NOT NULL AUTO_INCREMENT,
   `nomeUsuario` varchar(60) NOT NULL,
   `dataNascimento` date DEFAULT NULL,
   `email` varchar(45) NOT NULL,
   `senha` varchar(60) DEFAULT NULL,
-  `cancelado` tinyint DEFAULT NULL,
-  `dataCriacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `dataAlteracao` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `cancelado` tinyint(4) DEFAULT NULL,
+  `dataCriacao` timestamp NULL DEFAULT current_timestamp(),
+  `dataAlteracao` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`idUsuarios`)
 ) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
 
